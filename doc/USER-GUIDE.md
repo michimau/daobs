@@ -12,14 +12,14 @@ Click on ```+``` button to add a new one.
 
 
 ![Add an harvester]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/harvesting-add.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/harvesting-add.png)
 
 Click on ```harvest``` button to start harvesting the catalog. During harvesting
 the number of records will increase progressively. Harvesting is a background task
 that user can follow in the ```monitoring``` tab.
 
 ![Harvester status]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/harvesting-status.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/harvesting-status.png)
 
 Once all records are harvested, analysis tasks may be triggered depending on the 
 server configuration. By default, the following tasks are triggered:
@@ -48,7 +48,7 @@ A two steps validation task is defined:
 The validation result summary is displayed below harvester statistics:
 
 ![Harvester validation status]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/harvesting-validation-status.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/harvesting-validation-status.png)
 
 
 
@@ -111,7 +111,7 @@ The task also propagate INSPIRE theme from each datasets to the service.
 
 
 ![ETF tasks menu]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/harvesting-etfmenu.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/harvesting-etfmenu.png)
 
 
 
@@ -135,7 +135,7 @@ are running.
 
 
 ![Monitor background task]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/harvesting-monitor.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/harvesting-monitor.png)
 
 
 For the time being, no options are available to stop a background process.
@@ -152,12 +152,12 @@ a set of indicators and each indicator are based on query or expression.
 By default, 2 reports are available:
 
 ![Default reports]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/monitoring-reports.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-reports.png)
 
 User can preview report rules by clicking ```View report rules``` button:
 
 ![Report rules]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/monitoring-report-preview.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-preview.png)
 
 
 First select a report, then:
@@ -167,7 +167,7 @@ First select a report, then:
 
 
 ![Report indicator preview]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/monitoring-report-preview-indicator.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-preview-indicator.png)
 
 
 Report preview allows to quickly filter indicators:
@@ -177,7 +177,7 @@ Report preview allows to quickly filter indicators:
 
 
 ![Report indicator filter]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/monitoring-report-preview-filter.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-preview-filter.png)
 
 A report allows to save indicator values for a certain date. User can follow
 the trend of indicators by generating reports on a regular basis. For example,
@@ -189,14 +189,14 @@ for INSPIRE, Member States provide report every year since 2011.
 Reports can be download in various formats using the ```Download``` button:
 
 ![Report download]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/monitoring-report-download.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-download.png)
 
 
 For INSPIRE format, it may be relevant to set contact details to populate
 report metadata which will be required to create a full reporting:
 
 ![Report metadata]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/monitoring-report-metadata.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-metadata.png)
 
 
 ## Submitting report
@@ -207,7 +207,7 @@ dashboard from indicator values.
 
 
 ![Submit new report]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/monitoring-report-submit.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-submit.png)
 
 
 
@@ -220,7 +220,7 @@ When reports are uploaded, user can manage them from
 
 
 ![Managing report]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/monitoring-report-monitoring.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-monitoring.png)
 
 
 
