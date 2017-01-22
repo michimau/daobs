@@ -24,15 +24,15 @@ that user can follow in the ```monitoring``` tab.
 Once all records are harvested, analysis tasks may be triggered depending on the 
 server configuration. By default, the following tasks are triggered:
 
-* [XSD and INSPIRE validation](#XSD and INSPIRE validation)
-* [Service/dataset links](#Service/dataset links)
+* [XSD and INSPIRE validation](#xsd-and-inspire-validation)
+* [Service/dataset links](#servicedataset-links)
 
-[ETF validation](#ETF validation)can manually be triggered.
+[ETF validation](#etf-validation)can manually be triggered.
 
 Other tasks are also available:
 
-* [Database validation](#Database validation)
-* [Associated resource indexer (experimental)](#Associated resource indexer (experimental))
+* [Database validation](#database-validation)
+* [Associated resource indexer (experimental)](#associated-resource-indexer-experimental)
 
 
 
