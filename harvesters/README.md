@@ -30,11 +30,11 @@ and can be configured through the admin interface.
 
 The configuration parameters are:
 
-* territory: A representative geographic area for the node
-* folder: The folder name where harvested records are stored
-* name: The name of the node
-* url: The server URL to request (should provide GetCapabilities and GetRecords operations)
-* filter: (Optional) A OGC filter to restrict the search to a subset of the catalog
+* ```territory```: A representative geographic area for the node
+* ```folder```: The folder name where harvested records are stored
+* ```name```: The name of the node
+* ```url```: The server URL to request (should provide GetCapabilities and GetRecords operations)
+* ```filter```: (Optional) A OGC filter to restrict the search to a subset of the catalog
 
 
 Example:
