@@ -2,9 +2,13 @@
 
 The guide for user installing and configuring the application.
 
+[See daobs overview description](../README.md).
+
+
 ## Harvesting catalogs
 
 Daobs support harvesting from [OGC CSW](http://www.opengeospatial.org/standards/cat) services.
+The application support ISO19139 and ISO19115-3 standards.
 
 
 Sign in and move to the harvesting section. 
@@ -24,111 +28,18 @@ that user can follow in the ```monitoring``` tab.
 Once all records are harvested, analysis tasks may be triggered depending on the 
 server configuration. By default, the following tasks are triggered:
 
-* [XSD and INSPIRE validation](#xsd-and-inspire-validation)
-* [Service/dataset links](#servicedataset-links)
+* [XSD and INSPIRE validation](../tasks/validation-checker/README.md)
+* [Service/dataset links](../tasks/service-dataset-indexer/README.md)
 
-[ETF validation](#etf-validation)can manually be triggered.
+[ETF validation](../tasks/etf-validation-checker/README.md)can manually be triggered.
 
 Other tasks are also available:
 
-* [Database validation](#database-validation)
-* [Associated resource indexer (experimental)](#associated-resource-indexer-experimental)
-
-
-
-## Analysis tasks
-
-### XSD and INSPIRE validation
-
-A two steps validation task is defined:
-
-* XML Schema validation
-* [INSPIRE validator](http://inspire-geoportal.ec.europa.eu/validator2/#)
-
-The validation result summary is displayed below harvester statistics:
-
-![Harvester validation status]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/harvesting-validation-status.png)
-
-
-
-The results and details of the validation process are stored in the index:
-
-* For INSPIRE validation:
- * isValid: Boolean
- * validDate: Date of validation
- * validReport: XML report returned by the validation service
- * validInfo: Text information about the status
- * completenessIndicator: Completeness indicator reported by the validation tool
- * isAboveThreshold: Boolean. Set to true if the completeness indicator is above a value defined in the validation task configuration
-* For XML Schema validation:
- * isSchemaValid: Boolean
- * schemaValidDate: The date of validation
- * schemaValidReport: XSD validation report
-
-
-### Database validation
-
-By default, this validation is disabled. It allows to connect to a database
-containing validation information about metadata records. It can connect for
-example to a GeoNetwork database.
-
-
-### Service/dataset links
-
-A data sets may be accessible through a view and/or download services. This type 
-of relation is defined at the service metadata level using the operatesOn element:
-
-* link using the data sets metadata record UUID:
-
-```
-<srv:operatesOn uuidref="81aea739-4d21-427d-bec4-082cb64b825b"/>
-```
-
-* link using a GetRecordById request:
-```
-<srv:operatesOn uuidref="BDML_NATURES_FOND"
-                xlink:href="http://services.data.shom.fr/csw/ISOAP?service=CSW&version=2.0.2&request=GetRecordById&Id=81aea739-4d21-427d-bec4-082cb64b825b"/>
-```
-
-Both type of links are supported. The GetRecordById takes priority. The data sets 
-metadata record identifier is extracted from the GetRecordById request.
-
-
-
-This task analyze all available services in the index and update associated data 
-sets by adding the following fields:
-
-* recordOperatedByType: Contains the type of all services operating the data sets (eg. view, download)
-* recordOperatedBy: Contains the identifier of all services operating the data sets. Note: it does not provide information that this service is a download service. User need to get the service record to get this details.
-
-The task also propagate INSPIRE theme from each datasets to the service.
-
-
-### ETF validation
-
-[ETF](http://www.geostandaarden.nl/validatie/inspire/) is used to validate service.
-
-
-![ETF tasks menu]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/harvesting-etfmenu.png)
-
-
-
-### Associated resource indexer (experimental)
-
-A metadata record may contain URL to remote resources (eg. PDF document, ZIP files).
-This task will retrieve the content of such document using [Tika analysis toolkit](https://tika.apache.org/)
-and index the content retrieved. This improve search results has the data related
-to the metadata are also indexed.
-
-
-Associated document URL are stored in the linkUrl field in the index.
-
+* [Database validation](../tasks/db-validation-checker/README.md)
+* [Associated resource indexer (experimental)](../tasks/data-indexer/README.md)
 
 
 ## Following background tasks progress
-
 
 A minimal monitoring console allows to check if any background tasks (harvesting or analysis)
 are running.
@@ -139,8 +50,6 @@ are running.
 
 
 For the time being, no options are available to stop a background process.
-
-
 
 
 ## Creating reports
@@ -186,7 +95,7 @@ for INSPIRE, Member States provide report every year since 2011.
 
 ## Downloading reports
 
-Reports can be download in various formats using the ```Download``` button:
+Reports can be download in various formats proposed in the ```Download``` dropdown button:
 
 ![Report download]
 (https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-download.png)
@@ -211,6 +120,13 @@ dashboard from indicator values.
 
 
 
+While uploading, import status is reported after each file processing.
+
+![Submit report status]
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/monitoring-report-submit-status.png)
+
+
+
 
 
 ## Managing report
@@ -225,9 +141,102 @@ When reports are uploaded, user can manage them from
 
 
 
-## Building dashboard
+
+
+## Analyzing using dashboards
+
+### Default dashboards
+
+By default, the application provides a set of dashboards for:
+
+* INSPIRE (to follow INSPIRE monitoring)
+* Metadata records (to analyze catalog content)
+
+
+![Default dashboards]
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/dashboard-default.png)
+
+Access the dashboard page, click load and choose dashboard configuration from the list
+if default dashboard are not available. 
+
+Default dashboard are available here ```dashboard/src/app/dashboards```.
+
+By default no dashboard are loaded.
+
+User can load a set of dashboards using the ```/daobs/samples/dashboard``` API.
+
+Eg. http://localhost:8983/daobs/samples/dashboard/INSPIRE.json will load all INSPIRE specific dashboards.
 
 
 
-### Index fields
+### Creating your own dashboard
+
+Sign in first. Then use the dashboard creation page to create new one using
+the [Banana application](https://github.com/lucidworks/banana/wiki/Tutorials)
+
+
+#### Index fields
+
+Dashboards are based on index fields. It is usefull to well know the content of
+the index to easily build new dashboard.
+
+3 types of documents are available in the index.
+
+* metadata
+* indicators
+* monitoringMetadata (ie. raw data)
+
+Main fields for metadata document are the following:
+
+* ```documentType```: Fixed value ```metadata```
+* ```metadataIdentifier```: Metadata UUID
+* ```dateStamp```: Metadata date stamp (should be creation date but is usually storing last update date)
+* ```mainLanguage```: Metadata language
+* ```otherLanguage```: Other language for multilingual metadata
+* ```codelist_*```: All codelists values. * is replaced by the codelist element name
+* ```resourceTitle```: Resource title
+* ```resourceAltTitle```: Resource alternative title
+* ```resourceAbstract```: Resource title
+* ```*DateForResource```: Creation, publication or revision date. * is replaced by the type of date
+* ```resourceCredit```: Resource credit
+* ```resourceLanguage```: Resource language
+* ```inspireTheme_syn```: INSPIRE theme values 
+* ```inspireTheme```: INSPIRE theme id
+* ```inspireAnnex```: INSPIRE annex
+* ```inspireThemeFirst_syn```: First INSPIRE theme values 
+* ```inspireThemeFirst```: First INSPIRE theme id
+* ```inspireAnnexForFirstTheme```: INSPIRE annex for the first INSPIRE theme
+* ```numberOfInspireTheme```: Number of INSPIRE theme
+* ```isOpenData```: true if contains opendata tag in keywords
+* ```topic```: ISO topic category
+* ```resolutionScaleDenominator```: Scale denominator
+* ```useLimitation```: Use limitation
+* ```otherConstraints```: Other constraints
+* ```geoTag```: Geographic description
+* ```geom```: Extent polygon
+* ```serviceType```: Service type
+* ```coordinateSystem```: Coordinate system code
+* ```inspireConformResource```: Value of data quality report regarding EU 1089/2010 rules for datasets and 976/2009 rules for services
+
+* See more in https://github.com/INSPIRE-MIF/daobs/blob/1.0.x/harvesters/harvester-common/src/main/resources/xslt/metadata-iso19139.xsl
+
+
+
+Main fields for indicator document are the following:
+
+* ```id```: A unique identifier based on the territory and date
+* ```documentType```: Fixed value ```indicator```
+* ```indicatorName```: Indicator name
+* ```indicatorValue```: Indicator value
+* ```reportingDateSubmission```: Reporting submission date
+* ```reportingDate```: Reporting date
+* ```reportingYear```: Reporting date year only
+* ```territory```: The member state code
+* ```contact```: The contact information
+* ```contact```: The contact information
+
+Main fields for monitoringMetadata document are the following:
+
+* See https://github.com/INSPIRE-MIF/daobs/blob/1.0.x/reporting/src/main/resources/xslt/inspire-monitoring-reporting.xsl#L169
+
 

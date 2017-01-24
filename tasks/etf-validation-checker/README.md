@@ -1,6 +1,17 @@
 # ETF Validation Checker
 
+## Overview
+
+
+[ETF tool](http://www.geostandaarden.nl/validatie/inspire/) is used to validate service.
+
+
+![ETF tasks menu]
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/harvesting-etfmenu.png)
+
+
 This tasks process the links in the service metadata to validate them with ETF 1.5 (http://www.geostandaarden.nl/validatie/inspire/versies/1.5/ETF1.5.zip). The validation information is stored in SOLR.
+
 
 ## Requirements
 The following components are required by this task:

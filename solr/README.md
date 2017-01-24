@@ -67,3 +67,26 @@ cd $INSTALL_DASHBOARD_PATH/solr
 server/scripts/cloud-scripts/zkcli.sh -z localhost:9984 -cmd upconfig -confdir $INSTALL_DASHBOARD_PATH/daobssrc/solr/src/main/solr-cores/data/conf -confname data
 ```
 
+
+### Cleaning index
+
+
+To manually drop all records, user can run the following or the [solrdeletedoc.sh script](solrdeletedoc.sh):
+```
+curl http://localhost:8983/data/update \
+    --data '<delete><query>documentType:*</query></delete>' \
+    -u admin:admin \
+    -H 'Content-type:text/xml; charset=utf-8'
+
+curl http://localhost:8983/data/update \
+    --data '<commit/>' \
+    -u admin:admin \
+    -H 'Content-type:text/xml; charset=utf-8'
+```
+
+
+The search query could be adapted to restrict to a subset of documents:
+
+* reportingYear:2014 for removing reporting for 2014
+
+

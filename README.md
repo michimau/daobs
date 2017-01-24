@@ -27,6 +27,13 @@ associated resources (eg. PDF, JSON, DBF).
 (https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/daobs-sample-dashboard.png)
 
 
+2 types of information can be loaded into the system:
+
+* Metadata records following the standard for metadata on geographic information ISO19139/119
+* Indicators in [INSPIRE monitoring reporting format](http://inspire-geoportal.ec.europa.eu/monitoringreporting/monitoring.xsd)
+
+
+
 # Release
 
 * [Version 1.0.0](https://github.com/INSPIRE-MIF/daobs/releases/tag/v1.0.0)
