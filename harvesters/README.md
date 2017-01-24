@@ -24,8 +24,7 @@ on the same server but 11 nodes could be harvested in parallel.
 
 An harvester engine provides the capability to harvest metadata records 
 from discovery service (CSW end-point).
-The list of nodes to harvest is configured in 
-```harvester/csw-harvester/src/main/resources/WEB-INF/harvester/config-harvester.xml```
+The list of nodes to harvest is configured in ```harvester/csw-harvester/src/main/resources/WEB-INF/harvester/config-harvester.xml```
 and can be configured through the admin interface.
 
 
