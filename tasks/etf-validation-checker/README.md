@@ -119,6 +119,6 @@ to the proper value (default value is `changeit`):
 to the value defined for the `alias in previous step):
 
     ````
-    $ keytool -keystore "$JAVA_HOME/jre/lib/security/cacerts" \ 
+    $ keytool -keystore "$JAVA_HOME/jre/lib/security/cacerts" \
               -storepass changeit -list | grep nlrootssl
     ```
