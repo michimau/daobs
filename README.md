@@ -24,7 +24,7 @@ associated resources (eg. PDF, JSON, DBF).
 
 
 ![Dashboard example - INSPIRE reporting]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/daobs-1.0.x/doc/img/daobs-sample-dashboard.png)
+(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/daobs-sample-dashboard.png)
 
 
 2 types of information can be loaded into the system:
