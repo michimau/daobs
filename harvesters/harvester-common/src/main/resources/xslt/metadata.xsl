@@ -53,7 +53,7 @@
    Do not put accents or upper case letters here as comparison will not
    take them in account. -->
   <xsl:variable name="openDataKeywords"
-                select="'opendata|donnees ouvertes'"/>
+                select="'opendata|open data|donnees ouvertes'"/>
 
   <xsl:variable name="harvester" as="element()?"
                 select="/harvestedContent/daobs:harvester"/>

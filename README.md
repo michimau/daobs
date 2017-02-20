@@ -24,7 +24,7 @@ associated resources (eg. PDF, JSON, DBF).
 
 
 ![Dashboard example - INSPIRE reporting]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/es/doc/img/daobs-sample-dashboard.png)
+(https://github.com/INSPIRE-MIF/daobs/blob/2.0.x/doc/img/daobs-sample-dashboard.png)
 
 
 
