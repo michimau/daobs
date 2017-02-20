@@ -119,7 +119,7 @@
     <daobs:territory>FI</daobs:territory>
     <daobs:folder>FI</daobs:folder>
     <daobs:name>Paikkatietohakemisto (Maanmittauslaitos)</daobs:name>
-    <daobs:url>http://www.paikkatietohakemisto.fi:80/geonetwork/srv/fi/csw
+    <daobs:url>http://www.paikkatietohakemisto.fi:80/geonetwork/srv/fin/csw
     </daobs:url>
     <daobs:filter>
       <ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">
