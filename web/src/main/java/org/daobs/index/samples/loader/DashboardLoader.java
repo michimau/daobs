@@ -19,7 +19,7 @@
  * permissions and limitations under the Licence.
  */
 
-package org.daobs.solr.samples.loader;
+package org.daobs.index.samples.loader;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
@@ -111,13 +111,13 @@ public class DashboardLoader {
     ObjectMapper mapper = new ObjectMapper();
     JsonNode dashboardConfig = mapper.readTree(json);
 
-    SolrInputDocument doc = new SolrInputDocument();
-    doc.addField("id", dashboardConfig.get("title").asText());
-    doc.addField("title", dashboardConfig.get("title").asText());
-    doc.addField("type", "dashboard");
-    doc.addField("user", "guest");
-    doc.addField("group", "guest");
-    doc.addField("dashboard", json);
+    //    SolrInputDocument doc = new SolrInputDocument();
+    //    doc.addField("id", dashboardConfig.get("title").asText());
+    //    doc.addField("title", dashboardConfig.get("title").asText());
+    //    doc.addField("type", "dashboard");
+    //    doc.addField("user", "guest");
+    //    doc.addField("group", "guest");
+    //    doc.addField("dashboard", json);
     // TODO ES
     //    SolrClient client = server.getServer();
     //    client.add(collection, doc);

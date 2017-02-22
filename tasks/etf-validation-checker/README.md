@@ -1,6 +1,7 @@
 # ETF Validation Checker
 
-This tasks process the links in the service metadata to validate them with ETF 1.5 (http://www.geostandaarden.nl/validatie/inspire/versies/1.5/ETF1.5.zip). The validation information is stored in SOLR.
+This tasks process the links in the service metadata to validate them with ETF 1.5 (http://www.geostandaarden.nl/validatie/inspire/versies/1.5/ETF1.5.zip). 
+The validation information is stored in the index.
 
 ## Requirements
 The following components are required by this task:

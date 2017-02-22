@@ -25,7 +25,7 @@ package org.daobs.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-import org.daobs.solr.samples.loader.DashboardLoader;
+import org.daobs.index.samples.loader.DashboardLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -78,7 +78,7 @@ public class SamplesController {
    * Return the list of sample dashboard types available.
    * Dashboard type is defined by the upper-case file prefix.
    * The dashboard file pattern is
-   * {@link org.daobs.solr.samples.loader.DashboardLoader#dashboardSampleFilePattern}.
+   * {@link org.daobs.index.samples.loader.DashboardLoader#dashboardSampleFilePattern}.
    *
    */
   @ApiOperation(value = "Get the list of dashboard types",

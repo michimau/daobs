@@ -93,7 +93,7 @@ public class EsRequestBean {
 
 
   /**
-   * Query solr over HTTP.
+   * Query index over HTTP.
    */
   public static Node query(String collection, String[] fields,
                            String query, int rows) throws Exception {
@@ -250,7 +250,7 @@ public class EsRequestBean {
    * <p>
    * If an exception occured, the field value is returned.
    *
-   * Equivalent to: {@linkplain http://localhost:8983/solr/analysis/field?analysis.fieldname=inspireTheme_syn&q=hoogte}
+   * Equivalent to: {@linkplain http://localhost:8983/index/analysis/field?analysis.fieldname=inspireTheme_syn&q=hoogte}
    *
    * TODO: Logger.
    * </p>

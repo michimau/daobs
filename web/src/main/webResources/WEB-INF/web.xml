@@ -110,7 +110,7 @@
 
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
-    <url-pattern>/solr/*</url-pattern>
+    <url-pattern>/index/*</url-pattern>
   </filter-mapping>-->
 
 

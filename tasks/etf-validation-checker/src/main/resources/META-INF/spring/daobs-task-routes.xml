@@ -156,16 +156,17 @@
 
       <!-- Get number of records to validate -->
       <cm:setHeader headerName="CamelHttpMethod">
-        <cm:constant>GET</cm:constant>
+        <cm:constant>POST</cm:constant>
       </cm:setHeader>
       <cm:setHeader headerName="Exchange.HTTP_URI">
         <cm:simple>{{es.url}}/{{es.index.records}}/_search</cm:simple>
       </cm:setHeader>
       <cm:setHeader headerName="Exchange.HTTP_QUERY">
+        <!-- TODO: Migrate to ES -->
         <cm:groovy>'q=' + URLEncoder.encode(exchange.in.headers.documentFilter, 'UTF-8') + '&amp;fl={{task.validation-etf-checker.fields}}&amp;wt=xml&amp;start=0&amp;rows=0'</cm:groovy>
       </cm:setHeader>
       <cm:to
-        uri="http4://solr.server.url?authUsername={{solr.server.user}}&amp;authPassword={{solr.server.password}}&amp;authenticationPreemptive=true&amp;throwExceptionOnFailure=false"/>
+        uri="http4://index?throwExceptionOnFailure=false"/>
       <cm:convertBodyTo type="org.w3c.dom.Document"/>
       <cm:setHeader headerName="numberOfRecordsMatched">
         <cm:xpath resultType="java.lang.String">
@@ -201,7 +202,7 @@
           <cm:groovy>'q=' + URLEncoder.encode(exchange.in.headers.documentFilter, 'UTF-8') + '&amp;fl={{task.validation-etf-checker.fields}}&amp;wt=xml&amp;sort=id+asc&amp;start=' + exchange.in.headers.start + '&amp;rows=' + exchange.in.headers.row</cm:groovy>
         </cm:setHeader>
         <cm:to
-          uri="http4://solr.server.url?authUsername={{solr.server.user}}&amp;authPassword={{solr.server.password}}&amp;authenticationPreemptive=true&amp;throwExceptionOnFailure=false"/>
+          uri="http4://index?throwExceptionOnFailure=false"/>
         <cm:convertBodyTo type="org.w3c.dom.Document"/>
         <cm:split parallelProcessing="false" strategyRef="nullBodyStrategy">
           <cm:xpath>//doc</cm:xpath>
@@ -274,7 +275,7 @@
               logName="org.daobs.tasks.validation.etf"/>
       <cm:removeHeaders pattern="*"/>
       <cm:setHeader headerName="Exchange.HTTP_URI">
-        <cm:simple>{{solr.server.url}}/{{solr.core.data}}/update</cm:simple>
+        <cm:simple>{{es.url}}/{{es.index.records}}</cm:simple>
       </cm:setHeader>
       <cm:setHeader headerName="camelHttpMethod">
         <cm:constant>POST</cm:constant>
@@ -283,8 +284,8 @@
         <cm:constant>application/xml</cm:constant>
       </cm:setHeader>
       <cm:to
-        uri="http4://solr.server.url?authUsername={{solr.server.user}}&amp;authPassword={{solr.server.password}}&amp;authenticationPreemptive=true&amp;throwExceptionOnFailure=false"/>
-      <cm:log message="Solr response: ${body}."
+        uri="http4://index?throwExceptionOnFailure=false"/>
+      <cm:log message="Index response: ${body}."
               loggingLevel="DEBUG"
               logName="org.daobs.tasks.validation.etf"/>
     </cm:route>

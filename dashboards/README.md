@@ -18,9 +18,14 @@ Start Kibana.
 Import configuration
 
 ```
-curl -X PUT http://localhost:9200/.dashboard -d @config/idx-pattern-indicators.json
-curl -X PUT http://localhost:9200/.dashboard -d @config/idx-pattern-records.json
-curl -X PUT http://localhost:9200/.dashboard -d @config/dashboards.json
+curl -X PUT http://localhost:9200/.dashboards/index-pattern/indicators -d @config/idx-pattern-indicators.json
+curl -X PUT http://localhost:9200/.dashboards/index-pattern/records -d @config/idx-pattern-records.json
+
+
+
+
+## TODO: Fix to load using bulk mode
+curl -X PUT http://localhost:9200/.dashboards -d @config/dashboards.json
 ```
 
 

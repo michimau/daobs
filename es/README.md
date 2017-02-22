@@ -3,7 +3,7 @@
 ### Manual installation
 
 Download Elasticsearch from https://www.elastic.co/fr/downloads/elasticsearch
-and copy it to the ES module. eg. es/elasticsearch-5.0.0-rc1
+and copy it to the ES module. eg. es/elasticsearch-5.2.1
 
 Start ES.
 

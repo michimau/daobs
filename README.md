@@ -97,8 +97,9 @@ In order to build a custom WAR file, update the following properties which are d
 * webapp.url
 * webapp.username
 * webapp.password
-* solr.core.data: Define the data core name (useful if more than one daobs instance use the same Solr)
-* solr.core.dashboard: Define the dashboard core name
+* es.index.records: Define the data core name (useful if more than one daobs instance use the same Solr)
+* es.index.indicators: Define the indicator core name
+* es.index.dashboards: Define the dashboard core name
 
 
 Run the following command line and copy the WAR which is built in web/target/{{war.name}}.war.
@@ -300,7 +301,7 @@ cd tasks/validation-checker
 mvn camel:run
 ```
 
-By default, the task validates all records which have not been validated before (ie. +documentType:metadata -isValid:[* TO *]). A custom set of records could be validated by changing the solr.select.filter in the config.properties file.
+By default, the task validates all records which have not been validated before (ie. +documentType:metadata -isValid:[* TO *]). A custom set of records could be validated by changing the select.filter in the config.properties file.
 
 
 ### Services and data sets link

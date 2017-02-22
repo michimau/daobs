@@ -123,13 +123,14 @@
 
       <!-- Get number of records to validate -->
       <cm:setHeader headerName="CamelHttpMethod">
-        <cm:constant>GET</cm:constant>
+        <cm:constant>POST</cm:constant>
       </cm:setHeader>
       <cm:setHeader headerName="Exchange.HTTP_URI">
+        <!-- TODO Migrate to ES -->
         <cm:simple>{{es.url}}/{{es.index.records}}/_search?q=$simple{header.documentFilter}&amp;fl={{task.data-indexer.fields}}&amp;wt=xml&amp;start=0&amp;rows=0</cm:simple>
       </cm:setHeader>
       <cm:to
-        uri="http4://solr.server.url?authUsername={{solr.server.user}}&amp;authPassword={{solr.server.password}}&amp;authenticationPreemptive=true&amp;throwExceptionOnFailure=false"/>
+        uri="http4://index?throwExceptionOnFailure=false"/>
       <cm:convertBodyTo type="org.w3c.dom.Document"/>
       <cm:setHeader headerName="numberOfRecordsMatched">
         <cm:xpath resultType="java.lang.String">//result/@numFound</cm:xpath>
@@ -253,7 +254,7 @@
         <cm:constant>application/xml</cm:constant>
       </cm:setHeader>
       <cm:to
-        uri="http4://solr.server.url?authenticationPreemptive=true&amp;throwExceptionOnFailure=false"/>
+        uri="http4://index?throwExceptionOnFailure=false"/>
       <cm:log message="Solr response: ${body}."
               loggingLevel="DEBUG"
               logName="org.daobs.task.DataIndexer"/>

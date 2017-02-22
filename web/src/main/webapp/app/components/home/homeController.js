@@ -26,8 +26,8 @@
    * Controller for home page displaying dashboards. Used also on reporting.
    * available.
    */
-  app.controller('HomeCtrl', ['$scope', '$http', 'cfg', 'solrService',
-    function ($scope, $http, cfg, solrService) {
+  app.controller('HomeCtrl', ['$scope', '$http', 'cfg',
+    function ($scope, $http, cfg) {
       $scope.dashboards = null;
       $scope.dashboardsLoaded = null;
       $scope.listOfDashboardToLoad = null;

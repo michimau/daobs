@@ -136,7 +136,7 @@
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-core</artifactId>
-        <version>${solr.version}</version>
+        <version>${lucene.version}</version>
       </dependency>
 
       <dependency>
@@ -192,7 +192,6 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-test</artifactId>
         <version>${spring.version}</version>
-        <scope>test</scope>
       </dependency>
 
       <dependency>
@@ -515,24 +514,10 @@
     <ldap.base.search.base>ou=Users</ldap.base.search.base>
     <ldap.base.dn.pattern>uid={0}</ldap.base.dn.pattern>
 
+    <lucene.version>6.4.1</lucene.version>
 
-    <solr.webapp.name>solr</solr.webapp.name>
-    <solr.port>8984</solr.port>
-    <solr.url>http://localhost:${solr.port}/${solr.webapp.name}</solr.url>
-    <solr.username />
-    <solr.password />
-    <!-- Define the link to Solr admin page
-    displayed in the top tool bar. If Solr
-    is not accessible, leave it empty. -->
-    <solr.admin.url>http://localhost:${solr.port}/${solr.webapp.name}</solr.admin.url>
-    <solr.core.data>data</solr.core.data>
-    <solr.core.dashboard>dashboard</solr.core.dashboard>
-
-    <solr.version>6.2.0</solr.version>
-    <solr.version.md5>489ead340950950472ddbe8e32b7b20d</solr.version.md5>
-
-    <es.version>5.0.0</es.version>
-    <es.version.md5>17275e4d3a1fd95d591d504af1a0fd0c</es.version.md5>
+    <es.version>5.2.1</es.version>
+    <es.version.md5>33dbe0aa66b36a522236db2c04af8d49</es.version.md5>
     <es.port>9200</es.port>
     <es.url>http://localhost:${es.port}</es.url>
     <es.index.records>records</es.index.records>
@@ -541,7 +526,7 @@
     <es.username />
     <es.password />
 
-    <kb.version.md5>503430018187fd947dc4bf9046013d7b</kb.version.md5>
+    <kb.version.md5>660890618b34d57d8e06e5f280566cce</kb.version.md5>
     <kb.port>5601</kb.port>
     <kb.url>http://localhost:${kb.port}</kb.url>
 

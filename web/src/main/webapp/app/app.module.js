@@ -31,7 +31,6 @@
     'login',
     'ngRoute',
     'pascalprecht.translate',
-    'solr',
     'csw',
     'ui-notification']);
 
@@ -71,11 +70,6 @@
         icon: 'fa-cloud-download',
         url: '#/harvesting/manage',
         needsLogin: false
-      // }, {
-      //   id: 'admin',
-      //   icon: 'fa-cog',
-      //   url: cfg.SERVICES.solrAdmin,
-      //   needsLogin: true
       }];
 
       $scope.getNavLinks = function() {

@@ -25,8 +25,8 @@
 
 
   app.factory('harvesterService',
-    ['$http', '$q', 'cfg', 'solrService',
-      function ($http, $q, cfg, solrService) {
+    ['$http', '$q', 'cfg',
+      function ($http, $q, cfg) {
         return {
           getAll: function () {
             return $http.get(cfg.SERVICES.harvesters + '.json');

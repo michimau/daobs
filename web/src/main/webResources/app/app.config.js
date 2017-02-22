@@ -24,7 +24,6 @@
 
   var context = '${webapp.rootUrl}';
   var api = '${webapp.rootUrl}api/';
-  var solrContext = '/${solr.webapp.name}';
 
   app.constant('cfg', {
     'repository': '${repository}',
@@ -32,13 +31,7 @@
     'defaultDashboard': '${dashboard.default}',
     'SERVICES': {
       root: context,
-      solrRoot: solrContext,
-      solrAdmin: '${solr.admin.url}',
-      dashboardCoreName: '${solr.core.dashboard}',
-      dashboardCore: api + 'search/${solr.core.dashboard}',
       esdashboardCore: context + 'es/.dashboards',
-      dataCoreName: '${solr.core.data}',
-      dataCore: api + 'search/${solr.core.data}',
       esdataCore: context + 'es/records',
       esindicatorCore: context + 'es/indicators',
       proxy: context + 'proxy?url=',

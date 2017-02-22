@@ -25,8 +25,8 @@
 
 
   app.factory('monitoringService',
-    ['$http', '$q', 'cfg', 'solrService',
-      function ($http, $q, cfg, solrService) {
+    ['$http', '$q', 'cfg',
+      function ($http, $q, cfg) {
         return {
           loadMonitoring: function () {
             // TODO: Paging needed

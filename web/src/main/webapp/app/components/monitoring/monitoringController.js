@@ -75,8 +75,8 @@
    * current monitoring.
    */
   app.controller('MonitoringInfoCtrl', [
-    '$scope', '$http', '$timeout', 'cfg', 'solrService', 'monitoringService',
-    function ($scope, $http, $timeout, cfg, solrService, monitoringService) {
+    '$scope', '$http', '$timeout', 'cfg', 'monitoringService',
+    function ($scope, $http, $timeout, cfg, monitoringService) {
       $scope.listOfMonitoring = null;
       $scope.monitoringFacet = null;
       $scope.monitoringFilter = {};
