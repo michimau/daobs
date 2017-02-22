@@ -22,8 +22,12 @@
 
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 exclude-result-prefixes="#all"
                 version="2.0">
-  <xsl:variable name="doubleQuote">"</xsl:variable>
-  <xsl:variable name="escapedDoubleQuote">\\"</xsl:variable>
+  <xsl:variable name="doubleQuote" as="xs:string">"</xsl:variable>
+  <xsl:variable name="escapedDoubleQuote" as="xs:string">\\"</xsl:variable>
+  <xsl:variable name="dateFormat"
+                as="xs:string"
+                select="'[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]Z'"/>
 </xsl:stylesheet>

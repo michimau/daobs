@@ -83,7 +83,8 @@
         <td>
           <a class="btn btn-link"
              role="button"
-             data-ng-href="dashboard/#/dashboard/solr/INSPIRE%20Dashboard?q=%2Bterritory:{{m._source.territory}} %2BreportingYear:{{m._source.reportingYear}}">
+             target="daobsDocuments"
+             data-ng-href="dashboard/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fy,mode:quick,to:now%2Fy))&_a=(columns:!(indicatorName,indicatorValue,territory),index:indicators,interval:auto,query:(query_string:(analyze_wildcard:!t,query:'%2Bterritory:{{m._source.territory}}%20%2BreportingDate:%22{{m._source.reportingDate}}%22'%20%2BdocumentType:indicator)),sort:!(indicatorName,asc))&embed=true">
             <i class="fa fa-eye"></i>&nbsp;
             <span data-translate="">viewRecords</span>
           </a><br/>

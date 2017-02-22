@@ -75,8 +75,8 @@
    * current monitoring.
    */
   app.controller('MonitoringInfoCtrl', [
-    '$scope', '$http', 'cfg', 'solrService', 'monitoringService',
-    function ($scope, $http, cfg, solrService, monitoringService) {
+    '$scope', '$http', '$timeout', 'cfg', 'solrService', 'monitoringService',
+    function ($scope, $http, $timeout, cfg, solrService, monitoringService) {
       $scope.listOfMonitoring = null;
       $scope.monitoringFacet = null;
       $scope.monitoringFilter = {};
@@ -96,7 +96,9 @@
         // TODO: Handle oops
         monitoringService.removeMonitoring(m).then(
           function () {
-            init();
+            $timeout(function () {
+              init();
+            }, 100);
           }
         );
       };
@@ -109,8 +111,15 @@
    * current monitoring.
    */
   app.controller('MonitoringCreateCtrl', [
-    '$scope', '$http', '$location', 'cfg', 'solrService', 'monitoringService',
-    function ($scope, $http, $location, cfg, solrService, monitoringService) {
+    '$scope', '$http', '$location', '$translate',
+    'cfg', 'Notification',
+    function ($scope, $http, $location, $translate,
+              cfg, Notification) {
+
+      $scope.translations = null;
+      $translate(['monitoringSubmitSuccess']).then(function (translations) {
+        $scope.translations = translations;
+      });
       $scope.report = null;
       $scope.rules = null;
       $scope.overview = false;
@@ -287,7 +296,6 @@
         .success(function (data) {
           $scope.filterCount = data.hits.total;
           $scope.facetValues = {};
-          $scope.facetValues = data.facet_counts.facet_fields;
           $scope.preview();
         }).error(function (response) {
           $scope.filterError = response.error.msg;
@@ -333,6 +341,23 @@
           setReport(data);
         });
       };
+
+      $scope.submit = function (type) {
+        $scope.overview = false;
+        $scope.report = null;
+        var area = $scope.territory && $scope.territory.label,
+          filterParameter =
+            ($scope.filter ? '?fq=' + encodeURIComponent($scope.filter) : '?') +
+            '&scopeId=' + area; // TODO: add more specific id when using fq
+        return $http.post(cfg.SERVICES.reports +
+          (type === 'xml' ? '/' : '/custom/') +
+          $scope.reporting.id +
+          (area ? '/' + area : '') +
+          filterParameter).success(function (data) {
+          Notification.success($scope.translations.monitoringSubmitSuccess);
+        });
+      };
+
       $scope.$watch('reporting', function () {
         $scope.reporting && $location.search('reporting', $scope.reporting.id);
       });

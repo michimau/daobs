@@ -1,0 +1,72 @@
+<!--
+
+    Copyright 2014-2016 European Environment Agency
+
+    Licensed under the EUPL, Version 1.1 or – as soon
+    they will be approved by the European Commission -
+    subsequent versions of the EUPL (the "Licence");
+    You may not use this work except in compliance
+    with the Licence.
+    You may obtain a copy of the Licence at:
+
+    https://joinup.ec.europa.eu/community/eupl/og_page/eupl
+
+    Unless required by applicable law or agreed to in
+    writing, software distributed under the Licence is
+    distributed on an "AS IS" basis,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+    either express or implied.
+    See the Licence for the specific language governing
+    permissions and limitations under the Licence.
+
+-->
+<daobs:reporting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:daobs="http://daobs.org"
+                 xsi:schemaLocation="http://daobs.org ../xsd/daobsIndicatorConfig.xsd"
+                 id="catalog">
+  <daobs:identification>
+    <daobs:title xml:lang="en">Metadata catalog statistics</daobs:title>
+    <daobs:author>DAOBS Team</daobs:author>
+    <daobs:url></daobs:url>
+  </daobs:identification>
+
+  <daobs:variables>
+    <daobs:variable id="Nb_Records" numberFormat="#">
+      <daobs:name xml:lang="en">Number of records</daobs:name>
+      <daobs:query>+documentType:metadata</daobs:query>
+      <daobs:comment>Number of records in the catalog.</daobs:comment>
+    </daobs:variable>
+
+    <daobs:variable id="Nb_Services" numberFormat="#">
+      <daobs:name xml:lang="en">Number of services</daobs:name>
+      <daobs:query>+documentType:metadata +resourceType:service</daobs:query>
+      <daobs:comment>Number of records describing services.</daobs:comment>
+    </daobs:variable>
+
+    <daobs:variable id="Nb_Datasets" numberFormat="#">
+      <daobs:name xml:lang="en">Number of datasets</daobs:name>
+      <daobs:query>+documentType:metadata +resourceType:dataset</daobs:query>
+      <daobs:comment>Number of records describing datasets.</daobs:comment>
+    </daobs:variable>
+
+    <daobs:variable id="Nb_Applications" numberFormat="#">
+      <daobs:name xml:lang="en">Number of applications</daobs:name>
+      <daobs:query>+documentType:metadata +resourceType:application</daobs:query>
+      <daobs:comment>Number of records describing applications.</daobs:comment>
+    </daobs:variable>
+  </daobs:variables>
+  <daobs:indicators>
+    <!--
+    <daobs:indicator id="DSv22" numberFormat="#">
+      <daobs:name xml:lang="en">Number of conformant spatial data sets for Annex II that have conformant metadata
+      </daobs:name>
+      <daobs:parameters> <daobs:parameter id="DSv22_aII_t2"/>
+      <daobs:parameter id="DSv22_aII_t3"/>
+      <daobs:parameter id="DSv22_aII_t4"/>
+      <daobs:parameter id="DSv22_aII_t5"/>
+      </daobs:parameters>
+      <daobs:comment>Check the metadata record using INSPIRE validator and check that the Commission Regulation (EU) No 1089/2010 report a conform resource.
+      </daobs:comment>
+    </daobs:indicator>-->
+  </daobs:indicators>
+</daobs:reporting>

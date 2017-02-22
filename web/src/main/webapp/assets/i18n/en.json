@@ -43,6 +43,8 @@
   "configure": "Configure",
   "viewRecords": "View records",
   "remove": "Remove",
+  "computeAndSave": "Compute & save",
+  "computeAndSave-help": "Build the report and save it to the index.",
   "undefined": "none",
   "removeHarvester": "Remove harvester",
   "harvesterStartAll": "Run all",

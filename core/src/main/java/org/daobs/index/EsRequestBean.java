@@ -88,7 +88,7 @@ public class EsRequestBean {
           "{\"msg\": \"%d records removed.\"}", brb.numberOfActions());
       }
     }
-    return String.format("No match found for query ''.", query);
+    return String.format("{\"msg\": \"No match found for query '%s'.\"}", query);
   }
 
 

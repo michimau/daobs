@@ -34,6 +34,9 @@
   <xsl:include href="constant.xsl"/>
   <xsl:include href="metadata-inspire-constant.xsl"/>
 
+  <xsl:variable name="isDaobsFormat"
+                select="count(daobs:reporting) > 0"
+                as="xs:boolean"/>
 
   <!-- Compute ISO date from a INSPIRE date node
     eg. <monitoringDate>
@@ -70,22 +73,37 @@ using one character or two. Prepend 0 when needed. -->
 
 
   <xsl:variable name="reportingDate"
-                select="daobs:get-date(/monitoring:Monitoring/documentYear)"/>
+                select="if ($isDaobsFormat) then xs:dateTime(substring-before(/daobs:reporting/@dateTime, '.'))
+                        else daobs:get-date(/monitoring:Monitoring/documentYear)"/>
   <xsl:variable name="reportingDateSubmission"
-                select="daobs:get-date(/monitoring:Monitoring/MonitoringMD/monitoringDate)"/>
+                select="if ($isDaobsFormat) then xs:dateTime(substring-before(/daobs:reporting/@dateTime, '.'))
+                        else daobs:get-date(/monitoring:Monitoring/MonitoringMD/monitoringDate)"/>
 
   <xsl:variable name="reportingYear"
-                select="/monitoring:Monitoring/documentYear/year"/>
+                select="if ($isDaobsFormat) then format-dateTime($reportingDate, '[Y0001]')
+                        else /monitoring:Monitoring/documentYear/year"/>
 
   <xsl:variable name="reportingTerritory"
-                select="/monitoring:Monitoring/memberState"/>
+                select="if ($isDaobsFormat) then /daobs:reporting/@scopeId
+                        else /monitoring:Monitoring/memberState"/>
+
+  <xsl:variable name="reportIdentifier"
+                select="if ($isDaobsFormat) then /daobs:reporting/@id
+                        else 'inspire'"/>
 
 
   <xsl:template match="/">
     <add>
-      <!-- TODO add the capability to index indicator using
-           the daobs XML format. -->
+      <xsl:message>
+        <xsl:text>Indexing indicators for </xsl:text>
+        <xsl:value-of select="$reportingTerritory"/>
+        <xsl:value-of select="concat(' Report: ', $reportIdentifier, ' (', $reportingDate, ') - DAOBS format: ', $isDaobsFormat)"/>
+      </xsl:message>
+
       <xsl:apply-templates select="
+                //daobs:reporting|
+                //daobs:reporting/daobs:variables/daobs:variable|
+                //daobs:reporting/daobs:indicators/daobs:indicator|
                 //MonitoringMD|//Indicators/*|
                 //RowData/SpatialDataService/NetworkService/userRequest|
                 //RowData/SpatialDataSet/Coverage/(relevantArea|actualArea)|
@@ -94,11 +112,11 @@ using one character or two. Prepend 0 when needed. -->
     </add>
   </xsl:template>
 
-  <xsl:template match="MonitoringMD">
+  <xsl:template match="MonitoringMD|daobs:reporting">
     <doc>
       <field name="id">
         <xsl:value-of
-          select="concat('monitoring', $reportingTerritory, $reportingDate)"/>
+          select="concat('monitoring', $reportIdentifier, $reportingTerritory, $reportingDate)"/>
       </field>
       <field name="documentType">monitoring</field>
       <field name="territory">
@@ -131,7 +149,7 @@ using one character or two. Prepend 0 when needed. -->
       <doc>
         <field name="id">
           <xsl:value-of
-            select="concat('indicator', $indicatorIdentifier,
+            select="concat('indicator', $reportIdentifier, $indicatorIdentifier,
                 $reportingDate, $reportingTerritory)"/>
         </field>
         <field name="documentType">indicator</field>
@@ -162,6 +180,43 @@ using one character or two. Prepend 0 when needed. -->
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template match="daobs:variable|daobs:indicator">
+    <xsl:variable name="indicatorType" select="local-name()"/>
+    <xsl:variable name="indicatorIdentifier" select="@id"/>
+
+    <!--<xsl:message>  Indicator <xsl:value-of select="concat($indicatorIdentifier, ': ', daobs:value)"/></xsl:message>-->
+    <doc>
+      <field name="id">
+        <xsl:value-of
+          select="concat('indicator', $reportIdentifier, $indicatorIdentifier,
+              $reportingDate, $reportingTerritory)"/>
+      </field>
+      <field name="documentType">indicator</field>
+      <field name="indicatorType">
+        <xsl:value-of select="$indicatorType"/>
+      </field>
+      <field name="indicatorName">
+        <xsl:value-of select="$indicatorIdentifier"/>
+      </field>
+      <xsl:if test="daobs:value != ''">
+        <field name="indicatorValue">
+          <xsl:value-of select="daobs:value"/>
+        </field>
+      </xsl:if>
+      <field name="territory">
+        <xsl:value-of select="$reportingTerritory"/>
+      </field>
+      <field name="reportingDateSubmission">
+        <xsl:value-of select="$reportingDateSubmission"/>
+      </field>
+      <field name="reportingDate">
+        <xsl:value-of select="$reportingDate"/>
+      </field>
+      <field name="reportingYear">
+        <xsl:value-of select="$reportingYear"/>
+      </field>
+    </doc>
+  </xsl:template>
 
   <!-- Index row data like metadata records -->
   <xsl:template match="SpatialDataService">

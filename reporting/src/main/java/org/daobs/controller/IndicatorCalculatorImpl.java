@@ -292,13 +292,21 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
    * Save indicator as XML.
    */
   public Source toSource() {
+    return new StreamSource(toFile());
+  }
+
+
+  /**
+   * Save report to file.
+   */
+  public File toFile() {
     JAXBContext jaxbContext = null;
     try {
       jaxbContext = JAXBContext.newInstance(Reporting.class);
       Marshaller marshaller = jaxbContext.createMarshaller();
       File file = File.createTempFile("indicator", ".xml");
       marshaller.marshal(reporting, file);
-      return new StreamSource(file);
+      return file;
     } catch (JAXBException exception) {
       exception.printStackTrace();
     } catch (IOException exception) {

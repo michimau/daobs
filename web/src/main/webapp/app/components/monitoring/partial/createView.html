@@ -159,6 +159,7 @@
                 <i class="fa fa-eye"></i>&nbsp;
                 <span data-translate="">preview</span>
               </button>
+
               <div class="btn-group">
                 <button id="ds-btn-report-dwn"
                         type="button"
@@ -197,11 +198,35 @@
                       inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes</a>
                   </li>
                   <li><a target="_blank"
-                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.xml{{fq ? '?fq=' + fq : ''}}"
+                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.xml{{fq ? '?fq=' + fq : ''}}&scopeId={{territory.label}}"
                          data-translate="">XML</a></li>
                   <li><a target="_blank"
-                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.json{{fq ? '?fq=' + fq : ''}}"
+                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.json{{fq ? '?fq=' + fq : ''}}&scopeId={{territory.label}}"
                          data-translate="">JSON</a></li>
+                </ul>
+              </div>
+
+              <div class="btn-group">
+                <button type="button"
+                        class="btn btn-default dropdown-toggle"
+                        data-ng-disabled="!filterCount"
+                        title="{{'computeAndSave-help' | translate}}"
+                        data-toggle="dropdown">
+                  <i class="fa fa-save"></i>&nbsp;
+                  <span data-translate="">computeAndSave</span> <span
+                  class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
+                    <a href=""
+                       data-ng-click="submit('inspireMonitoringFormat')"
+                       data-translate=""
+                       title="{{('inspireMonitoringFormat-help' | translate) !== '' ? ('inspireMonitoringFormat-help' | translate) : ''}}">
+                      inspireMonitoringFormat</a></li>
+                  <li>
+                    <a href=""
+                       data-ng-click="submit('xml')"
+                       data-translate="">XML</a></li>
                 </ul>
               </div>
               <!--<button id="ds-btn-report-submit"

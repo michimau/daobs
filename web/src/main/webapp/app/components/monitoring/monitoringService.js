@@ -48,6 +48,13 @@
                     }
                   }
                 },
+                "sort": [
+                  {
+                    "reportingDate": {
+                      "order": "desc"
+                    }
+                  }
+                ],
                 "aggs": {
                   "reportingYear" : {
                     "terms" : {
