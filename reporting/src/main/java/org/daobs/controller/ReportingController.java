@@ -101,8 +101,17 @@ public class ReportingController {
 
   private static final int commitInterval = 1000;
 
-  public static final String INDICATOR_CONFIGURATION_DIR =
-      "/WEB-INF/datadir/monitoring/";
+  private String indicatorConfigurationDir;
+
+  public String getIndicatorConfigurationDir() {
+    return indicatorConfigurationDir;
+  }
+
+  @Value("${reporting.dir}")
+  public void setIndicatorConfigurationDir(String indicatorConfigurationDir) {
+    this.indicatorConfigurationDir = indicatorConfigurationDir;
+  }
+
   public static final String INDICATOR_CONFIGURATION_FILE_PREFIX = "config-";
   private static final String INDICATOR_CONFIGURATION_ID_MATCHER =
       INDICATOR_CONFIGURATION_FILE_PREFIX + "(.*).xml";
@@ -135,8 +144,7 @@ public class ReportingController {
     File[] paths = null;
     Reports reports = new Reports();
     try {
-      file = new File(request.getSession().getServletContext()
-        .getRealPath(INDICATOR_CONFIGURATION_DIR));
+      file = new File(indicatorConfigurationDir);
       FilenameFilter filenameFilter = (file1, name) -> {
         if (name.startsWith(INDICATOR_CONFIGURATION_FILE_PREFIX)
             && name.endsWith(".xml")) {
@@ -175,7 +183,7 @@ public class ReportingController {
       },
       method = RequestMethod.GET)
   @ResponseBody
-  public Reporting get(HttpServletRequest request,
+  public Reporting getSpecification(HttpServletRequest request,
                        @ApiParam(
                          value = "The report type to generate",
                          required = true)
@@ -188,7 +196,7 @@ public class ReportingController {
                          required = false) String scopeId,
                        @ApiParam(
                          value = "An optional filter query to generate report on a subset",
-                         required = true)
+                         required = false)
                        @RequestParam(
                          value = "fq",
                          defaultValue = "",
@@ -199,6 +207,119 @@ public class ReportingController {
     return indicatorCalculator.getConfiguration();
   }
 
+
+  /**
+   * Upload a report specification in XML or JSON format.
+   */
+  @ApiOperation(value = "Upload report specification",
+      nickname = "uploadSpecification")
+  @RequestMapping(value = "/reports/{reporting}",
+      consumes = {
+          MediaType.APPLICATION_XML_VALUE,
+          MediaType.APPLICATION_JSON_VALUE
+      },
+      method = RequestMethod.POST)
+  @ResponseBody
+  public ResponseEntity uploadSpecification(HttpServletRequest request,
+                       @ApiParam(
+                         value = "The report type to generate",
+                         required = true)
+                       @PathVariable(value = "reporting")
+                       String reporting,
+                       @ApiParam(value = "The specification to upload")
+                       @RequestParam("file")
+                       MultipartFile file)
+      throws IOException {
+
+    File tmpFile = File.createTempFile("report", ".xml");
+    try {
+      File reportingConfigFile = new File(indicatorConfigurationDir + reporting + ".xml");
+
+      FileUtils.writeByteArrayToFile(tmpFile, file.getBytes());
+      IndicatorCalculatorImpl indicatorCalculator =
+          new IndicatorCalculatorImpl(tmpFile);
+
+      FileUtils.copyFile(indicatorCalculator.toFile(), reportingConfigFile);
+
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } catch (Exception ex) {
+      throw ex;
+    } finally {
+      FileUtils.deleteQuietly(tmpFile);
+    }
+  }
+
+
+  /**
+   * Add a report specification in XML or JSON format.
+   */
+  @ApiOperation(value = "Add report specification",
+      nickname = "getReports")
+  @RequestMapping(value = "/reports/{reporting}",
+      consumes = {
+          MediaType.APPLICATION_XML_VALUE,
+          MediaType.APPLICATION_JSON_VALUE
+      },
+      method = RequestMethod.PUT)
+  @ResponseBody
+  public ResponseEntity addSpecification(HttpServletRequest request,
+                                         @ApiParam(
+                                           value = "The report type to generate",
+                                           required = true)
+                                         @PathVariable(value = "reporting")
+                                           String reporting,
+                                         @ApiParam(value = "The specification to add")
+                                         @RequestParam("specification")
+                                           String specification)
+      throws IOException {
+
+    File tmpFile = File.createTempFile("report", ".xml");
+    try {
+      File reportingConfigFile = new File(indicatorConfigurationDir + reporting + ".xml");
+
+      FileUtils.writeStringToFile(tmpFile, specification);
+      IndicatorCalculatorImpl indicatorCalculator =
+          new IndicatorCalculatorImpl(tmpFile);
+
+      FileUtils.copyFile(indicatorCalculator.toFile(), reportingConfigFile);
+
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } catch (Exception ex) {
+      throw ex;
+    } finally {
+      FileUtils.deleteQuietly(tmpFile);
+    }
+  }
+
+
+  /**
+   * Remove a report specification.
+   */
+  @ApiOperation(value = "Remove a report specification",
+      nickname = "getReports")
+  @RequestMapping(value = "/reports/{reporting}",
+      method = RequestMethod.DELETE)
+  @ResponseBody
+  public ResponseEntity removeSpecification(HttpServletRequest request,
+                                         @ApiParam(
+                                           value = "The report sepecification to remove",
+                                           required = true)
+                                         @PathVariable(value = "reporting")
+                                           String reporting)
+      throws IOException {
+
+    try {
+      File reportingConfigFile = new File(indicatorConfigurationDir + reporting + ".xml");
+      if (reportingConfigFile.exists()) {
+        reportingConfigFile.delete();
+      } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception ex) {
+      throw ex;
+    }
+  }
 
 
   /**
@@ -379,7 +500,7 @@ public class ReportingController {
         required = false) int rows)
       throws IOException {
     IndicatorCalculatorImpl indicatorCalculator =
-        ReportingController.generateReporting(request, reporting, scopeId, fq, true);
+        generateReporting(request, reporting, scopeId, fq, true);
 
     ModelAndView model = new ModelAndView("reporting-xslt-" + reporting);
     model.addObject("xmlSource", indicatorCalculator.toSource());
@@ -449,7 +570,7 @@ public class ReportingController {
       throws IOException {
     String filter = fq + " +territory:" + territory;
     IndicatorCalculatorImpl indicatorCalculator =
-        ReportingController.generateReporting(request, reporting, scopeId, filter, true);
+        generateReporting(request, reporting, scopeId, filter, true);
 
 
     ModelAndView model = new ModelAndView("reporting-xslt-" + reporting);
@@ -528,7 +649,7 @@ public class ReportingController {
       throws IOException {
     String filter = fq + " +territory:" + territory;
     IndicatorCalculatorImpl indicatorCalculator =
-        ReportingController.generateReporting(request, reporting, scopeId, filter, true);
+        generateReporting(request, reporting, scopeId, filter, true);
 
     ModelAndView model = new ModelAndView("reporting-xslt-" + reporting);
     model.addObject("xmlSource", indicatorCalculator.toSource());
@@ -847,19 +968,18 @@ public class ReportingController {
   /**
    * Render reporting using XSLT view.
    */
-  public static IndicatorCalculatorImpl generateReporting(HttpServletRequest request,
+  public IndicatorCalculatorImpl generateReporting(HttpServletRequest request,
                                                           String reporting,
                                                           String scopeId,
                                                           String fq,
                                                           boolean calculate)
       throws FileNotFoundException {
     String configurationFilePath =
-        INDICATOR_CONFIGURATION_DIR
+        indicatorConfigurationDir
         + INDICATOR_CONFIGURATION_FILE_PREFIX
         + reporting + ".xml";
     File configurationFile =
-        new File(request.getSession().getServletContext()
-            .getRealPath(configurationFilePath));
+        new File(configurationFilePath);
 
     if (configurationFile.exists()) {
       IndicatorCalculatorImpl indicatorCalculator =

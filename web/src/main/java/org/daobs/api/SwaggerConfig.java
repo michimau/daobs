@@ -86,7 +86,7 @@ public class SwaggerConfig {
         .apis(RequestHandlerSelectors.any())
         .paths(paths())
         .build()
-        .pathMapping("/")
+        .pathMapping("/api")
         .genericModelSubstitutes(ResponseEntity.class)
         // .directModelSubstitute(XMLGregorianCalendar.class, Date.class)
         .alternateTypeRules(
