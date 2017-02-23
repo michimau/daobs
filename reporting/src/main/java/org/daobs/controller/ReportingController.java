@@ -248,7 +248,7 @@ public class ReportingController {
   /**
    * Add a report by uploading a file.
    */
-  @ApiOperation(value = "Add a report",
+  @ApiOperation(value = "Upload a report",
       nickname = "addReport")
   @RequestMapping(
       value = "/reports",
@@ -280,13 +280,13 @@ public class ReportingController {
    *
    * @param fq Filter query to be applied on top of the territory filter
    */
-  @ApiOperation(value = "Generate a XML or JSON report",
+  @ApiOperation(value = "Save a report",
       nickname = "buildAndIndexReport")
   @RequestMapping(value = "/reports/{reporting}/{territory}",
       produces = {
           MediaType.APPLICATION_JSON_VALUE
       },
-      method = RequestMethod.POST)
+      method = RequestMethod.PUT)
   @ResponseBody
   public ResponseEntity<Map<String, String>> buildAndIndexReport(
        HttpServletRequest request,
@@ -487,7 +487,7 @@ public class ReportingController {
       produces = {
           MediaType.APPLICATION_XML_VALUE
       },
-      method = RequestMethod.POST)
+      method = RequestMethod.PUT)
   @ResponseBody
   public ResponseEntity<Map<String, String>> saveMonitoring(
       HttpServletRequest request,

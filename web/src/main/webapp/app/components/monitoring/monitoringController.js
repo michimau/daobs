@@ -349,7 +349,7 @@
           filterParameter =
             ($scope.filter ? '?fq=' + encodeURIComponent($scope.filter) : '?') +
             '&scopeId=' + area; // TODO: add more specific id when using fq
-        return $http.post(cfg.SERVICES.reports +
+        return $http.put(cfg.SERVICES.reports +
           (type === 'xml' ? '/' : '/custom/') +
           $scope.reporting.id +
           (area ? '/' + area : '') +
