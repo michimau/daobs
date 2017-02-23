@@ -278,12 +278,19 @@
         </xsl:for-each>
 
 
-        <xsl:for-each select="mri:graphicOverview/mcc:MD_BrowseGraphic/
-                                mcc:fileName/gco:CharacterString[. != '']">
+        <xsl:variable name="overviews"
+                      select="mri:graphicOverview/mcc:MD_BrowseGraphic/
+                                mcc:fileName/gco:CharacterString[. != '']"/>
+        <hasOverview>
+          <xsl:value-of select="if (count($overviews) > 0) then 'true' else 'false'"/>
+        </hasOverview>
+
+        <xsl:for-each select="$overviews">
           <overviewUrl>
             <xsl:value-of select="."/>
           </overviewUrl>
         </xsl:for-each>
+
 
         <xsl:for-each
           select="mri:defaultLocale/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue">
@@ -356,6 +363,11 @@
           <xsl:value-of
             select="count($inspireKeywords)"/>
         </numberOfInspireTheme>
+
+        <hasInspireTheme>
+          <xsl:value-of
+            select="if (count($inspireKeywords) > 0) then 'true' else 'false'"/>
+        </hasInspireTheme>
 
 
         <!-- Index all keywords -->

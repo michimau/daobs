@@ -1025,6 +1025,12 @@
         "id": {
           "type": "keyword"
         },
+        "hasInspireTheme": {
+          "type": "boolean"
+        },
+        "hasOverview": {
+          "type": "boolean"
+        },
         "isValid": {
           "type": "boolean"
         },
