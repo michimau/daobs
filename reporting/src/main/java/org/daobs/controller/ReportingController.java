@@ -268,11 +268,7 @@ public class ReportingController {
       FileUtils.writeByteArrayToFile(xmlFile, file.getBytes());
 
       Map<String, String> errors = indexIndicators(filename, xmlFile);
-      if (errors.size() > 0) {
-        return new ResponseEntity<>(errors, HttpStatus.OK);
-      } else {
-        return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
+      return new ResponseEntity<>(errors, HttpStatus.OK);
     } finally {
       FileUtils.deleteQuietly(xmlFile);
     }
