@@ -1,22 +1,5 @@
 [
   {
-    "_id": "Statistics",
-    "_type": "dashboard",
-    "_source": {
-      "title": "Statistics",
-      "hits": 0,
-      "description": "",
-      "panelsJSON": "[{\"col\":1,\"id\":\"Records-by-Member-states\",\"panelIndex\":1,\"row\":1,\"size_x\":3,\"size_y\":8,\"type\":\"visualization\"},{\"col\":4,\"id\":\"Number-of-records-per-annex\",\"panelIndex\":2,\"row\":1,\"size_x\":9,\"size_y\":3,\"type\":\"visualization\"},{\"col\":4,\"id\":\"Records-per-INSPIRE-themes\",\"panelIndex\":8,\"row\":4,\"size_x\":9,\"size_y\":5,\"type\":\"visualization\"},{\"col\":9,\"id\":\"Type-of-services\",\"panelIndex\":5,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":5,\"id\":\"Type-of-datasets\",\"panelIndex\":3,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Type-of-resources\",\"panelIndex\":4,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Spatial-resolution\",\"panelIndex\":7,\"row\":13,\"size_x\":11,\"size_y\":7,\"type\":\"visualization\"},{\"col\":9,\"id\":\"Opendata\",\"panelIndex\":6,\"row\":20,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"}]",
-      "optionsJSON": "{\"darkTheme\":false}",
-      "uiStateJSON": "{\"P-1\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}},\"P-5\":{\"vis\":{\"legendOpen\":true}},\"P-7\":{\"vis\":{\"legendOpen\":false}}}",
-      "version": 1,
-      "timeRestore": false,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
-      }
-    }
-  },
-  {
     "_id": "INSPIRE-Member-state-dashboard",
     "_type": "dashboard",
     "_source": {
@@ -26,6 +9,23 @@
       "panelsJSON": "[{\"col\":1,\"id\":\"Indicators-slash-Member-states\",\"panelIndex\":4,\"row\":1,\"size_x\":2,\"size_y\":7,\"type\":\"visualization\"},{\"col\":3,\"id\":\"TITLE-slash-INSPIRE-slash-Data-sets-and-services-availability\",\"panelIndex\":3,\"row\":1,\"size_x\":10,\"size_y\":1,\"type\":\"visualization\"},{\"col\":3,\"id\":\"Number-of-spatial-data-sets-for-all-annexes-(DSV_NUM)\",\"panelIndex\":5,\"row\":2,\"size_x\":4,\"size_y\":6,\"type\":\"visualization\"},{\"col\":7,\"id\":\"Number-of-spatial-data-sets-per-annexes\",\"panelIndex\":2,\"row\":2,\"size_x\":6,\"size_y\":6,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Number-of-spatial-data-services-(SDSv_Num)-and-with-metadata-(MDv14)\",\"panelIndex\":6,\"row\":8,\"size_x\":6,\"size_y\":6,\"type\":\"visualization\"},{\"col\":7,\"id\":\"Spatial-data-services-by-service-types\",\"panelIndex\":1,\"row\":8,\"size_x\":6,\"size_y\":6,\"type\":\"visualization\"},{\"id\":\"-percent-age-of-spatial-data-sets-for-which-a-view-service-(NSi21),-a-download-service-(NSi22)-or-a-view-and-download-(NSi2)-exist\",\"type\":\"visualization\",\"panelIndex\":7,\"size_x\":6,\"size_y\":7,\"col\":1,\"row\":14},{\"id\":\"Number-of-spatial-data-sets-for-which-a-view-(NSv21)-or-download-(NSv22)-or-both-(NSv23)-service-exist-and-the-total-number-of-metadata-(MDv1_ds)\",\"type\":\"visualization\",\"panelIndex\":8,\"size_x\":6,\"size_y\":7,\"col\":7,\"row\":14},{\"id\":\"TITLE-slash-INSPIRE-slash-Metadata-conformity\",\"type\":\"visualization\",\"panelIndex\":9,\"size_x\":12,\"size_y\":1,\"col\":1,\"row\":21},{\"id\":\"-percent-age-of-spatial-data-sets-and-services-with-conformant-metadata-(MDi2)\",\"type\":\"visualization\",\"panelIndex\":10,\"size_x\":6,\"size_y\":6,\"col\":1,\"row\":22},{\"id\":\"Number-of-service-that-have-metadata-(MDV14)-and-have-conformant-metadata-(MDV24)\",\"type\":\"visualization\",\"panelIndex\":11,\"size_x\":6,\"size_y\":6,\"col\":7,\"row\":22},{\"id\":\"Number-of-spatial-data-set-that-have-metadata-(MDv1_DS)-and-have-conformant-metadata-(MDv2_DS)\",\"type\":\"visualization\",\"panelIndex\":12,\"size_x\":6,\"size_y\":7,\"col\":1,\"row\":28},{\"id\":\"Number-of-spatial-data-sets-that-have-conformant-metadata-per-annexes\",\"type\":\"visualization\",\"panelIndex\":13,\"size_x\":6,\"size_y\":7,\"col\":7,\"row\":28},{\"id\":\"TITLE-slash-INSPIRE-slash-Spatial-data-sets-and-services-conformity\",\"type\":\"visualization\",\"panelIndex\":14,\"size_x\":12,\"size_y\":1,\"col\":1,\"row\":35},{\"id\":\"Number-of-conformant-spatial-data-sets-per-Annexes\",\"type\":\"visualization\",\"panelIndex\":15,\"size_x\":12,\"size_y\":7,\"col\":1,\"row\":36},{\"id\":\"Number-of-all-conformant-network-services:-discovery-(NSv41),-view-(NSv42),-download-(NSv43),-transformation-(NSv44)-total-(NSv4)\",\"type\":\"visualization\",\"panelIndex\":16,\"size_x\":6,\"size_y\":7,\"col\":1,\"row\":43},{\"id\":\"-percent-age-of-all-conformant-network-services:-discovery-(NSi41),-view-(NSi42),-download-(NSi43),-transformation-(NSi44)-total-(NSi4)\",\"type\":\"visualization\",\"panelIndex\":17,\"size_x\":6,\"size_y\":7,\"col\":7,\"row\":43}]",
       "optionsJSON": "{\"darkTheme\":false}",
       "uiStateJSON": "{\"P-4\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "Statistics",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Statistics",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":1,\"id\":\"Records-by-Member-states\",\"panelIndex\":1,\"row\":1,\"size_x\":3,\"size_y\":8,\"type\":\"visualization\"},{\"col\":4,\"id\":\"Number-of-records-per-annex\",\"panelIndex\":2,\"row\":1,\"size_x\":9,\"size_y\":3,\"type\":\"visualization\"},{\"col\":4,\"id\":\"Records-per-INSPIRE-themes\",\"panelIndex\":8,\"row\":4,\"size_x\":9,\"size_y\":5,\"type\":\"visualization\"},{\"col\":9,\"id\":\"Type-of-services\",\"panelIndex\":5,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":5,\"id\":\"Type-of-datasets\",\"panelIndex\":3,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Type-of-resources\",\"panelIndex\":4,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Spatial-resolution\",\"panelIndex\":7,\"row\":13,\"size_x\":11,\"size_y\":7,\"type\":\"visualization\"},{\"col\":9,\"id\":\"Opendata\",\"panelIndex\":6,\"row\":20,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-1\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}},\"P-5\":{\"vis\":{\"legendOpen\":true}},\"P-7\":{\"vis\":{\"legendOpen\":false}}}",
       "version": 1,
       "timeRestore": false,
       "kibanaSavedObjectMeta": {
@@ -55,27 +55,6 @@
     }
   },
   {
-    "_id": "All-records",
-    "_type": "search",
-    "_source": {
-      "title": "All records",
-      "description": "",
-      "hits": 0,
-      "columns": [
-        "resourceTitle",
-        "territory"
-      ],
-      "sort": [
-        "_score",
-        "desc"
-      ],
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
-      }
-    }
-  },
-  {
     "_id": "All-indicators",
     "_type": "search",
     "_source": {
@@ -98,73 +77,23 @@
     }
   },
   {
-    "_id": "Indicators-slash-Number-of-spatial-data-sets-for-all-annexes-(DSV_Num)",
-    "_type": "visualization",
+    "_id": "All-records",
+    "_type": "search",
     "_source": {
-      "title": "Indicators / Number of spatial data sets for all annexes (DSV_Num)",
-      "visState": "{\"title\":\"Indicators / Number of spatial data sets for all annexes (DSV_Num)\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"reportingDate\",\"interval\":\"y\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{},\"customLabel\":\"Reporting date\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"territory\",\"size\":45,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{}",
+      "title": "All records",
       "description": "",
+      "hits": 0,
+      "columns": [
+        "resourceTitle",
+        "territory"
+      ],
+      "sort": [
+        "_score",
+        "desc"
+      ],
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"indicators\",\"query\":{\"query_string\":{\"query\":\"+indicatorName:dsv_num\",\"analyze_wildcard\":true}},\"filter\":[]}"
-      }
-    }
-  },
-  {
-    "_id": "Indicators-slash-Member-states",
-    "_type": "visualization",
-    "_source": {
-      "title": "Indicators / Member states",
-      "visState": "{\"title\":\"Indicators / Member states\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"territory\",\"size\":45,\"order\":\"desc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
-      "description": "",
-      "savedSearchId": "All-indicators",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[]}"
-      }
-    }
-  },
-  {
-    "_id": "Spatial-resolution",
-    "_type": "visualization",
-    "_source": {
-      "title": "Spatial resolution",
-      "visState": "{\"title\":\"Spatial resolution\",\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"scale\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"resolutionScaleDenominator\",\"size\":145,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
-      }
-    }
-  },
-  {
-    "_id": "Number-of-records-per-annex",
-    "_type": "visualization",
-    "_source": {
-      "title": "Number of records per annex",
-      "visState": "{\"title\":\"Number of records per annex\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"inspireAnnex\",\"exclude\":{\"pattern\":\"\\\"\\\"\"},\"size\":5,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
-      }
-    }
-  },
-  {
-    "_id": "Type-of-datasets",
-    "_type": "visualization",
-    "_source": {
-      "title": "Type of datasets",
-      "visState": "{\"title\":\"Type of datasets\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"top\",\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"spatialRepresentationType\",\"size\":5,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
       }
     }
   },
@@ -207,21 +136,6 @@
       "version": 1,
       "kibanaSavedObjectMeta": {
         "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
-      }
-    }
-  },
-  {
-    "_id": "Member-states-indicators",
-    "_type": "visualization",
-    "_source": {
-      "title": "Member states indicators",
-      "visState": "{\"title\":\"Member states indicators\",\"type\":\"table\",\"params\":{\"perPage\":30,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"territory\",\"size\":45,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
-      "description": "",
-      "savedSearchId": "All-indicators",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"filter\":[]}"
       }
     }
   },
@@ -474,6 +388,92 @@
       "version": 1,
       "kibanaSavedObjectMeta": {
         "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Spatial-resolution",
+    "_type": "visualization",
+    "_source": {
+      "title": "Spatial resolution",
+      "visState": "{\"title\":\"Spatial resolution\",\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"scale\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"resolutionScaleDenominator\",\"size\":145,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Indicators-slash-Number-of-spatial-data-sets-for-all-annexes-(DSV_Num)",
+    "_type": "visualization",
+    "_source": {
+      "title": "Indicators / Number of spatial data sets for all annexes (DSV_Num)",
+      "visState": "{\"title\":\"Indicators / Number of spatial data sets for all annexes (DSV_Num)\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"reportingDate\",\"interval\":\"y\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{},\"customLabel\":\"Reporting date\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"territory\",\"size\":45,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"indicators\",\"query\":{\"query_string\":{\"query\":\"+indicatorName:dsv_num\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Indicators-slash-Member-states",
+    "_type": "visualization",
+    "_source": {
+      "title": "Indicators / Member states",
+      "visState": "{\"title\":\"Indicators / Member states\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"territory\",\"size\":45,\"order\":\"desc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "savedSearchId": "All-indicators",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Number-of-records-per-annex",
+    "_type": "visualization",
+    "_source": {
+      "title": "Number of records per annex",
+      "visState": "{\"title\":\"Number of records per annex\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"inspireAnnex\",\"exclude\":{\"pattern\":\"\\\"\\\"\"},\"size\":5,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Type-of-datasets",
+    "_type": "visualization",
+    "_source": {
+      "title": "Type of datasets",
+      "visState": "{\"title\":\"Type of datasets\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"top\",\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"spatialRepresentationType\",\"size\":5,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"records\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Member-states-indicators",
+    "_type": "visualization",
+    "_source": {
+      "title": "Member states indicators",
+      "visState": "{\"title\":\"Member states indicators\",\"type\":\"table\",\"params\":{\"perPage\":30,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"territory\",\"size\":45,\"order\":\"asc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "savedSearchId": "All-indicators",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
       }
     }
   }
