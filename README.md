@@ -23,8 +23,7 @@ associated resources (eg. PDF, JSON, DBF).
 * Generate configurable reports
 
 
-![Dashboard example - INSPIRE reporting]
-(https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/daobs-sample-dashboard.png)
+![Dashboard example - INSPIRE reporting](https://raw.githubusercontent.com/INSPIRE-MIF/daobs/1.0.x/doc/img/daobs-sample-dashboard.png)
 
 
 2 types of information can be loaded into the system:
