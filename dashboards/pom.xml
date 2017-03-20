@@ -55,7 +55,7 @@
                 </goals>
                 <configuration>
                   <url>
-                    https://artifacts.elastic.co/downloads/kibana/kibana-${es.version}-linux-x86_64.tar.gz
+                    https://artifacts.elastic.co/downloads/kibana/kibana-${es.version}-${kb.platform}.${kb.installer.extension}
                   </url>
                   <unpack>true</unpack>
                   <outputDirectory>${project.basedir}</outputDirectory>
@@ -81,7 +81,7 @@
             <artifactId>exec-maven-plugin</artifactId>
             <version>1.5.0</version>
             <configuration>
-              <executable>kibana-${es.version}-linux-x86_64/bin/${kb.executable}</executable>
+              <executable>kibana-${es.version}-${kb.platform}/bin/${kb.executable}</executable>
             </configuration>
           </plugin>
         </plugins>
@@ -95,12 +95,17 @@
         </os>
       </activation>
       <properties>
-        <es.executable>kibana.bat</es.executable>
+        <kb.executable>kibana.bat</kb.executable>
+        <kb.platform>windows-x86</kb.platform>
+        <kb.installer.extension>zip</kb.installer.extension>
+        <kb.version.md5>bb1dbfe5b4eef2c17370fb09eb41f3c9</kb.version.md5>
       </properties>
     </profile>
   </profiles>
   <properties>
     <kb.executable>kibana</kb.executable>
+    <kb.platform>linux-x86_64</kb.platform>
+    <kb.installer.extension>tar.gz</kb.installer.extension>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
