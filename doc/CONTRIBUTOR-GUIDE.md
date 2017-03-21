@@ -31,7 +31,7 @@ mvn clean install -DskipTests -Drelax -P web
 
 ## Install and configure Solr
 
-See [Solr installation](solr/README.md).
+See [Solr installation](../solr/README.md).
 
 
 ## Run the application
