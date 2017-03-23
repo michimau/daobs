@@ -26,12 +26,17 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.commons.io.FileUtils;
 import org.daobs.index.EsClientBean;
 import org.daobs.index.EsRequestBean;
+import org.daobs.indicator.config.Indicator;
 import org.daobs.indicator.config.Reporting;
 import org.daobs.indicator.config.Reports;
+import org.daobs.indicator.config.Variable;
 import org.daobs.util.UnzipUtility;
+import org.elasticsearch.ResourceNotFoundException;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.support.WriteRequest;
@@ -48,6 +53,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -137,26 +143,23 @@ public class ReportingController {
           MediaType.APPLICATION_JSON_VALUE
       },
       method = RequestMethod.GET)
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Return the list of available reports.")
+      })
   @ResponseBody
   public Reports getReports(HttpServletRequest request)
       throws IOException {
-    File file = null;
-    File[] paths = null;
-    Reports reports = new Reports();
-    try {
-      file = new File(indicatorConfigurationDir);
-      FilenameFilter filenameFilter = (file1, name) -> {
-        if (name.startsWith(INDICATOR_CONFIGURATION_FILE_PREFIX)
-            && name.endsWith(".xml")) {
-          return true;
-        }
-        return false;
-      };
+    File file = new File(indicatorConfigurationDir);
+    FilenameFilter filenameFilter = (file1, name) -> {
+      if (name.startsWith(INDICATOR_CONFIGURATION_FILE_PREFIX)
+          && name.endsWith(".xml")) {
+        return true;
+      }
+      return false;
+    };
+    File[] paths = file.listFiles(filenameFilter);
 
-      paths = file.listFiles(filenameFilter);
-    } catch (Exception exception) {
-      exception.printStackTrace();
-    }
+    Reports reports = new Reports();
     if (paths != null && paths.length > 0) {
       for (File configFile : paths) {
         Reporting reporting = new Reporting();
@@ -182,6 +185,10 @@ public class ReportingController {
           MediaType.APPLICATION_JSON_VALUE
       },
       method = RequestMethod.GET)
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Return a report configuration."),
+      @ApiResponse(code = 404, message = "Report not found.")
+      })
   @ResponseBody
   public Reporting getSpecification(HttpServletRequest request,
                        @ApiParam(
@@ -200,10 +207,9 @@ public class ReportingController {
                        @RequestParam(
                          value = "fq",
                          defaultValue = "",
-                         required = false) String fq)
-      throws IOException {
-    IndicatorCalculatorImpl indicatorCalculator =
-        generateReporting(request, reporting, scopeId, fq.trim(), true);
+                         required = false) String fq) throws FileNotFoundException {
+    IndicatorCalculatorImpl indicatorCalculator = null;
+    indicatorCalculator = generateReporting(request, reporting, scopeId, fq.trim(), true);
     return indicatorCalculator.getConfiguration();
   }
 
@@ -219,6 +225,10 @@ public class ReportingController {
           MediaType.APPLICATION_JSON_VALUE
       },
       method = RequestMethod.POST)
+  @ApiResponses(value = {
+      @ApiResponse(code = 201, message = "Report configuration added."),
+      @ApiResponse(code = 500, message = "Failed to upload report.")
+      })
   @ResponseBody
   public ResponseEntity uploadSpecification(HttpServletRequest request,
                        @ApiParam(
@@ -243,7 +253,8 @@ public class ReportingController {
 
       return new ResponseEntity<>(HttpStatus.CREATED);
     } catch (Exception ex) {
-      throw ex;
+      throw new IllegalArgumentException(String.format(
+        "Failed to upload, load and save report configuration."), ex);
     } finally {
       FileUtils.deleteQuietly(tmpFile);
     }
@@ -254,13 +265,16 @@ public class ReportingController {
    * Add a report specification in XML or JSON format.
    */
   @ApiOperation(value = "Add report specification",
-      nickname = "getReports")
+      nickname = "addSpecification")
   @RequestMapping(value = "/reports/{reporting}",
       consumes = {
-          MediaType.APPLICATION_XML_VALUE,
-          MediaType.APPLICATION_JSON_VALUE
+          MediaType.APPLICATION_XML_VALUE
       },
       method = RequestMethod.PUT)
+  @ApiResponses(value = {
+      @ApiResponse(code = 201, message = "Report configuration added."),
+      @ApiResponse(code = 500, message = "Failed to upload report.")
+      })
   @ResponseBody
   public ResponseEntity addSpecification(HttpServletRequest request,
                                          @ApiParam(
@@ -275,7 +289,8 @@ public class ReportingController {
 
     File tmpFile = File.createTempFile("report", ".xml");
     try {
-      File reportingConfigFile = new File(indicatorConfigurationDir + reporting + ".xml");
+      File reportingConfigFile = new File(indicatorConfigurationDir
+          + INDICATOR_CONFIGURATION_FILE_PREFIX + reporting + ".xml");
 
       FileUtils.writeStringToFile(tmpFile, specification);
       IndicatorCalculatorImpl indicatorCalculator =
@@ -285,10 +300,186 @@ public class ReportingController {
 
       return new ResponseEntity<>(HttpStatus.CREATED);
     } catch (Exception ex) {
-      throw ex;
+      throw new IllegalArgumentException(String.format(
+        "Failed to upload, load and save report configuration."), ex);
     } finally {
       FileUtils.deleteQuietly(tmpFile);
     }
+  }
+
+
+  /**
+   * Add a report specification in XML or JSON format.
+   */
+  @ApiOperation(value = "Add or update an indicator in a report specification",
+      nickname = "addIndicator")
+  @RequestMapping(value = "/reports/{reporting}/indicators",
+      consumes = {
+        MediaType.APPLICATION_XML_VALUE,
+        MediaType.APPLICATION_JSON_VALUE
+      },
+      method = RequestMethod.PUT)
+  @ApiResponses(value = {
+      @ApiResponse(code = 201, message = "Indicator added or updated."),
+      @ApiResponse(code = 500, message = "Failed to add indicator.")
+      })
+  @ResponseBody
+  public ResponseEntity addIndicator(HttpServletRequest request,
+                                     @ApiParam(
+                                       value = "The report type to generate",
+                                       required = true)
+                                     @PathVariable(value = "reporting")
+                                       String reporting,
+                                     @ApiParam(value = "The indicator to add or update")
+                                         @RequestBody()
+                                     Indicator indicator)
+      throws IOException {
+    IndicatorCalculatorImpl indicatorCalculator = null;
+    try {
+      indicatorCalculator = generateReporting(request, reporting, null, null, false);
+
+      indicatorCalculator.addIndicator(indicator);
+
+      // Save configuration
+      synchronized (this) {
+        File reportingConfigFile = new File(indicatorConfigurationDir
+            + INDICATOR_CONFIGURATION_FILE_PREFIX + reporting + ".xml");
+        FileUtils.copyFile(indicatorCalculator.toFile(), reportingConfigFile);
+      }
+    } catch (FileNotFoundException exception) {
+      throw new ResourceNotFoundException(String.format(
+          "Report with identifier '%s' not found.", reporting), exception);
+    }
+    return new ResponseEntity(HttpStatus.CREATED);
+  }
+
+
+  /**
+   * Delete an indicator.
+   */
+  @ApiOperation(value = "Delete an indicator in a report specification",
+      nickname = "delIndicator")
+  @RequestMapping(value = "/reports/{reporting}/indicators/{indicatorId}",
+      method = RequestMethod.DELETE)
+  @ApiResponses(value = {
+      @ApiResponse(code = 201, message = "Indicator removed."),
+      @ApiResponse(code = 500, message = "Failed to delete indicator.")
+      })
+  @ResponseBody
+  public ResponseEntity delIndicator(HttpServletRequest request,
+                                     @ApiParam(
+                                       value = "The report type to generate",
+                                       required = true)
+                                     @PathVariable(value = "reporting")
+                                       String reporting,
+                                     @PathVariable(value = "The indicator to remove")
+                                       String indicatorId)
+      throws IOException, org.daobs.api.exception.ResourceNotFoundException {
+    IndicatorCalculatorImpl indicatorCalculator = null;
+    try {
+      indicatorCalculator = generateReporting(request, reporting, null, null, false);
+
+      indicatorCalculator.removeIndicator(indicatorId);
+
+      // Save configuration
+      synchronized (this) {
+        File reportingConfigFile = new File(indicatorConfigurationDir
+            + INDICATOR_CONFIGURATION_FILE_PREFIX + reporting + ".xml");
+        FileUtils.copyFile(indicatorCalculator.toFile(), reportingConfigFile);
+      }
+    } catch (FileNotFoundException exception) {
+      throw new ResourceNotFoundException(String.format(
+        "Report with identifier '%s' not found.", reporting), exception);
+    }
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
+  }
+
+
+
+  /**
+   * Add a report specification in XML or JSON format.
+   */
+  @ApiOperation(value = "Add or update a variable in a report specification",
+      nickname = "addVariable")
+  @RequestMapping(value = "/reports/{reporting}/variables",
+      consumes = {
+          MediaType.APPLICATION_XML_VALUE,
+          MediaType.APPLICATION_JSON_VALUE
+      },
+      method = RequestMethod.PUT)
+  @ApiResponses(value = {
+      @ApiResponse(code = 201, message = "Variable added or updated."),
+      @ApiResponse(code = 500, message = "Failed to add variable.")
+      })
+  @ResponseBody
+  public ResponseEntity addVariable(HttpServletRequest request,
+                                     @ApiParam(
+                                       value = "The report type to generate",
+                                       required = true)
+                                     @PathVariable(value = "reporting")
+                                       String reporting,
+                                     @ApiParam(value = "The variable to add or update")
+                                     @RequestBody()
+                                      Variable variable)
+      throws IOException {
+    IndicatorCalculatorImpl indicatorCalculator = null;
+    try {
+      indicatorCalculator = generateReporting(request, reporting, null, null, false);
+
+      indicatorCalculator.addVariable(variable);
+
+      // Save configuration
+      synchronized (this) {
+        File reportingConfigFile = new File(indicatorConfigurationDir
+            + INDICATOR_CONFIGURATION_FILE_PREFIX + reporting + ".xml");
+        FileUtils.copyFile(indicatorCalculator.toFile(), reportingConfigFile);
+      }
+    } catch (FileNotFoundException exception) {
+      throw new ResourceNotFoundException(String.format(
+        "Report with identifier '%s' not found.", reporting), exception);
+    }
+    return new ResponseEntity(HttpStatus.CREATED);
+  }
+
+
+  /**
+   * Delete a variable.
+   */
+  @ApiOperation(value = "Delete a variable in a report specification",
+      nickname = "delVariable")
+  @RequestMapping(value = "/reports/{reporting}/variables/{variableId}",
+      method = RequestMethod.DELETE)
+  @ApiResponses(value = {
+      @ApiResponse(code = 201, message = "Indicator removed."),
+      @ApiResponse(code = 500, message = "Failed to delete variable.")
+      })
+  @ResponseBody
+  public ResponseEntity delVariable(HttpServletRequest request,
+                                     @ApiParam(
+                                       value = "The report type to generate",
+                                       required = true)
+                                     @PathVariable(value = "reporting")
+                                       String reporting,
+                                     @PathVariable(value = "The variable to remove")
+                                       String variableId)
+      throws IOException, org.daobs.api.exception.ResourceNotFoundException {
+    IndicatorCalculatorImpl indicatorCalculator = null;
+    try {
+      indicatorCalculator = generateReporting(request, reporting, null, null, false);
+
+      indicatorCalculator.removeVariable(variableId);
+
+      // Save configuration
+      synchronized (this) {
+        File reportingConfigFile = new File(indicatorConfigurationDir
+            + INDICATOR_CONFIGURATION_FILE_PREFIX + reporting + ".xml");
+        FileUtils.copyFile(indicatorCalculator.toFile(), reportingConfigFile);
+      }
+    } catch (FileNotFoundException exception) {
+      throw new ResourceNotFoundException(String.format(
+        "Report with identifier '%s' not found.", reporting), exception);
+    }
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
 
 
@@ -299,6 +490,7 @@ public class ReportingController {
       nickname = "getReports")
   @RequestMapping(value = "/reports/{reporting}",
       method = RequestMethod.DELETE)
+
   @ResponseBody
   public ResponseEntity removeSpecification(HttpServletRequest request,
                                          @ApiParam(
@@ -309,7 +501,8 @@ public class ReportingController {
       throws IOException {
 
     try {
-      File reportingConfigFile = new File(indicatorConfigurationDir + reporting + ".xml");
+      File reportingConfigFile = new File(indicatorConfigurationDir
+          + INDICATOR_CONFIGURATION_FILE_PREFIX + reporting + ".xml");
       if (reportingConfigFile.exists()) {
         reportingConfigFile.delete();
       } else {
@@ -335,6 +528,10 @@ public class ReportingController {
           MediaType.APPLICATION_JSON_VALUE
       },
       method = RequestMethod.GET)
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Return a report for a territory."),
+      @ApiResponse(code = 404, message = "Report not found.")
+      })
   @ResponseBody
   public Reporting get(HttpServletRequest request,
                        @ApiParam(
@@ -359,9 +556,14 @@ public class ReportingController {
                          defaultValue = "",
                          required = false) String fq)
       throws IOException {
-    IndicatorCalculatorImpl indicatorCalculator =
-        generateReporting(request, reporting, scopeId, "+territory:" + territory
+    IndicatorCalculatorImpl indicatorCalculator = null;
+    try {
+      indicatorCalculator = generateReporting(request, reporting, scopeId, "+territory:" + territory
         + (StringUtils.isEmpty(fq) ? "" : " " + fq.trim()), true);
+    } catch (FileNotFoundException exception) {
+      throw new ResourceNotFoundException(String.format(
+        "Report with identifier '%s' not found.", reporting), exception);
+    }
     return indicatorCalculator.getConfiguration();
   }
 
@@ -973,7 +1175,7 @@ public class ReportingController {
                                                           String scopeId,
                                                           String fq,
                                                           boolean calculate)
-      throws FileNotFoundException {
+      throws ResourceNotFoundException, FileNotFoundException {
     String configurationFilePath =
         indicatorConfigurationDir
         + INDICATOR_CONFIGURATION_FILE_PREFIX
@@ -991,7 +1193,7 @@ public class ReportingController {
       // adds the XML source file to the model so the XsltView can detect
       return indicatorCalculator;
     } else {
-      throw new FileNotFoundException(String.format(
+      throw new ResourceNotFoundException(String.format(
           "Reporting configuration "
             + "'%s' file does not exist for reporting '%s'.",
           configurationFilePath,

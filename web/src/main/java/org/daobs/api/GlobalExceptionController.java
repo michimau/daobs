@@ -21,6 +21,7 @@
 
 package org.daobs.api;
 
+import org.daobs.api.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
@@ -81,10 +82,11 @@ public class GlobalExceptionController {
   @ResponseBody
   @ResponseStatus(HttpStatus.NOT_FOUND)
   @ExceptionHandler({
-       FileNotFoundException.class})
+      FileNotFoundException.class,
+      ResourceNotFoundException.class})
   public Object fileNotFoundHandler(final Exception exception) {
     return new LinkedHashMap<String, String>() {{
-          put("code", "file_not_found");
+          put("code", "not_found");
           put("message", exception.getClass().getSimpleName());
           put("description", exception.getMessage());
         }

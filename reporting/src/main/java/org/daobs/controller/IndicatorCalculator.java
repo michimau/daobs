@@ -21,7 +21,10 @@
 
 package org.daobs.controller;
 
+import org.daobs.api.exception.ResourceNotFoundException;
+import org.daobs.indicator.config.Indicator;
 import org.daobs.indicator.config.Reporting;
+import org.daobs.indicator.config.Variable;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
@@ -37,6 +40,26 @@ public interface IndicatorCalculator {
   IndicatorCalculator loadConfig() throws FileNotFoundException;
 
   Reporting getConfiguration();
+
+  /**
+   * Add or update an indicator.
+   */
+  IndicatorCalculator addIndicator(Indicator indicator);
+
+  /**
+   * Remove an indicator.
+   */
+  IndicatorCalculator removeIndicator(String indicatorId) throws ResourceNotFoundException;
+
+  /**
+   * Add or update a variable.
+   */
+  IndicatorCalculator addVariable(Variable variable);
+
+  /**
+   * Remove a variable.
+   */
+  IndicatorCalculator removeVariable(String variableId) throws ResourceNotFoundException;
 
   Double get(String indicatorName);
 

@@ -26,6 +26,7 @@ import de.congrace.exp4j.ExpressionBuilder;
 import de.congrace.exp4j.UnknownFunctionException;
 import de.congrace.exp4j.UnparsableExpressionException;
 
+import org.daobs.api.exception.ResourceNotFoundException;
 import org.daobs.index.EsRequestBean;
 import org.daobs.indicator.config.Indicator;
 import org.daobs.indicator.config.Parameter;
@@ -41,6 +42,7 @@ import java.text.DecimalFormat;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -108,6 +110,103 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
   @Override
   public Reporting getConfiguration() {
     return reporting;
+  }
+
+  @Override
+  public IndicatorCalculator addIndicator(Indicator newIndicator) {
+    final List<Indicator> indicatorList =
+        getConfiguration().getIndicators().getIndicator();
+
+    boolean isUpdated = false;
+    // Update indicator
+    for (Indicator indicator : indicatorList) {
+      if (indicator.getId().equals(newIndicator.getId())) {
+        isUpdated = true;
+        indicator.setName(newIndicator.getName());
+        indicator.setComment(newIndicator.getComment());
+        indicator.setExpression(newIndicator.getExpression());
+        indicator.setFormat(newIndicator.getFormat());
+        indicator.setParameters(newIndicator.getParameters());
+      }
+    }
+
+    if (!isUpdated) {
+      Indicator newI = new Indicator();
+      newI.setName(newIndicator.getName());
+      newI.setName(newIndicator.getName());
+      newI.setComment(newIndicator.getComment());
+      newI.setExpression(newIndicator.getExpression());
+      newI.setFormat(newIndicator.getFormat());
+      // TODO: validate that parameters exist
+      newI.setParameters(newIndicator.getParameters());
+      indicatorList.add(newI);
+    }
+    return this;
+  }
+
+  @Override
+  public IndicatorCalculator removeIndicator(String indicatorId) throws ResourceNotFoundException {
+    final List<Indicator> indicatorList =
+        getConfiguration().getIndicators().getIndicator();
+    boolean isRemoved = false;
+    for (Indicator indicator : indicatorList) {
+      if (indicator.getId().equals(indicatorId)) {
+        indicatorList.remove(indicator);
+        isRemoved = true;
+      }
+    }
+    if (!isRemoved) {
+      throw new ResourceNotFoundException(String.format(
+        "Variable with id '%s' not found.", indicatorId));
+    }
+    return this;
+  }
+
+  @Override
+  public IndicatorCalculator addVariable(Variable newVariable) {
+    final List<Variable> variableList =
+        getConfiguration().getVariables().getVariable();
+
+    boolean isUpdated = false;
+    // Update indicator
+    for (Variable variable : variableList) {
+      if (variable.getId().equals(newVariable.getId())) {
+        isUpdated = true;
+        variable.setName(newVariable.getName());
+        variable.setComment(newVariable.getComment());
+        variable.setQuery(newVariable.getQuery());
+        variable.setFormat(newVariable.getFormat());
+      }
+    }
+
+    if (!isUpdated) {
+      Variable newI = new Variable();
+      newI.setName(newVariable.getName());
+      newI.setName(newVariable.getName());
+      newI.setComment(newVariable.getComment());
+      newI.setQuery(newVariable.getQuery());
+      newI.setFormat(newVariable.getFormat());
+      variableList.add(newI);
+    }
+    return this;
+  }
+
+  @Override
+  public IndicatorCalculator removeVariable(String variableId) throws ResourceNotFoundException {
+    final List<Variable> variableList =
+        getConfiguration().getVariables().getVariable();
+    boolean isRemoved = false;
+    for (Variable variable : variableList) {
+      if (variable.getId().equals(variableId)) {
+        variableList.remove(variable);
+        isRemoved = true;
+      }
+    }
+    if (!isRemoved) {
+      throw new ResourceNotFoundException(String.format(
+        "Variable with id '%s' not found.", variableId));
+    }
+    return this;
   }
 
   @Override
