@@ -107,7 +107,8 @@
             <div class="form-group"
                  data-ng-repeat="(key, value) in harvesterTpl">
               <label for="field-{{key}}"
-                     class="col-sm-4 control-label">
+                     class="col-sm-4 control-label"
+                     data-ng-class="{'required' : key === 'territory' || key === 'name' || key === 'url'}">
                 {{key | translate}}</label>
               <div class="col-sm-8" data-ng-switch="key">
                 <textarea data-ng-switch-when="filter"
