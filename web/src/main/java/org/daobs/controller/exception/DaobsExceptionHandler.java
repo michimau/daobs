@@ -21,6 +21,7 @@
 
 package org.daobs.controller.exception;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.daobs.controller.binding.ErrorResource;
 import org.daobs.controller.binding.FieldErrorResource;
 import org.springframework.http.HttpHeaders;
@@ -50,7 +51,8 @@ public class DaobsExceptionHandler extends ResponseEntityExceptionHandler {
       // fieldErrorResource.setResource(fieldError.getObjectName());
       // fieldErrorResource.setField(fieldError.getField());
       // fieldErrorResource.setCode(fieldError.getCode());
-      fieldErrorResource.setMessage(fieldError);
+      fieldErrorResource.setMessage(StringEscapeUtils.escapeJavaScript(
+          StringEscapeUtils.escapeHtml(fieldError)));
       fieldErrorResources.add(fieldErrorResource);
     }
 
