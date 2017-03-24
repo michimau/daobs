@@ -21,6 +21,8 @@
 
 package org.daobs.harvester.repository;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.daobs.controller.exception.InvalidHarvesterException;
 import org.daobs.harvester.config.Harvester;
 import org.daobs.harvester.config.Harvesters;
@@ -28,19 +30,22 @@ import org.daobs.utility.UuidFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.xml.sax.InputSource;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * A really simple harvester repository based on the
@@ -80,6 +85,8 @@ public class HarvesterConfigRepository implements InitializingBean {
       }
     } catch (JAXBException exception) {
       throw new RuntimeException(exception);
+    } catch (IOException exception) {
+      throw new RuntimeException(exception);
     }
     return true;
   }
@@ -94,7 +101,7 @@ public class HarvesterConfigRepository implements InitializingBean {
 
   /**
    * Add or update an harvester configuration.
-     */
+   */
   public synchronized Harvester addOrUpdate(Harvester harvester) throws Exception {
     if (harvester != null) {
       String uuid = harvester.getUuid();
@@ -123,7 +130,8 @@ public class HarvesterConfigRepository implements InitializingBean {
   }
 
   /**
-   *  Check harvester configuration.
+   * Check harvester configuration.
+   *
    * @return Return list of errors
    */
   private List<String> isValid(Harvester harvester) {
@@ -144,28 +152,28 @@ public class HarvesterConfigRepository implements InitializingBean {
       listOfErrors.add(String.format("Harvester with UUID '%s' does not have territory.",
           harvester.getUuid()));
     }
-    // String filter = (String) harvester.getFilter();
-    // if (filter != null) {
-    //     DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-    //     domFactory.setNamespaceAware(true);
-    //     try {
-    //         DocumentBuilder builder = domFactory.newDocumentBuilder();
-    //         builder.parse(new InputSource(
-    //                         new StringReader(filter)));
-    //     } catch (Exception exception) {
-    //         listOfErrors.add(String.format("Harvester with UUID '%s' does not have " +
-    //                         "a valid filter '%s'. Error is: %s.",
-    //                 harvester.getUuid(), filter, e.getMessage()));
-    //     }
-    // }
+    String filter = harvester.getFilter();
+    if (StringUtils.isNotBlank(filter)) {
+      DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+      domFactory.setNamespaceAware(true);
+      try {
+        DocumentBuilder builder = domFactory.newDocumentBuilder();
+        builder.parse(new InputSource(
+            new StringReader(filter)));
+      } catch (Exception exception) {
+        listOfErrors.add(String.format("Harvester with UUID '%s' does not have "
+            + "a valid filter '%s'. Error is: %s.",
+            harvester.getUuid(), filter, exception.getMessage()));
+      }
+    }
     return listOfErrors;
   }
 
   /**
    * Set defaults for an incomplete harvester.
    * <ul>
-   *     <li>territory is set to UUID</li>
-   *     <li>folder is set to territory</li>
+   * <li>territory is set to UUID</li>
+   * <li>folder is set to territory</li>
    * </ul>
    */
   private void accomodate(Harvester harvester) {
@@ -180,7 +188,7 @@ public class HarvesterConfigRepository implements InitializingBean {
 
   /**
    * Remove harvester.
-     */
+   */
   public synchronized boolean remove(String harvesterUuid) throws Exception {
     Harvester harvester = findByUuid(harvesterUuid);
     if (harvester == null) {
@@ -198,21 +206,37 @@ public class HarvesterConfigRepository implements InitializingBean {
   /**
    * Save the harvester configuration file.
    */
-  private synchronized void commit() {
+  private synchronized void commit() throws IOException {
     JAXBContext jaxbContext = null;
     try {
+      // create config backup
+      FileUtils.copyFile(new File(configurationFilepath), new File(configurationFilepath + ".bak"));
       jaxbContext = JAXBContext.newInstance(Harvesters.class);
       Marshaller marshaller = jaxbContext.createMarshaller();
       marshaller.marshal(harvesters, new File(configurationFilepath));
     } catch (JAXBException exception) {
       exception.printStackTrace();
+      // restore backup
+      try {
+        FileUtils.copyFile(new File(configurationFilepath + ".bak"),
+            new File(configurationFilepath));
+      } catch (IOException oops) {
+        // Error restoring config backup
+        oops.printStackTrace();
+      }
+
+    } catch (IOException exception) {
+      exception.printStackTrace();
+      throw exception;
+    } finally {
+      FileUtils.deleteQuietly(new File(configurationFilepath + ".bak"));
+      reload();
     }
-    reload();
   }
 
   /**
    * Start a harvester.
-     */
+   */
   public synchronized boolean start(String harvesterUuid) throws Exception {
     Harvester harvester = findByUuid(harvesterUuid);
     if (harvester == null) {
@@ -256,8 +280,8 @@ public class HarvesterConfigRepository implements InitializingBean {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
     String dataStampString = simpleDateFormat.format(dataStamp);
     return harvestingTasksFolder + File.separator
-        + harvesterUuid + "_"
-        + dataStampString + ".xml";
+      + harvesterUuid + "_"
+      + dataStampString + ".xml";
   }
 
   /**
