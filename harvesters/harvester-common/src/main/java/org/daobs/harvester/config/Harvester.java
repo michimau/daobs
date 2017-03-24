@@ -23,7 +23,12 @@ package org.daobs.harvester.config;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -85,9 +90,8 @@ public class Harvester implements Serializable {
   @XmlElement(namespace = "http://daobs.org", required = true)
   @XmlSchemaType(name = "anyURI")
   protected String url;
-  //@XmlElement(namespace = "http://daobs.org")
-  @XmlAnyElement(value = FilterHandler.class)
-  protected String filter;
+  @XmlElement(namespace = "http://daobs.org")
+  protected Object filter;
   @XmlElement(namespace = "http://daobs.org")
   protected Integer nbOfRecordsPerPage;
   @XmlElement(namespace = "http://daobs.org", required = true)
@@ -225,7 +229,7 @@ public class Harvester implements Serializable {
    *     {@link Object }
    *
    */
-  public String getFilter() {
+  public Object getFilter() {
     return filter;
   }
 
@@ -237,7 +241,7 @@ public class Harvester implements Serializable {
    *     {@link Object }
    *
    */
-  public void setFilter(String value) {
+  public void setFilter(Object value) {
     this.filter = value;
   }
 
