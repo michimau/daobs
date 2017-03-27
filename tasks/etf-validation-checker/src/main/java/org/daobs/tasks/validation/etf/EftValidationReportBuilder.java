@@ -57,18 +57,18 @@ public class EftValidationReportBuilder {
 
     try {
       DocumentBuilderFactory factory =
-          DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory.newInstance();
       DocumentBuilder builder = factory.newDocumentBuilder();
 
       ByteArrayInputStream input = new ByteArrayInputStream(
-          FileUtils.readFileToByteArray(eftResults));
+        FileUtils.readFileToByteArray(eftResults));
       Document doc = builder.parse(input);
 
       XPath xpath = XPathFactory.newInstance().newXPath();
       String expression = "/testsuites/testsuite";
       NodeList nodeList = (NodeList) xpath
-          .compile(expression)
-          .evaluate(doc, XPathConstants.NODESET);
+        .compile(expression)
+        .evaluate(doc, XPathConstants.NODESET);
 
       int totalErrorsMandatory = 0;
       int totalFailuresMandatory = 0;
@@ -87,9 +87,13 @@ public class EftValidationReportBuilder {
 
           String testName = element.getAttribute("name").toLowerCase();
 
+          // Test results have a convention name start with "O-" for optional tests
+          // and "M-" for mandatory tests.
+          boolean isOptional = testName.startsWith("o-");
+
           // Optional/mandatory tests are indicated in the report
           // created by ETF in the name attribute
-          if (testName.endsWith("optional")) {
+          if (isOptional) {
             totalErrorsOptional += Integer.parseInt(element.getAttribute("errors"));
             totalFailuresOptional += Integer.parseInt(element.getAttribute("failures"));
             totalTestsOptional += Integer.parseInt(element.getAttribute("tests"));
