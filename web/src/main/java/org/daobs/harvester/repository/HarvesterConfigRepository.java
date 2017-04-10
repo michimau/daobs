@@ -107,7 +107,7 @@ public class HarvesterConfigRepository implements InitializingBean {
       String uuid = harvester.getUuid();
       boolean harvesterExist = false;
       Harvester harvesterCheck = null;
-      if (uuid != null) {
+      if (StringUtils.isNotBlank(uuid)) {
         harvesterCheck = findByUuid(uuid);
         harvesterExist = harvesterCheck != null;
       } else {
