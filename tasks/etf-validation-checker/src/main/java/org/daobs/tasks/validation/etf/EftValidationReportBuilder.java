@@ -57,18 +57,18 @@ public class EftValidationReportBuilder {
 
     try {
       DocumentBuilderFactory factory =
-        DocumentBuilderFactory.newInstance();
+          DocumentBuilderFactory.newInstance();
       DocumentBuilder builder = factory.newDocumentBuilder();
 
       ByteArrayInputStream input = new ByteArrayInputStream(
-        FileUtils.readFileToByteArray(eftResults));
+          FileUtils.readFileToByteArray(eftResults));
       Document doc = builder.parse(input);
 
       XPath xpath = XPathFactory.newInstance().newXPath();
       String expression = "/testsuites/testsuite";
       NodeList nodeList = (NodeList) xpath
-        .compile(expression)
-        .evaluate(doc, XPathConstants.NODESET);
+          .compile(expression)
+          .evaluate(doc, XPathConstants.NODESET);
 
       int totalErrorsMandatory = 0;
       int totalFailuresMandatory = 0;

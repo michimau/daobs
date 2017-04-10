@@ -296,6 +296,16 @@
             response.error.msg);
         });
       };
+      $scope.inspireValidation = function (h, all) {
+        harvesterService.inspireValidation(h).then(function (response) {
+          Notification.success($scope.translations.inspireValidationStarted);
+          init();
+        }, function (response) {
+          Notification.error(
+            $scope.translations.errorStartingInspireValidation + ' ' +
+            response.error.msg);
+        });
+      };
 
       init();
     }]);
