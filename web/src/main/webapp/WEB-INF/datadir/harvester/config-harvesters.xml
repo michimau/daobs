@@ -201,6 +201,15 @@
   </daobs:harvester>
 
   <daobs:harvester>
+    <daobs:uuid>08980fe1-c0a6-4916-bf7d-ae6536edc8e2</daobs:uuid>
+    <daobs:territory>CY2</daobs:territory>
+    <daobs:folder>CY2</daobs:folder>
+    <daobs:name>Cyprus eservices</daobs:name>
+    <daobs:url>http://eservices.dls.moi.gov.cy/geoportal_inspire/csw</daobs:url>
+    <daobs:pointOfTruthURLPattern></daobs:pointOfTruthURLPattern>
+  </daobs:harvester>
+
+  <daobs:harvester>
     <daobs:uuid>64490bc7-c90f-4511-9b39-42e60def45cd</daobs:uuid>
     <daobs:territory>BE</daobs:territory>
     <daobs:folder>BE-GEO</daobs:folder>
