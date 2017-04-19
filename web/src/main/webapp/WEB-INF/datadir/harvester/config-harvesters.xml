@@ -61,6 +61,17 @@
       http://www.nationaalgeoregister.nl/geonetwork/?uuid={{uuid}}
     </daobs:pointOfTruthURLPattern>
   </daobs:harvester>
+  <daobs:harvester>
+    <daobs:uuid>0a8b54e3-a216-43aa-a132-096eb72197cc</daobs:uuid>
+    <daobs:territory>MT</daobs:territory>
+    <daobs:folder>MT</daobs:folder>
+    <daobs:name>Malta</daobs:name>
+    <daobs:url>https://msdi.data.gov.mt/geonetwork/srv/eng/csw</daobs:url>
+    <daobs:pointOfTruthURLPattern>
+      https://msdi.data.gov.mt/geonetwork/?uuid={{uuid}}
+    </daobs:pointOfTruthURLPattern>
+  </daobs:harvester>
+
 
   <daobs:harvester>
     <daobs:uuid>1e420e84-e683-4b91-a1f1-db5b68320ee3</daobs:uuid>
@@ -187,6 +198,15 @@
     <daobs:url>http://inspire.cyprus.moi.gov.cy/geocatalog/srv/eng/csw</daobs:url>
     <daobs:pointOfTruthURLPattern>http://inspire.cyprus.moi.gov.cy/geocatalog/?uuid={{uuid}}
     </daobs:pointOfTruthURLPattern>
+  </daobs:harvester>
+
+  <daobs:harvester>
+    <daobs:uuid>08980fe1-c0a6-4916-bf7d-ae6536edc8e2</daobs:uuid>
+    <daobs:territory>CY2</daobs:territory>
+    <daobs:folder>CY2</daobs:folder>
+    <daobs:name>Cyprus eservices</daobs:name>
+    <daobs:url>http://eservices.dls.moi.gov.cy/geoportal_inspire/csw</daobs:url>
+    <daobs:pointOfTruthURLPattern></daobs:pointOfTruthURLPattern>
   </daobs:harvester>
 
   <daobs:harvester>
@@ -460,6 +480,14 @@
       životného prostredia)
     </daobs:name>
     <daobs:url>http://csw.sazp.sk/</daobs:url>
+  </daobs:harvester>
+
+  <daobs:harvester>
+    <daobs:uuid>218a6808-049c-11e7-93ae-92361f002671</daobs:uuid>
+    <daobs:territory>SK</daobs:territory>
+    <daobs:folder>SK2</daobs:folder>
+    <daobs:name>Národná vyhľadávacia služba (Register priestorových informácií)</daobs:name>
+    <daobs:url>https://rpi.gov.sk/rpi_csw/service.svc/get?</daobs:url>
   </daobs:harvester>
 
   <daobs:harvester>

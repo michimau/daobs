@@ -47,7 +47,8 @@
       reports: api + 'reports',
       samples: api + 'samples',
       dashboardBaseURL: context + 'dashboard/#/dashboard/solr/',
-      eftValidation: api + 'validate/etf'
+      eftValidation: api + 'validate/etf',
+      inspireValidation: api + 'validate/inspire'
     }
   });
 }());

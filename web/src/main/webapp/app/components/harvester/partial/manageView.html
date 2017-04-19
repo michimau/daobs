@@ -282,6 +282,15 @@
                     data-ng-show="statsForTerritory[h.uuid].count > 0"></li>
                 <li>
                   <a role="button"
+                     data-ng-click="inspireValidation(h)"
+                     data-ng-show="statsForTerritory[h.uuid].count > 0"
+                     title="{{'restartInspireAll' | translate}}">
+                    <i class="fa fa-fw"></i>&nbsp;
+                    <span data-translate="">restartInspireAll</span>
+                  </a>
+                </li>
+                <li>
+                  <a role="button"
                      data-ng-click="eftValidation(h, true)"
                      data-ng-show="statsForTerritory[h.uuid].count > 0"
                      title="{{'restartEtfAll' | translate}}">

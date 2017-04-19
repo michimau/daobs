@@ -26,15 +26,19 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import org.daobs.event.EtfValidatorEvent;
+import org.daobs.event.TextEvent;
 import org.daobs.messaging.JmsMessager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.jms.TextMessage;
 
 
 /**
@@ -53,6 +57,10 @@ public class ValidationController {
   @Autowired
   private JmsMessager jmsMessager;
 
+
+  /**
+   * Run ETF validation.
+   */
   @ApiOperation(value = "Start ETF validation",
       nickname = "runEtf")
   @RequestMapping(value = "/validate/etf",
@@ -64,13 +72,27 @@ public class ValidationController {
   @ResponseBody
   public RequestResponse run(@RequestParam(required = true) String fq)
     throws Exception {
-    sendMessage(fq);
+    EtfValidatorEvent event = new EtfValidatorEvent(appContext, fq);
+    jmsMessager.sendMessage("etf-task-validate", event);
     return new RequestResponse("ETF Validator started", "success");
   }
 
-  private void sendMessage(String fq) {
-    EtfValidatorEvent event = new EtfValidatorEvent(appContext, fq);
 
-    jmsMessager.sendMessage("etf-task-validate", event);
+  /**
+   * Run INSPIRE validation.
+   */
+  @ApiOperation(value = "Start INSPIRE validation",
+      nickname = "runEtf")
+  @RequestMapping(value = "/validate/inspire",
+      produces = {
+        MediaType.APPLICATION_XML_VALUE,
+        MediaType.APPLICATION_JSON_VALUE
+      },
+      method = RequestMethod.GET)
+  @ResponseBody
+  public RequestResponse runInspireValidation(@RequestParam(required = true) String fq)
+      throws Exception {
+    jmsMessager.sendMessage("task-validate", fq);
+    return new RequestResponse("INSPIRE validation started", "success");
   }
 }
