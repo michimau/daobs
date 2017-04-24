@@ -4,7 +4,7 @@
 
 Download Kibana from https://www.elastic.co/fr/downloads/kibana
 
-Set Kibana base path and index name in config/kibana.yml
+Set Kibana base path and index name in config/kibana.yml:
 
 ```
 server.basePath: "/<webappname>/dashboard"
@@ -13,9 +13,14 @@ kibana.index: ".dashboards"
 
 ```
 
-Start Kibana.
+Start Kibana manually:
 
-Import configuration
+```
+cd kibana/bin
+./kibana
+```
+
+Import configuration:
 
 ```
 curl -X PUT http://localhost:9200/.dashboards/index-pattern/indicators -d @config/idx-pattern-indicators.json
