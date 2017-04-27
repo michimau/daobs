@@ -4,7 +4,7 @@
 
 Download Kibana from https://www.elastic.co/fr/downloads/kibana
 
-Set Kibana base path and index name in config/kibana.yml
+Set Kibana base path and index name in config/kibana.yml:
 
 ```
 server.basePath: "/<webappname>/dashboard"
@@ -26,7 +26,14 @@ If not starting properly, check Kibana log file (eg. may fail if Elasticsearch v
 is not compatible with Kibana version).
 
 
-Then import configuration
+Start Kibana manually:
+
+```
+cd kibana/bin
+./kibana
+```
+
+Import configuration:
 
 ```
 curl -X PUT http://localhost:9200/.dashboards/index-pattern/indicators -d @config/idx-pattern-indicators.json

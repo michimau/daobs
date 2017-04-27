@@ -136,7 +136,6 @@
                                 else if (name() = 'gco:Date' and string-length(.) = 7)
                                 then concat(., '-01T00:00:00')
                                 else if (name() = 'gco:Date' or string-length(.) = 10)
-<<<<<<< HEAD
                                 then concat(., 'T00:00:00')
                                 else if (contains(., '.'))
                                 then tokenize(., '\.')[1]
@@ -148,17 +147,6 @@
                                       xs:dayTimeDuration('PT0H'))
                                      ), 'Z', '')"/>
         </dateStamp>
-=======
-                                then concat(., 'T00:00:00Z')
-                                else if (contains(., '.'))
-                                then concat(tokenize(., '\.')[1], 'Z')
-                                else (
-                                  if (ends-with(., 'Z'))
-                                  then .
-                                  else concat(., 'Z')
-                                )"/>
-        </field>
->>>>>>> origin/1.0.x
       </xsl:for-each>
 
 
@@ -756,13 +744,9 @@
         <xsl:for-each select="gmd:report/*[
                 normalize-space(gmd:nameOfMeasure[0]/gco:CharacterString) != '']">
           <xsl:variable name="measureName"
-<<<<<<< HEAD
                         select="replace(
                                 normalize-space(
                                   gmd:nameOfMeasure[0]/gco:CharacterString), ' ', '-')"/>
-=======
-                        select="normalize-space(gmd:nameOfMeasure[0]/gco:CharacterString)"/>
->>>>>>> origin/1.0.x
           <xsl:for-each select="gmd:result/gmd:DQ_QuantitativeResult/gmd:value">
             <xsl:if test=". != ''">
               <xsl:element name="measure_{replace($measureName, '[^a-zA-Z0-9]', '')}">
