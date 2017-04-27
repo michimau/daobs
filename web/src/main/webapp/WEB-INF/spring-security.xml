@@ -38,6 +38,8 @@
   <http auto-config="true" entry-point-ref="httpAuthenticationEntryPoint">
     <intercept-url pattern="/api/me" access="permitAll"/>
     <intercept-url pattern="/login" access="permitAll" />
+    <intercept-url pattern="/es" access="permitAll" />
+    <intercept-url pattern="/dashboard" access="permitAll" />
     <intercept-url pattern="/assets/**" access="permitAll" />
     <intercept-url pattern="/app/**" access="permitAll" />
     <intercept-url pattern="/favicon.ico" access="permitAll" />

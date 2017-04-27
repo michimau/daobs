@@ -57,12 +57,10 @@
 
   <bean id="DashboardLoader"
         class="org.daobs.index.samples.loader.DashboardLoader">
-    <!--TODO ES <property name="collection" value="${index.core.dashboard}"/>-->
   </bean>
 
   <bean id="ReportingController"
         class="org.daobs.controller.ReportingController">
-    <!--TODO ES  <property name="collection" value="${index.core.data}"/>-->
   </bean>
 
   <bean id="harvesterConfigRepository"

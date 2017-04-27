@@ -316,11 +316,16 @@
         <version>${project.version}</version>
       </dependency>
 
-      <!-- compress -->
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-compress</artifactId>
         <version>1.7</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mitre.dsmiley.httpproxy</groupId>
+        <artifactId>smiley-http-proxy-servlet</artifactId>
+        <version>1.8</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -449,7 +454,6 @@
     <module>web</module>
     <module>messaging</module>
     <module>reporting</module>
-    <module>http-proxy</module>
     <module>es</module>
   </modules>
 
@@ -514,7 +518,7 @@
     <ldap.base.search.base>ou=Users</ldap.base.search.base>
     <ldap.base.dn.pattern>uid={0}</ldap.base.dn.pattern>
 
-    <lucene.version>6.4.1</lucene.version>
+    <lucene.version>6.4.2</lucene.version>
 
     <es.version>5.3.1</es.version>
     <es.version.md5>586559cc0931b7d3c22819b4d9db1a49</es.version.md5>
