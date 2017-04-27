@@ -13,9 +13,20 @@ kibana.index: ".dashboards"
 
 ```
 
-Start Kibana.
+Adapt if needed ```elasticsearch.url``` and ```server.host```.
 
-Import configuration
+Start Kibana. Kibana should be running from:
+
+```
+http://localhost:5601
+
+```
+
+If not starting properly, check Kibana log file (eg. may fail if Elasticsearch version
+is not compatible with Kibana version).
+
+
+Then import configuration
 
 ```
 curl -X PUT http://localhost:9200/.dashboards/index-pattern/indicators -d @config/idx-pattern-indicators.json

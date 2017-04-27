@@ -1067,6 +1067,9 @@
         "lineage": {
           "type": "text"
         },
+        "resolutionScaleDenominator": {
+          "type": "integer"
+        },
         "link": {
           "type": "text"
         },
