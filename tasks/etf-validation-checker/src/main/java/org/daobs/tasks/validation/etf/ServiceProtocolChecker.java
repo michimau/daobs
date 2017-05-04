@@ -269,6 +269,6 @@ public class ServiceProtocolChecker {
    *
    */
   private String buildUrl(String url, String params) {
-    return url + (url.endsWith("?") ? "" : "?") + params;
+    return url + (url.contains("?") ? "&" : "?") + params;
   }
 }
