@@ -87,14 +87,19 @@ public class EftValidationReportBuilder {
 
           String testName = element.getAttribute("name").toLowerCase();
 
+          // Test results have a convention name start with "O-" for optional tests
+          // and "M-" for mandatory tests.
+          boolean isOptional = testName.startsWith("o-");
+          boolean isMandatory = testName.startsWith("m-");
+
           // Optional/mandatory tests are indicated in the report
           // created by ETF in the name attribute
-          if (testName.endsWith("optional")) {
+          if (isOptional) {
             totalErrorsOptional += Integer.parseInt(element.getAttribute("errors"));
             totalFailuresOptional += Integer.parseInt(element.getAttribute("failures"));
             totalTestsOptional += Integer.parseInt(element.getAttribute("tests"));
             totalTimeOptional += Double.parseDouble(element.getAttribute("time"));
-          } else {
+          } else if (isMandatory) {
             totalErrorsMandatory += Integer.parseInt(element.getAttribute("errors"));
             totalFailuresMandatory += Integer.parseInt(element.getAttribute("failures"));
             totalTestsMandatory += Integer.parseInt(element.getAttribute("tests"));

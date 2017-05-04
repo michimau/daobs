@@ -83,6 +83,17 @@
               deferred.reject(response);
             });
             return deferred.promise;
+          },
+          inspireValidation: function (h) {
+            var query = '+harvesterUuid:' + h.uuid + ' +documentType:metadata';
+
+            var deferred = $q.defer();
+            $http.get(cfg.SERVICES.inspireValidation, {params: {fq: query}}).success(function (data) {
+              deferred.resolve(data);
+            }).error(function (response) {
+              deferred.reject(response);
+            });
+            return deferred.promise;
           }
         };
       }]);

@@ -33,6 +33,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 
 /**
  * Created by francois on 05/11/15.
@@ -51,13 +52,32 @@ public class JmsMessager {
 
   /**
    * Send a JMS message.
-     */
+   */
   public void sendMessage(final String queue, final ApplicationEvent event) {
     try {
       template.send(queue, new MessageCreator() {
         public Message createMessage(Session session)
           throws JMSException {
           ObjectMessage message = session.createObjectMessage(event);
+          log.info("JMSMessanger - message send (" + message.toString() + ") to queue: " + queue);
+          return message;
+        }
+      });
+    } catch (Exception exception) {
+      log.error(this.getClass().getSimpleName(), exception);
+      exception.printStackTrace();
+    }
+  }
+
+  /**
+   * Send a JMS text message.
+   */
+  public void sendMessage(final String queue, final String text) {
+    try {
+      template.send(queue, new MessageCreator() {
+        public Message createMessage(Session session)
+          throws JMSException {
+          TextMessage message = session.createTextMessage(text);
           log.info("JMSMessanger - message send (" + message.toString() + ") to queue: " + queue);
           return message;
         }
