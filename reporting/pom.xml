@@ -72,7 +72,7 @@
     <dependency>
       <groupId>org.elasticsearch</groupId>
       <artifactId>elasticsearch</artifactId>
-      <version>RELEASE</version>
+      <version>${es.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
