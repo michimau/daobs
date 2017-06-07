@@ -67,3 +67,31 @@ mvn exec:exec -Dkb-start
 Configure Kibana to start on server startup.
 
 
+### Backup index
+
+```
+npm install elasticdump -g
+
+elasticdump \
+  --input=http://localhost:9200/.dashboards \
+  --output=index-dashboards-mapping.json \
+  --type=mapping
+
+elasticdump \
+  --input=http://localhost:9200/.dashboards \
+  --output=index-dashboards.json
+  
+  
+
+
+
+elasticdump \
+  --input=index-dashboards-mapping.json \
+  --output=http://localhost:9200/.dashboards \
+  --type=mapping
+
+elasticdump \
+  --input=index-dashboards.json \
+  --output=http://localhost:9200/.dashboards 
+  
+```
