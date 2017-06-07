@@ -193,7 +193,8 @@
             "aggs": {
               "territory": {
                 "terms":  {
-                  "field": "territory"
+                  "field": "territory",
+                  "size": "100"
                 }
               },
               "resourceType": {

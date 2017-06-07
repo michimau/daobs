@@ -43,7 +43,7 @@
       reports: api + 'reports',
       samples: api + 'samples',
       dashboardBaseURL: context + 'dashboard/app/kibana?#/dashboard/',
-      eftValidation: api + 'validate/etf'
+      eftValidation: api + 'validate/etf',
       inspireValidation: api + 'validate/inspire'
     }
   });

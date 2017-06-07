@@ -58,12 +58,14 @@
                 "aggs": {
                   "reportingYear" : {
                     "terms" : {
-                      "field" : "reportingYear"
+                      "field" : "reportingYear",
+                      "size": "100"
                     }
                   },
                   "territory": {
                     "terms":  {
-                      "field": "territory"
+                      "field": "territory",
+                      "size": "100"
                     }
                   }
                 }

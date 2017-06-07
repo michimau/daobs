@@ -263,20 +263,20 @@
                 </li>
                 <li>
                   <a role="button"
-                     data-ng-click="remove(h)"
-                     title="{{'remove' | translate}}">
-                    <i class="fa fa-remove text-danger"></i>&nbsp;
-                    <span data-translate="">removeHarvester</span>
-                  </a>
-                </li>
-                <li>
-                  <a role="button"
                      data-ng-click="removeRecords(h)"
                      data-ng-show="statsForTerritory[h.uuid].count > 0"
                      title="{{'removeRecords' | translate}}">
                     <i
                       class="fa fa-remove text-danger"></i>&nbsp;
                     <span data-translate="">removeRecords</span>
+                  </a>
+                </li>
+                <li>
+                  <a role="button"
+                     data-ng-click="remove(h)"
+                     title="{{'remove' | translate}}">
+                    <i class="fa fa-remove text-danger"></i>&nbsp;
+                    <span data-translate="">removeHarvester</span>
                   </a>
                 </li>
                 <li role="separator" class="divider"

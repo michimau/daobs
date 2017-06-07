@@ -86,9 +86,7 @@
     <daobs:territory>LI</daobs:territory>
     <daobs:folder>LI</daobs:folder>
     <daobs:name>geocat.ch - liechtenstein</daobs:name>
-    <daobs:url>
-      http://www.geocat.ch/geonetwork/srv/ger/csw-liechtenstein-inspire
-    </daobs:url>
+    <daobs:url>https://www.geocat.ch/geonetwork/srv/ger/csw-liechtenstein-inspire</daobs:url>
     <daobs:pointOfTruthURLPattern>http://www.geocat.ch/geonetwork/?uuid={{uuid}}
     </daobs:pointOfTruthURLPattern>
   </daobs:harvester>
@@ -199,19 +197,9 @@
   </daobs:harvester>
 
   <daobs:harvester>
-    <daobs:uuid>08880fe1-c0a6-4916-bf7d-ae6536edc8e2</daobs:uuid>
+    <daobs:uuid>08980fe1-c0a6-4916-bf7d-ae6536edc8e2</daobs:uuid>
     <daobs:territory>CY</daobs:territory>
     <daobs:folder>CY</daobs:folder>
-    <daobs:name>Cyprus</daobs:name>
-    <daobs:url>http://inspire.cyprus.moi.gov.cy/geocatalog/srv/eng/csw</daobs:url>
-    <daobs:pointOfTruthURLPattern>http://inspire.cyprus.moi.gov.cy/geocatalog/?uuid={{uuid}}
-    </daobs:pointOfTruthURLPattern>
-  </daobs:harvester>
-
-  <daobs:harvester>
-    <daobs:uuid>08980fe1-c0a6-4916-bf7d-ae6536edc8e2</daobs:uuid>
-    <daobs:territory>CY2</daobs:territory>
-    <daobs:folder>CY2</daobs:folder>
     <daobs:name>Cyprus eservices</daobs:name>
     <daobs:url>http://eservices.dls.moi.gov.cy/geoportal_inspire/csw</daobs:url>
     <daobs:pointOfTruthURLPattern></daobs:pointOfTruthURLPattern>

@@ -103,7 +103,7 @@
     <servlet-class>org.mitre.dsmiley.httpproxy.ProxyServlet</servlet-class>
     <init-param>
       <param-name>targetUri</param-name>
-      <param-value>${kb.url}/dashboard</param-value>
+      <param-value>${kb.url}</param-value>
     </init-param>
     <init-param>
       <param-name>log</param-name>
