@@ -55,7 +55,7 @@ public class EsClientBean implements InitializingBean {
    * The first time this method is called, ping the
    * client to check connection status.
    *
-   * @return The Solr client instance.
+   * @return The index instance.
    */
   public TransportClient getClient() throws Exception {
     return client;
@@ -63,7 +63,7 @@ public class EsClientBean implements InitializingBean {
 
 
   /**
-   * Connect to the Solr client, ping the client
+   * Connect to the index, ping the client
    * to check connection and set the instance.
    *
    */
@@ -78,20 +78,20 @@ public class EsClientBean implements InitializingBean {
         instance = this;
       }
     } else {
-      throw new Exception(String.format("No Solr client URL defined in %s. "
+      throw new Exception(String.format("No index URL defined in %s. "
           + "Check bean configuration.", this.serverUrl));
     }
   }
 
   /**
-   * Return the Solr client URL.
+   * Return the index URL.
    */
   public String getServerUrl() {
     return serverUrl;
   }
 
   /**
-   * The Solr client URL.
+   * The index URL.
    */
   public EsClientBean setServerUrl(String serverUrl) {
     this.serverUrl = serverUrl;
@@ -99,14 +99,14 @@ public class EsClientBean implements InitializingBean {
   }
 
   /**
-   * Return Solr client username for credentials.
+   * Return index username for credentials.
    */
   public String getUsername() {
     return username;
   }
 
   /**
-   * The Solr client credentials username.
+   * The index credentials username.
    */
   public EsClientBean setUsername(String username) {
     this.username = username;
@@ -114,14 +114,14 @@ public class EsClientBean implements InitializingBean {
   }
 
   /**
-   * Return Solr client password for credentials.
+   * Return index password for credentials.
    */
   public String getPassword() {
     return password;
   }
 
   /**
-   * The Solr client credentials password.
+   * The index credentials password.
    */
   public EsClientBean setPassword(String password) {
     this.password = password;
