@@ -22,6 +22,7 @@
 package org.daobs.tasks.validation.etf;
 
 import org.apache.camel.Exchange;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -104,7 +105,7 @@ public class EtfValidatorBean {
 
       XPath xpath = XPathFactory.newInstance().newXPath();
 
-      String expression = "/doc/str[@name='harvesterUuid']";
+      String expression = "/e/harvesterUuid";
       String harvesterUuid =
           (String) xpath.compile(expression).evaluate(doc, XPathConstants.STRING);
 
@@ -116,13 +117,13 @@ public class EtfValidatorBean {
       final EtfValidatorClient validatorClient =
           new EtfValidatorClient(this.etfResourceTesterPath, reportPath, reportUrl, timeout);
 
-      expression = "/doc/arr[@name='serviceType']/str";
+      expression = "/e//serviceType";
       String serviceType = (String) xpath.compile(expression).evaluate(doc, XPathConstants.STRING);
 
-      expression = "/doc/arr[@name='linkUrl']/str";
+      expression = "/e//linkUrl";
       String url = (String) xpath.compile(expression).evaluate(doc, XPathConstants.STRING);
 
-      expression = "/doc/arr[@name='linkProtocol']/str";
+      expression = "/e//linkProtocol";
       String declaredProtocol =
           (String) xpath.compile(expression).evaluate(doc, XPathConstants.STRING);
 

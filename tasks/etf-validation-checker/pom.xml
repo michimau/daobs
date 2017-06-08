@@ -76,6 +76,10 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
   </dependencies>
 
   <profiles>
@@ -131,8 +135,6 @@
               </execution>
             </executions>
           </plugin>
-
-
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
             <executions>
@@ -154,7 +156,6 @@
               </execution>
             </executions>
           </plugin>
-
         </plugins>
       </build>
     </profile>
@@ -198,8 +199,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}/classes
-              </outputDirectory>
+              <outputDirectory>${project.build.directory}/classes</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.basedir}/src/main/resources</directory>

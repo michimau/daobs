@@ -22,6 +22,7 @@
 package org.daobs.tasks.validation.etf;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -120,7 +121,7 @@ public class EftValidationReportBuilder {
       report.setTotalTimeOptional(totalTimeOptional);
 
       // Replace CDATA sections in the xml
-      report.setReport(FileUtils.readFileToString(eftResults).replace("]]>", "]]]]><![CDATA[>"));
+      report.setReport(StringEscapeUtils.escapeJson(FileUtils.readFileToString(eftResults)));
       report.setReportUrl(reportUrl);
 
     } catch (Throwable ex) {
