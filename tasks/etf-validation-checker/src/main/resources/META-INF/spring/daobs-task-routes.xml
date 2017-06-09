@@ -283,7 +283,7 @@
     <cm:route id="route-validation-etf-checker">
       <cm:from uri="direct:validation-etf"/>
       <cm:setHeader headerName="beginTime">
-        <cm:simple>${date:now:yyyyMMdd'T'HH':'mm':'SS}</cm:simple>
+        <cm:simple>${date:now:yyyy-MM-dd'T'HH':'mm':'ss}</cm:simple>
       </cm:setHeader>
       <cm:log
         message="Checking record with UUID '$simple{header.documentIdentifier}'. Start at $simple{header.beginTime}. Body: $simple{body}"
