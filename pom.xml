@@ -567,7 +567,7 @@
     <posgresql.version>9.1-901.jdbc4</posgresql.version>
     <commons-dbcp.version>1.4</commons-dbcp.version>
 
-    <camel.version>2.18.0</camel.version>
+    <camel.version>2.18.4</camel.version>
 
     <jackson.version>1.9.2</jackson.version>
 
