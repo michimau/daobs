@@ -227,7 +227,7 @@
             logName="org.daobs.tasks.validation.etf"/>
 
           <cm:setHeader headerName="CamelHttpMethod">
-            <cm:constant>GET</cm:constant>
+            <cm:constant>POST</cm:constant>
           </cm:setHeader>
           <cm:setHeader headerName="Exchange.HTTP_URI">
             <cm:simple>{{es.url}}/{{es.index.records}}/_search</cm:simple>
