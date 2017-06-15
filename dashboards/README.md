@@ -33,17 +33,21 @@ cd kibana/bin
 ./kibana
 ```
 
-Import configuration:
+Import dashboard configuration:
 
 ```
-curl -X PUT http://localhost:9200/.dashboards/index-pattern/indicators -d @config/idx-pattern-indicators.json
-curl -X PUT http://localhost:9200/.dashboards/index-pattern/records -d @config/idx-pattern-records.json
+npm install elasticdump -g
 
+cd data
+elasticdump \
+  --input=index-dashboards-mapping.json \
+  --output=http://localhost:9200/.dashboards \
+  --type=mapping
 
+elasticdump \
+  --input=index-dashboards.json \
+  --output=http://localhost:9200/.dashboards 
 
-
-## TODO: Fix to load using bulk mode
-curl -X PUT http://localhost:9200/.dashboards -d @config/dashboards.json
 ```
 
 
@@ -79,19 +83,5 @@ elasticdump \
 
 elasticdump \
   --input=http://localhost:9200/.dashboards \
-  --output=index-dashboards.json
-  
-  
-
-
-
-elasticdump \
-  --input=index-dashboards-mapping.json \
-  --output=http://localhost:9200/.dashboards \
-  --type=mapping
-
-elasticdump \
-  --input=index-dashboards.json \
-  --output=http://localhost:9200/.dashboards 
-  
+  --output=index-dashboards.json  
 ```
