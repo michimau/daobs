@@ -132,7 +132,7 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
 
     if (!isUpdated) {
       Indicator newI = new Indicator();
-      newI.setName(newIndicator.getName());
+      newI.setId(newIndicator.getId());
       newI.setName(newIndicator.getName());
       newI.setComment(newIndicator.getComment());
       newI.setExpression(newIndicator.getExpression());
@@ -152,14 +152,12 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
     for (Indicator indicator : indicatorList) {
       if (indicator.getId().equals(indicatorId)) {
         indicatorList.remove(indicator);
-        isRemoved = true;
+        return this;
       }
     }
-    if (!isRemoved) {
-      throw new ResourceNotFoundException(String.format(
-        "Variable with id '%s' not found.", indicatorId));
-    }
-    return this;
+    
+    throw new ResourceNotFoundException(String.format(
+      "Variable with id '%s' not found.", indicatorId));
   }
 
   @Override
@@ -181,7 +179,7 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
 
     if (!isUpdated) {
       Variable newI = new Variable();
-      newI.setName(newVariable.getName());
+      newI.setId(newVariable.getId());
       newI.setName(newVariable.getName());
       newI.setComment(newVariable.getComment());
       newI.setQuery(newVariable.getQuery());
@@ -199,14 +197,11 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
     for (Variable variable : variableList) {
       if (variable.getId().equals(variableId)) {
         variableList.remove(variable);
-        isRemoved = true;
+        return this;
       }
     }
-    if (!isRemoved) {
-      throw new ResourceNotFoundException(String.format(
+    throw new ResourceNotFoundException(String.format(
         "Variable with id '%s' not found.", variableId));
-    }
-    return this;
   }
 
   @Override

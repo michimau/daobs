@@ -158,5 +158,14 @@
   "login.password": "Mot de passe",
   "login.password-placeholder": "Mot de passe",
   "login.userPassword-error": "Username or password is invalid.",
-  "signIn": "Se connecter"
+  "signIn": "Se connecter",
+  "type": "Type",
+  "action": "Action",
+  "addIndicator": "Ajouter un indicator",
+  "addVariable": "Ajouter une variable",
+  "query": "Requête",
+  "expression": "Expression",
+  "save": "Sauvegarder",
+  "queryLink": "Pour plus d'information sur la syntaxe des requêtes, consultez le <a target='_blank' href='https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax'>lien</a>",
+  "expressionLink": "Vous pouvez utiliser les opérateurs arithmétiques simples (+, -, *, /)"
 }

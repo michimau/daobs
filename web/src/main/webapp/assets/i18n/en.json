@@ -160,5 +160,14 @@
   "login.password": "Password",
   "login.password-placeholder": "Password",
   "login.userPassword-error": "Username or password is invalid.",
-  "signIn": "Sign in"
+  "signIn": "Sign in",
+  "type": "Type",
+  "action": "Action",
+  "addIndicator": "Add indicator",
+  "addVariable": "Add variable",
+  "query": "Query",
+  "expression": "Expression",
+  "save": "Save",
+  "queryLink":"For more information on queries syntax, see this <a target='_blank' href='https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax'>link</a>",
+  "expressionLink":"You can use simple arithemtic operators (+, -, *, /)"
 }

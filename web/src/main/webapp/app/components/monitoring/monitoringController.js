@@ -322,6 +322,8 @@
       // View report configuration
       $scope.getReportDetails = function () {
         //$scope.territory = null;
+        console.log(cfg.SERVICES.reports + '/' +
+          $scope.reporting.id + '.json');
         return $http.get(cfg.SERVICES.reports + '/' +
           $scope.reporting.id + '.json').success(function (data) {
           setReport(data);
@@ -342,6 +344,129 @@
           setReport(data);
         });
       };
+
+      // Delete indicator or variable
+      $scope.deleteIndicator = function (elem) {
+        if (elem.expression) {
+          return $http.delete(cfg.SERVICES.reports + '/' +
+            $scope.reporting.id + '/indicators/'+ elem.id).then(function successCallback(response) {
+              $scope.getReportDetails();
+          }, function errorCallback(response) {
+            //console.log(response);
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+          });
+        }
+        if (elem.query) {
+          return $http.delete(cfg.SERVICES.reports + '/' +
+            $scope.reporting.id + '/variables/'+ elem.id).then(function successCallback(response) {
+              $scope.getReportDetails();
+            }, function errorCallback(response) {
+              //console.log(response);
+              // called asynchronously if an error occurs
+              // or server returns response with an error status.
+          });
+        }
+      };
+
+      //Edit indicator or variable
+      $scope.editIndicator = function (elem) {
+        $scope.displayAddRule = true;
+        $scope.disabledId = true;
+        $scope.elem.id = elem.id;
+        $scope.elem.name = elem.name.content;
+        $scope.elem.definition = elem.comment;
+        if (elem.expression){
+          $scope.displayAddIndicator = true;
+          $scope.elem.expression = elem.expression;
+        }
+        if (elem.query){
+          $scope.displayAddIndicator = false;
+          $scope.elem.query = elem.query.value;
+        }
+      }
+
+      // Display indicator or variable form
+      $scope.elem = {};
+      $scope.displayAddRule = false;
+      $scope.displayAddIndicator = false;
+      $scope.showAddIndicator = function(){
+        $scope.elem={};
+        $scope.displayAddRule = true;
+        $scope.displayAddIndicator = true;
+        $scope.disabledId = false;
+      };
+      $scope.showAddVariable = function(){
+        $scope.elem={};
+        $scope.displayAddRule = true;
+        $scope.displayAddIndicator = false;
+        $scope.disabledId = false;
+      };
+
+      // Add indicator or variable
+      $scope.addRule= function (elem) {
+        $scope.name = {};
+        $scope.name['content'] = elem.name;
+        $scope.name['lang'] = 'en';
+        if (elem.expression){
+          $scope.indicator = {
+            "error": true,
+            "format": "string",
+            "numberFormat": "string",
+            "parameters": {
+              "parameter": []
+            },
+            "status": "string",
+            "value": "string"
+          };
+          var params = elem.expression.match(/([A-Za-z0-9_-]+)/g);
+          for (var i = params.length - 1; i >= 0; i--) {
+            $scope.indicator.parameters.parameter.push(
+              {
+              "error": true,
+              "id": params[i],
+              "status": "set",
+              "value": "0"
+            });
+          }
+          $scope.indicator['name'] = $scope.name;
+          $scope.indicator['comment'] = elem.definition;
+          $scope.indicator['expression'] = elem.expression;
+          $scope.indicator['id'] = elem.id;
+          $http.put(cfg.SERVICES.reports + '/' +
+            $scope.reporting.id + '/indicators', $scope.indicator).then(function (response) {
+              $scope.getReportDetails();
+              $scope.elem = {};
+              $scope.displayAddRule = false;
+          });
+        }
+        if (elem.query){
+          $scope.variable = {
+            "default": 0,
+            "error": true,
+            "format": "string",
+            "numberFormat": "string",
+            "status": "string",
+            "value": "string"
+          };
+          $scope.query = {
+            "stats": null,
+            "statsField": null,
+          };
+          $scope.query['value'] = elem.query;
+          $scope.variable['id'] = elem.id;
+          $scope.variable['comment'] = elem.definition;
+          $scope.variable['name'] = $scope.name;
+          $scope.variable['query'] = $scope.query;
+          $http.put(cfg.SERVICES.reports + '/' +
+            $scope.reporting.id + '/variables', $scope.variable).then(function (response) {
+              $scope.getReportDetails();
+              $scope.elem = {};
+              $scope.displayAddRule = false;
+          }); 
+        }
+      }
+
 
       $scope.submit = function (type) {
         $scope.overview = false;
@@ -375,6 +500,7 @@
         if (oldValue !== newValue) {
           $scope.filter && $location.search('filter', $scope.filter);
           getMatchingRecord();
+
         }
       });
 

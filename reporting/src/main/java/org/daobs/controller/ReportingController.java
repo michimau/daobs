@@ -368,11 +368,14 @@ public class ReportingController {
   @ResponseBody
   public ResponseEntity delIndicator(HttpServletRequest request,
                                      @ApiParam(
-                                       value = "The report type to generate",
+                                       value = "The report type to update",
                                        required = true)
                                      @PathVariable(value = "reporting")
                                        String reporting,
-                                     @PathVariable(value = "The indicator to remove")
+                                     @ApiParam(
+                                       value = "The indicator to remove",
+                                       required = true)
+                                     @PathVariable(value = "indicatorId")
                                        String indicatorId)
       throws IOException, org.daobs.api.exception.ResourceNotFoundException {
     IndicatorCalculatorImpl indicatorCalculator = null;
@@ -456,11 +459,14 @@ public class ReportingController {
   @ResponseBody
   public ResponseEntity delVariable(HttpServletRequest request,
                                      @ApiParam(
-                                       value = "The report type to generate",
+                                       value = "The report type to update",
                                        required = true)
                                      @PathVariable(value = "reporting")
                                        String reporting,
-                                     @PathVariable(value = "The variable to remove")
+                                      @ApiParam(
+                                       value = "The variable to remove",
+                                       required = true)
+                                     @PathVariable(value = "variableId")
                                        String variableId)
       throws IOException, org.daobs.api.exception.ResourceNotFoundException {
     IndicatorCalculatorImpl indicatorCalculator = null;

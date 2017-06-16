@@ -242,6 +242,7 @@
         </div>
       </div>
     </form>
+    
     <div data-ng-show="report != null && overview"
          id="ds-report-results">
       <h2 data-translate="">
@@ -259,9 +260,11 @@
 
       <table class="table table-striped">
         <tr>
-          <th></th>
+          <th data-translate="">id</th>
           <th data-translate="">name</th>
           <th data-translate="">definition</th>
+          <th data-translate="">type</th>
+          <th data-translate="">action</th>
         </tr>
         <tr>
           <th>
@@ -273,6 +276,8 @@
             <input class="form-control"
                    data-ng-model="reportConfigSearch.$"/>
           </th>
+          <th></th>
+          <th></th>
         </tr>
         <tr
           data-ng-repeat="v in rules | orderBy:'id' | filter:reportConfigSearch">
@@ -296,8 +301,119 @@
               {{v.expression}}
             </samp>
           </td>
+          <td>
+            <h4><span ng-if="v.query" class="label label-info">V</span></h4> 
+            <h4><span ng-if="v.expression" class="label label-success">I</span></h4>
+          </td>
+          <td>
+            <div class='row text-center'>
+              <button
+                class="btn btn-link"
+                data-ng-click="editIndicator(v)">
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button
+                class="btn btn-link"
+                data-ng-click="deleteIndicator(v)">
+                <i class="fa fa-times text-danger"></i>
+              </button>
+            </div>
+          </td>
         </tr>
       </table>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="ds-btn-indic-add"
+              type="submit"
+              class="btn btn-default"
+              data-ng-click="showAddIndicator()">
+              <i class="fa fa-plus"></i>&nbsp;
+              <span data-translate="">addIndicator</span></span>
+            </button>
+            <button id="ds-btn-variable-add"
+              type="submit"
+              class="btn btn-default"
+              data-ng-click="showAddVariable()">
+              <i class="fa fa-plus"></i>&nbsp;
+              <span data-translate="">addVariable</span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div ng-if="displayAddRule" class="col-12">
+        <br>
+        <form class="form-horizontal" role="form"  
+            name="ruleForm" ng-submit="submitForm(ruleForm.$valid)" 
+            novalidate>
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="form-group" id="ds-inputform-rule">
+                <label for="dds-input-ruleId"
+                  class="col-sm-3 control-label"
+                  data-translate="">id</label>
+                <div class="col-sm-9">
+                  <input id="ds-input-ruleId"
+                    data-ng-model="elem.id"
+                   class="form-control" ng-disabled="disabledId" required/>
+                </div>
+              </div>
+              <div class="form-group" id="ds-inputform-rule">
+                <label for="dds-input-ruleName"
+                  class="col-sm-3 control-label"
+                  data-translate="">name</label>
+                <div class="col-sm-9">
+                  <input id="ds-input-ruleName"
+                    data-ng-model="elem.name"
+                    class="form-control" required/>
+                </div>
+              </div>
+              <div ng-if="displayAddIndicator" class="form-group" 
+                id="ds-inputform-rule">
+                <label for="ds-input-ruleExpression"
+                  class="col-sm-3 control-label"
+                  data-translate="">expression</label>
+                <div class="col-sm-9">
+                  <input id="ds-input-ruleExpression"
+                    data-ng-model="elem.expression"
+                    class="form-control" required/>
+                  <p class="help-block ng-binding" data-translate="">expressionLink</p>
+                </div>
+              </div>
+              <div ng-if="!displayAddIndicator" class="form-group" 
+                id="ds-inputform-rule">         
+                <label for="ds-input-ruleQuery"
+                  class="col-sm-3 control-label"
+                  data-translate="">query</label>
+                <div class="col-sm-9">
+                  <input id="ds-input-ruleQuery"
+                    data-ng-model="elem.query"
+                    class="form-control" required/>
+                    <p class="help-block ng-binding" data-translate="">queryLink</p>
+                </div>
+              </div>
+              <div class="form-group" id="ds-inputform-rule">  
+                <label for="ds-input-ruleDefinition"
+                  class="col-sm-3 control-label"
+                  data-translate="">definition</label>
+                <div class="col-sm-9">
+                  <input id="ds-input-ruleDefinition"
+                    data-ng-model="elem.definition"
+                    class="form-control" required/>
+                </div>
+              </div>
+              <button id="ds-btn-indic-add"
+                type="submit"
+                class="btn btn-info pull-right"
+                data-ng-click="addRule(elem)"
+                ng-disabled="ruleForm.$invalid">
+                <i class="fa fa-floppy-o"></i>&nbsp;
+                <span data-translate="">save</span></span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
 
     <div data-ng-show="report != null && overview == false">
