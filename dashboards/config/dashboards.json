@@ -233,7 +233,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"indicators\",\"query\":{\"query_string\":{\"query\":\"+indicatorName:(NSv_NumViewServ or NSv_NumDiscServ or NSv_NumDownlServ or NSv_NumInvkServ or NSv_NumTransfServ)\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"indicators\",\"query\":{\"query_string\":{\"query\":\"+indicatorName:(NSv_NumViewServ or NSv_NumDiscServ or NSv_NumDownServ or NSv_NumInvkServ or NSv_NumTransfServ)\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
