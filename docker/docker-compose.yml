@@ -11,7 +11,7 @@ services:
       - "8080:8080"
     depends_on:
       - "elasticsearch"
-    command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "20", "--", "/docker-entry.sh"]
+    command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
 
   elasticsearch:
     build: ./elasticsearch
@@ -35,13 +35,14 @@ services:
 
 
   kibana:
-    image: eeacms/elk-kibana
+    build: ./kibana
     ports:
       - "5601:5601"
     volumes:
       - /backups:/backups
-    links:
-      - elasticsearch:elasticsearch
+    depends_on:
+      - "elasticsearch"
+    command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
     environment:
       #must match above!
       KIBANA_RW_USERNAME: admin
