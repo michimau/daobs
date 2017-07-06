@@ -3,7 +3,6 @@ from  eeacms/elk-kibana
 MAINTAINER doublebyte <joana.simoes@geocat.net>
 
 RUN echo "Updating Kibana configuration" && \
- #sed -i 's@#server.basePath: ""@server.basePath: "http://dashboard:8080/daobs/dashboard"@g' /kibana/config/kibana.yml  && \
  sed -i 's@#server.basePath: ""@server.basePath: "/daobs/dashboard"@g' /kibana/config/kibana.yml  && \
  sed -i 's@#kibana.index: ".kibana"@kibana.index: ".kibana"@g' /kibana/config/kibana.yml 
 

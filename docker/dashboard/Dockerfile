@@ -100,13 +100,25 @@ RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 # Cloning & building the DAOS repo
 RUN git clone https://github.com/INSPIRE-MIF/daobs.git
 WORKDIR /usr/local/tomcat/daobs
-RUN mvn clean package install -DskipTests -Drelax -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
+
+#RUN mvn -B -f pom.xml -s /usr/share/maven/ref/settings-docker.xml dependency:resolve
+
+RUN mvn install -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
+-Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
 -Detf.installation.path=${INSTALL_ETF_PATH}
+
+# Build and install ETF
+WORKDIR /usr/local/tomcat/daobs/tasks/etf-validation-checker
+RUN mvn install -Drelax -DskipTests -gs /usr/share/maven/ref/settings-docker.xml -Petf-download
+RUN mv ./ETF ${INSTALL_ETF_PATH}
 
 RUN cp /usr/local/tomcat/daobs/web/target/daobs.war /usr/local/tomcat/webapps
 
+# Cleanup
+RUN rm -rf /usr/local/tomcat/daobs/
+
 COPY ./wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /wait-for-it.sh
+#RUN chmod +x /wait-for-it.sh
 
 COPY ./docker-entry.sh /docker-entry.sh
 RUN chmod +x /docker-entry.sh
