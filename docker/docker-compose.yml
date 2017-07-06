@@ -5,13 +5,16 @@ services:
     build:
       context: ./dashboard
       args:
-          INSTALL_DASHBOARD_PATH: /mapped/drive/daobs-data-dir
           INSTALL_ETF_PATH: /var/local/etf
+          INSTALL_DASHBOARD_PATH: /daobs-data-dir/
+    volumes:
+       - /mapped/drive/daobs-data-dir:/daobs-data-dir/
+       - kibana:/kibana
     ports:
       - "8080:8080"
     depends_on:
-      - "elasticsearch"
-    command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
+      - "kibana"
+    command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
 
   elasticsearch:
     build: ./elasticsearch
@@ -33,16 +36,16 @@ services:
       #KIBANA_RO_USERNAME: changeme
       #KIBANA_RO_PASSWORD: changeme
 
-
   kibana:
     build: ./kibana
     ports:
       - "5601:5601"
     volumes:
+      - kibana:/kibana
       - /backups:/backups
     depends_on:
       - "elasticsearch"
-    command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
+    command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/kibana/bin/kibana"]
     environment:
       #must match above!
       KIBANA_RW_USERNAME: admin
@@ -77,5 +80,7 @@ volumes:
     elasticsearchData:
        driver: local
     backups:
+       driver: local
+    kibana:
        driver: local
 

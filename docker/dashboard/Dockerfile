@@ -2,8 +2,8 @@ from maven:3.5.0-jdk-8-alpine
 
 MAINTAINER doublebyte <joana.simoes@geocat.net>
 
-ARG INSTALL_DASHBOARD_PATH
 ARG INSTALL_ETF_PATH
+ARG INSTALL_DASHBOARD_PATH
 
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
@@ -15,6 +15,7 @@ WORKDIR $CATALINA_HOME
 ENV TOMCAT_NATIVE_LIBDIR $CATALINA_HOME/native-jni-lib
 ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$TOMCAT_NATIVE_LIBDIR
 
+RUN apk add --update nodejs nodejs-npm && npm install npm@latest -g
 RUN apk add --no-cache gnupg git
 
 # see https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/KEYS
@@ -101,10 +102,8 @@ RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 RUN git clone https://github.com/INSPIRE-MIF/daobs.git
 WORKDIR /usr/local/tomcat/daobs
 
-#RUN mvn -B -f pom.xml -s /usr/share/maven/ref/settings-docker.xml dependency:resolve
-
 RUN mvn install -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
--Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
+#-Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
 -Detf.installation.path=${INSTALL_ETF_PATH}
 
 # Build and install ETF
@@ -114,11 +113,14 @@ RUN mv ./ETF ${INSTALL_ETF_PATH}
 
 RUN cp /usr/local/tomcat/daobs/web/target/daobs.war /usr/local/tomcat/webapps
 
+# Load kibana dashboards
+RUN npm install elasticdump -g
+
 # Cleanup
-RUN rm -rf /usr/local/tomcat/daobs/
+#RUN rm -rf /usr/local/tomcat/daobs/
 
 COPY ./wait-for-it.sh /wait-for-it.sh
-#RUN chmod +x /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
 
 COPY ./docker-entry.sh /docker-entry.sh
 RUN chmod +x /docker-entry.sh
