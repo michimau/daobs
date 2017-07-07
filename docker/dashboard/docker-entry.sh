@@ -6,10 +6,8 @@ curl -X PUT http://elasticsearch:9200/indicators -d @/usr/local/tomcat/daobs/es/
 
 curl 'elasticsearch:9200/_cat/indices?v'
 
-echo -e "\e[91mLoad defaults for Kibana\e[96m"
-
-#cd /kibana/data;
 cd /usr/local/tomcat/daobs/dashboards/data/;
+rm index-dashboards-mapping.json && rm index-dashboards.json;
 
 elasticdump \
   --input=http://elasticsearch:9200/.dashboards \
