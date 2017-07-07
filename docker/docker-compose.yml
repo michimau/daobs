@@ -1,6 +1,23 @@
 version: '2'
 services:
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.3
+    volumes:
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.4.3
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+
   dashboard:
     build:
       context: ./dashboard
@@ -9,78 +26,13 @@ services:
           INSTALL_DASHBOARD_PATH: /daobs-data-dir/
     volumes:
        - /mapped/drive/daobs-data-dir:/daobs-data-dir/
-       - kibana:/kibana
     ports:
       - "8080:8080"
     depends_on:
       - "kibana"
     command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
 
-  elasticsearch:
-    build: ./elasticsearch
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    volumes:
-      - elasticsearchData:/usr/share/elasticsearch/data
-      - backups:/backups
-    environment:
-      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
-
-      #must match below!
-      KIBANA_RW_USERNAME: admin
-      KIBANA_RW_PASSWORD: tZGVophwWaVM
-      ENABLE_SSL: 0
-
-      #in case you don't want public read only access, uncommend and set
-      #KIBANA_RO_USERNAME: changeme
-      #KIBANA_RO_PASSWORD: changeme
-
-  kibana:
-    build: ./kibana
-    ports:
-      - "5601:5601"
-    volumes:
-      - kibana:/kibana
-      - /backups:/backups
-    depends_on:
-      - "elasticsearch"
-    command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/kibana/bin/kibana"]
-    environment:
-      #must match above!
-      KIBANA_RW_USERNAME: admin
-      KIBANA_RW_PASSWORD: tZGVophwWaVM
-      ENABLE_SSL: 0
-
-      SSL_KEY: |-
-          -----BEGIN RSA PRIVATE KEY-----
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          -----END RSA PRIVATE KEY-----
-
-      SSL_CERT: |-
-          -----BEGIN CERTIFICATE-----
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          -----END CERTIFICATE-----
-
-      AUTH_CERT: |-
-          -----BEGIN CERTIFICATE-----
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          changemechangemechangemechangemechangemechangemechangemechangeme
-          -----END CERTIFICATE-----
-
 volumes:
     elasticsearchData:
-       driver: local
-    backups:
-       driver: local
-    kibana:
        driver: local
 
