@@ -102,7 +102,10 @@ RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 RUN git clone https://github.com/INSPIRE-MIF/daobs.git
 WORKDIR /usr/local/tomcat/daobs
 
-RUN mvn install -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
+RUN mvn install \
+ -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
+ -Dwebapp.context=/daobs/  \
+ -Dwebapp.rootUrl=/daobs/ \
 #-Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
 -Detf.installation.path=${INSTALL_ETF_PATH}
 
@@ -118,6 +121,8 @@ RUN npm install elasticdump -g
 
 # Cleanup
 #RUN rm -rf /usr/local/tomcat/daobs/
+
+#COPY ./server.xml /usr/local/tomcat/conf/server.xml
 
 COPY ./wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh

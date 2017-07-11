@@ -17,6 +17,9 @@ services:
       - "5601:5601"
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./kibana/wait-for-it.sh:/wait-for-it.sh
+      - ./kibana/docker-entry.sh:/docker-entry.sh
+    command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
 
   dashboard:
     build:
@@ -29,7 +32,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - "kibana"
+      - "elasticsearch"
     command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
 
   nginx:
@@ -43,6 +46,7 @@ services:
     volumes:
       #- ./nginx/assets/certs:/etc/nginx/certs
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      #- /host/share:/tmp
 
 volumes:
     elasticsearchData:
