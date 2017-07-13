@@ -106,6 +106,8 @@ RUN mvn install \
  -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
  -Dwebapp.context=/daobs/  \
  -Dwebapp.rootUrl=/daobs/ \
+ -Des.url=http://elasticsearch:9200 \
+ -Dkb.url=http://kibana:5601 \
 #-Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
 -Detf.installation.path=${INSTALL_ETF_PATH}
 

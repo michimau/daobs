@@ -16,5 +16,5 @@ xpack.ml.enabled: false
 xpack.graph.enabled: false
 xpack.reporting.enabled: false
 
-#server.basePath: "/dashboard"
+server.basePath: "/daobs/dashboard"
 kibana.index: ".dashboards"
