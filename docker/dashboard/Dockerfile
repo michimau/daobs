@@ -2,8 +2,11 @@ from maven:3.5.0-jdk-8-alpine
 
 MAINTAINER doublebyte <joana.simoes@geocat.net>
 
-ARG INSTALL_ETF_PATH
-ARG INSTALL_DASHBOARD_PATH
+#ARG INSTALL_ETF_PATH
+#ARG INSTALL_DASHBOARD_PATH
+
+ENV INSTALL_ETF_PATH /var/local/etf
+ENV INSTALL_DASHBOARD_PATH /daobs-data-dir
 
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
@@ -95,7 +98,7 @@ RUN set -e \
 	fi
 
 # Create dirs if they don't exist yet
-RUN echo ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard && mkdir -p ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
+RUN echo ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard && mkdir -p ${INSTALL_DASHBOARD_PATH} && mkdir -p ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
 RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 
 # Cloning & building the DAOS repo
@@ -108,7 +111,7 @@ RUN mvn install \
  -Dwebapp.rootUrl=/daobs/ \
  -Des.url=http://elasticsearch:9200 \
  -Dkb.url=http://kibana:5601 \
-#-Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
+-Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
 -Detf.installation.path=${INSTALL_ETF_PATH}
 
 # Build and install ETF
@@ -117,6 +120,7 @@ RUN mvn install -Drelax -DskipTests -gs /usr/share/maven/ref/settings-docker.xml
 RUN mv ./ETF ${INSTALL_ETF_PATH}
 
 RUN cp /usr/local/tomcat/daobs/web/target/daobs.war /usr/local/tomcat/webapps
+#RUN cp -r /usr/local/tomcat/daobs/web/target/daobs/WEB-INF/datadir/ ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
 
 # Load kibana dashboards
 RUN npm install elasticdump -g

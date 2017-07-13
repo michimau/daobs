@@ -14,6 +14,8 @@ elasticdump \
   --input=http://elasticsearch:9200/.dashboards \
   --output=index-dashboards.json
 
+cp -r $CATALINA_HOME/daobs/web/target/daobs/WEB-INF/datadir/* ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
+
 echo -e "\e[96mStart tomcat\e[0m"
 
 cd $CATALINA_HOME
