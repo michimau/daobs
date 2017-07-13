@@ -37,16 +37,6 @@ services:
       - "kibana"
     command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
 
-  apache:
-    build:
-      context: ./apache
-    ports:
-       - "8081:80"
-       - "8443:443"
-    volumes:
-       - ./apache/apache2.conf:/etc/apache2/apache2.conf
-    container_name: "apache"
-
   nginx:
     hostname: nginx
     image: nginx:stable-alpine
