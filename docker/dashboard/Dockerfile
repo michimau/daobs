@@ -25,9 +25,9 @@ RUN apk add --no-cache gnupg git
 # see also "update.sh" (https://github.com/docker-library/tomcat/blob/master/update.sh)
 ENV GPG_KEYS 05AB33110949707C93A279E3D3EFE6B686867BA6 07E48665A34DCAFAE522E5E6266191C37C037D42 47309207D818FFD8DCD3F83F1931D684307A10A5 541FBE7D8F78B25E055DDEE13C370389288584E7 61B832AC2F1C5A90F0F9B00A1C506407564C17A3 713DA88BE50911535FE716F5208B0AB1D63011C7 79F7026C690BAA50B92CD8B66A3AD3F4F22C4FED 9BA44C2621385CB966EBA586F72C284D731FABEE A27677289986DB50844682F8ACB77FC2E86E29AC A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243 F3A04C595DB5B6A5F1ECA43E3B7BBB100D811BBE F7DA48BB64BCB84ECBA7EE6935CD23C10D498E23
 RUN set -ex; \
-	for key in $GPG_KEYS; do \
-		gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
-	done
+  for key in $GPG_KEYS; do \
+    gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+  done
 
 ENV TOMCAT_MAJOR 8
 ENV TOMCAT_VERSION 8.5.16
@@ -38,64 +38,64 @@ ENV TOMCAT_TGZ_URL https://www.apache.org/dyn/closer.cgi?action=download&filenam
 ENV TOMCAT_ASC_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz.asc
 
 RUN set -x \
-	\
-	&& apk add --no-cache --virtual .fetch-deps \
-		ca-certificates \
-		tar \
-		openssl \
-	&& wget -O tomcat.tar.gz "$TOMCAT_TGZ_URL" \
-	&& wget -O tomcat.tar.gz.asc "$TOMCAT_ASC_URL" \
-	&& gpg --batch --verify tomcat.tar.gz.asc tomcat.tar.gz \
-	&& tar -xvf tomcat.tar.gz --strip-components=1 \
-	&& rm bin/*.bat \
-	&& rm tomcat.tar.gz* \
-	\
-	&& nativeBuildDir="$(mktemp -d)" \
-	&& tar -xvf bin/tomcat-native.tar.gz -C "$nativeBuildDir" --strip-components=1 \
-	&& apk add --no-cache --virtual .native-build-deps \
-		apr-dev \
-		coreutils \
-		dpkg-dev dpkg \
-		gcc \
-		libc-dev \
-		make \
-		"openjdk${JAVA_VERSION%%[-~bu]*}"="$JAVA_ALPINE_VERSION" \
-		openssl-dev \
-	&& ( \
-		export CATALINA_HOME="$PWD" \
-		&& cd "$nativeBuildDir/native" \
-		&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
-		&& ./configure \
-			--build="$gnuArch" \
-			--libdir="$TOMCAT_NATIVE_LIBDIR" \
-			--prefix="$CATALINA_HOME" \
-			--with-apr="$(which apr-1-config)" \
-			--with-java-home="$(docker-java-home)" \
-			--with-ssl=yes \
-		&& make -j "$(nproc)" \
-		&& make install \
-	) \
-	&& runDeps="$( \
-		scanelf --needed --nobanner --recursive "$TOMCAT_NATIVE_LIBDIR" \
-			| awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
-			| sort -u \
-			| xargs -r apk info --installed \
-			| sort -u \
-	)" \
-	&& apk add --virtual .tomcat-native-rundeps $runDeps \
-	&& apk del .fetch-deps .native-build-deps \
-	&& rm -rf "$nativeBuildDir" \
-	&& rm bin/tomcat-native.tar.gz
+  \
+  && apk add --no-cache --virtual .fetch-deps \
+    ca-certificates \
+    tar \
+    openssl \
+  && wget -O tomcat.tar.gz "$TOMCAT_TGZ_URL" \
+  && wget -O tomcat.tar.gz.asc "$TOMCAT_ASC_URL" \
+  && gpg --batch --verify tomcat.tar.gz.asc tomcat.tar.gz \
+  && tar -xvf tomcat.tar.gz --strip-components=1 \
+  && rm bin/*.bat \
+  && rm tomcat.tar.gz* \
+  \
+  && nativeBuildDir="$(mktemp -d)" \
+  && tar -xvf bin/tomcat-native.tar.gz -C "$nativeBuildDir" --strip-components=1 \
+  && apk add --no-cache --virtual .native-build-deps \
+    apr-dev \
+    coreutils \
+    dpkg-dev dpkg \
+    gcc \
+    libc-dev \
+    make \
+    "openjdk${JAVA_VERSION%%[-~bu]*}"="$JAVA_ALPINE_VERSION" \
+    openssl-dev \
+  && ( \
+    export CATALINA_HOME="$PWD" \
+    && cd "$nativeBuildDir/native" \
+    && gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
+    && ./configure \
+      --build="$gnuArch" \
+      --libdir="$TOMCAT_NATIVE_LIBDIR" \
+      --prefix="$CATALINA_HOME" \
+      --with-apr="$(which apr-1-config)" \
+      --with-java-home="$(docker-java-home)" \
+      --with-ssl=yes \
+    && make -j "$(nproc)" \
+    && make install \
+  ) \
+  && runDeps="$( \
+    scanelf --needed --nobanner --recursive "$TOMCAT_NATIVE_LIBDIR" \
+      | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+      | sort -u \
+      | xargs -r apk info --installed \
+      | sort -u \
+  )" \
+  && apk add --virtual .tomcat-native-rundeps $runDeps \
+  && apk del .fetch-deps .native-build-deps \
+  && rm -rf "$nativeBuildDir" \
+  && rm bin/tomcat-native.tar.gz
 
 # verify Tomcat Native is working properly
 RUN set -e \
-	&& nativeLines="$(catalina.sh configtest 2>&1)" \
-	&& nativeLines="$(echo "$nativeLines" | grep 'Apache Tomcat Native')" \
-	&& nativeLines="$(echo "$nativeLines" | sort -u)" \
-	&& if ! echo "$nativeLines" | grep 'INFO: Loaded APR based Apache Tomcat Native library' >&2; then \
-		echo >&2 "$nativeLines"; \
-		exit 1; \
-	fi
+  && nativeLines="$(catalina.sh configtest 2>&1)" \
+  && nativeLines="$(echo "$nativeLines" | grep 'Apache Tomcat Native')" \
+  && nativeLines="$(echo "$nativeLines" | sort -u)" \
+  && if ! echo "$nativeLines" | grep 'INFO: Loaded APR based Apache Tomcat Native library' >&2; then \
+    echo >&2 "$nativeLines"; \
+    exit 1; \
+  fi
 
 # Create dirs if they don't exist yet
 RUN echo ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard && mkdir -p ${INSTALL_DASHBOARD_PATH} && mkdir -p ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
@@ -107,12 +107,12 @@ WORKDIR /usr/local/tomcat/daobs
 
 RUN mvn install \
  -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
- -Dwebapp.context=/daobs/  \
+ -Dwebapp.context=/daobs  \
  -Dwebapp.rootUrl=/daobs/ \
  -Des.url=http://elasticsearch:9200 \
  -Dkb.url=http://kibana:5601 \
--Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
--Detf.installation.path=${INSTALL_ETF_PATH}
+ -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
+ -Detf.installation.path=${INSTALL_ETF_PATH}
 
 # Build and install ETF
 WORKDIR /usr/local/tomcat/daobs/tasks/etf-validation-checker

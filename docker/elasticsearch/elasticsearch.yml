@@ -1,8 +1,12 @@
 ## Default Elasticsearch configuration from elasticsearch-docker.
 ## from https://github.com/elastic/elasticsearch-docker/blob/master/build/elasticsearch/elasticsearch.yml
 #
-cluster.name: "docker-cluster"
-#network.host: 0.0.0.0
+#cluster.name: "docker-cluster"
+
+transport.host: 0.0.0.0
+
+http.host: 0.0.0.0
+
 network.bind_host: 0
 
 # minimum_master_nodes need to be explicitly set when bound on a public IP
@@ -26,4 +30,4 @@ xpack.graph.enabled: false
 xpack.watcher.enabled: false
 
 #Accept all requests from localhost, dashboard and kibana
-#network.host: [127.0.0.1, localhost, dashboard, kibana, nginx]
+network.host: [127.0.0.1, localhost]
