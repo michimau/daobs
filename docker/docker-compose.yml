@@ -33,7 +33,7 @@ services:
     build:
       context: ./dashboard
     volumes:
-       - /mapped/drive/daobs-data-dir:/daobs-data-dir/
+       - daobsdir:/daobs-data-dir/
     #ports:
     #  - "8080:8080"
     expose:
@@ -58,4 +58,6 @@ services:
 
 volumes:
     esdata:
+       driver: local
+    daobsdir:
        driver: local

@@ -74,7 +74,8 @@ server {
 Persisted Volumes
 -----------------
 The folder `/usr/share/elasticsearch/data` is persisted to a named volume called `esdata`. Unless explicitly removed, this volume will be persisted on the host folder: `var/lib/docker/volumes/docker_esdata/_data`.
-The folder `/daobs-data-dir/`, which is mapped in the dockerfile to environmental variable `INSTALL_DASHBOARD_PATH`, is mapped to a host directory: `/mapped/drive/daobs-data-dir`. If you change `INSTALL_DASHBOARD_PATH` on the dockerfile, remember to also change the mapping on docker-compose, or your data directory won't be persisted.
+The folder `/daobs-data-dir/`, which is mapped in the dockerfile to environmental variable `INSTALL_DASHBOARD_PATH`, is persisted in a volume called: `daobsdatadir`. If you change `INSTALL_DASHBOARD_PATH` on the dockerfile, remember to also change the mapping on docker-compose, or your data directory won't be persisted.
+Depending on your docker configuration, the volumes are stored on the host on this path `/var/lib/docker/volumes/`.
 
 Security
 --------
