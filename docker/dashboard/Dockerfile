@@ -111,8 +111,10 @@ RUN mvn install \
  -Dwebapp.rootUrl=/daobs/ \
  -Des.url=http://elasticsearch:9200 \
  -Dkb.url=http://kibana:5601 \
--Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
--Detf.installation.path=${INSTALL_ETF_PATH}
+ -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
+ -Detf.installation.path=${INSTALL_ETF_PATH} \
+ -Des.url=http://elasticsearch:9200 \
+ -Dkb.url=http://kibana:5601
 
 # Build and install ETF
 WORKDIR /usr/local/tomcat/daobs/tasks/etf-validation-checker
