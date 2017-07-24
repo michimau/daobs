@@ -102,8 +102,10 @@ RUN echo ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard && mkdir -p ${INSTALL_DA
 RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 
 # Cloning & building the DAOS repo
-RUN git clone https://github.com/INSPIRE-MIF/daobs.git
+#RUN git clone https://github.com/INSPIRE-MIF/daobs.git
 WORKDIR /usr/local/tomcat/daobs
+
+ADD ./ /usr/local/tomcat/daobs
 
 RUN mvn install \
  -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
