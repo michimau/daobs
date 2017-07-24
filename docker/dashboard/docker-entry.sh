@@ -2,19 +2,26 @@
 
 curl 'elasticsearch:9200/_cat/indices?v'
 
-cd /usr/local/tomcat/daobs/dashboards/data/;
-#rm index-dashboards-mapping.json && rm index-dashboards.json;
+# Create index
+cd /usr/local/tomcat/daobs/es/config;
+curl -X PUT http://elasticsearch:9200/records -d @records.json;
+curl -X PUT http://elasticsearch:9200/indicators -d @indicators.json;
 
+cd /usr/local/tomcat/daobs/dashboards/data;
 elasticdump \
-  --input=http://elasticsearch:9200/.dashboards \
-  --output=index-dashboards-mapping.json \
+  --input=index-dashboards-mapping.json \
+  --output=http://elasticsearch:9200/.dashboards \
   --type=mapping
 
 elasticdump \
-  --input=http://elasticsearch:9200/.dashboards \
-  --output=index-dashboards.json
+  --input=index-dashboards.json \
+  --output=http://elasticsearch:9200/.dashboards
 
-cp -r $CATALINA_HOME/daobs/web/target/daobs/WEB-INF/datadir/* ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
+#rm index-dashboards-mapping.json && rm index-dashboards.json;
+
+
+cp -r $CATALINA_HOME/daobs/web/target/daobs/WEB-INF/datadir/* \
+    ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
 
 echo -e "\e[96mStart tomcat\e[0m"
 
