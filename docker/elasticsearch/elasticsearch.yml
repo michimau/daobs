@@ -30,4 +30,4 @@ xpack.graph.enabled: false
 xpack.watcher.enabled: false
 
 #Accept all requests from localhost, dashboard and kibana
-network.host: [127.0.0.1, localhost]
+network.host: [127.0.0.1, localhost, dashboard, kibana, nginx]
