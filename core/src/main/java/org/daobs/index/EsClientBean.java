@@ -71,15 +71,15 @@ public class EsClientBean implements InitializingBean {
   public void afterPropertiesSet() throws Exception {
     if (serverUrl != null) {
       Settings settings = Settings.builder()
-        .put("client.transport.sniff", false)
-        .put("client.transport.ignore_cluster_name", true).build();
+          .put("client.transport.sniff", false)
+          .put("client.transport.ignore_cluster_name", true).build();
 
       // Set nodes to localhost or docker elasticsearch container
       // TODO: externalize configuration
       client = new PreBuiltTransportClient(settings)
-        .addTransportAddress(new InetSocketTransportAddress(
+          .addTransportAddress(new InetSocketTransportAddress(
           InetAddress.getByName("127.0.0.1"), 9300))
-        .addTransportAddress(new InetSocketTransportAddress(
+          .addTransportAddress(new InetSocketTransportAddress(
           InetAddress.getByName("elasticsearch"), 9300));
 
       synchronized (EsClientBean.class) {
