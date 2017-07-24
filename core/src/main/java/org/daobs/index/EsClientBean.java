@@ -70,9 +70,13 @@ public class EsClientBean implements InitializingBean {
   @Override
   public void afterPropertiesSet() throws Exception {
     if (serverUrl != null) {
-      client = new PreBuiltTransportClient(Settings.EMPTY)
+      Settings settings = Settings.builder()
+        .put("client.transport.sniff", false)
+        .put("client.transport.ignore_cluster_name", true).build();
+
+      client = new PreBuiltTransportClient(settings)
         .addTransportAddress(new InetSocketTransportAddress(
-          InetAddress.getByName("127.0.0.1"), 9300));
+          InetAddress.getByName("elasticsearch"), 9300));
 
       synchronized (EsClientBean.class) {
         instance = this;
