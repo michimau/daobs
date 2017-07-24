@@ -42,7 +42,7 @@ The dashboard Dockerfile contains two environmental variables: `INSTALL_ETF_PATH
 ```java
 RUN mvn install \
  -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
- -Dwebapp.context=/daobs/  \
+ -Dwebapp.context=/daobs  \
  -Dwebapp.rootUrl=/daobs/ \
  -Des.url=http://elasticsearch:9200 \
  -Dkb.url=http://kibana:5601 \
@@ -62,12 +62,9 @@ server {
   listen          80;
   server_name     daobs;
 
-
-        location /daobs {
-
-           proxy_pass http://dashboard:8080/daobs/;
-           proxy_redirect http://dashboard:8080/daobs /;
-        }
+  location /daobs {
+     proxy_pass http://dashboard:8080/daobs/;
+  }
 }
 ```
 

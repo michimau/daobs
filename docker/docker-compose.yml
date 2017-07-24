@@ -7,8 +7,8 @@ services:
       - esdata:/usr/share/elasticsearch/data
       - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     #ports:
-    #  - "9200:9200"
-    #  - "9300:9300"
+     # - "9200:9200"
+     # - "9300:9300"
     expose:
       - "9200"
       - "9300"
@@ -34,9 +34,9 @@ services:
       context: ../
     volumes:
        - daobsdir:/daobs-data-dir/
-       #- m2:/usr/share/maven/ref/repository
     #ports:
     #  - "8080:8080"
+    #- m2:/usr/share/maven/ref/repository
     expose:
       - "8080"
     depends_on:

@@ -19,7 +19,6 @@ elasticdump \
 
 #rm index-dashboards-mapping.json && rm index-dashboards.json;
 
-
 cp -r $CATALINA_HOME/daobs/web/target/daobs/WEB-INF/datadir/* \
     ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
 
