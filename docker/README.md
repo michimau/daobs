@@ -44,10 +44,11 @@ RUN mvn install \
  -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
  -Dwebapp.context=/daobs  \
  -Dwebapp.rootUrl=/daobs/ \
+ -Des.host=elasticsearch \
  -Des.url=http://elasticsearch:9200 \
  -Dkb.url=http://kibana:5601 \
--Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
--Detf.installation.path=${INSTALL_ETF_PATH}
+ -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
+ -Detf.installation.path=${INSTALL_ETF_PATH}
 ```
 Elasticsearch reads its configuration from `./elasticsearch/elasticsearch.yml`.
 Kibana reads its configuration from `./kibana/kibana.yml`. XPack is disabled in both services. Additionally, these settings are relevant on `kibana.yml`:
