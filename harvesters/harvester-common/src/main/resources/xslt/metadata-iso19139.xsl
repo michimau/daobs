@@ -862,7 +862,7 @@
                   as="xs:string*"/>
 
     <xsl:variable name="role"
-                  select="*[1]/gmd:role/*/@codeListValue"
+                  select="replace(*[1]/gmd:role/*/@codeListValue, ' ', '')"
                   as="xs:string?"/>
     <xsl:if test="normalize-space($organisationName) != ''">
       <xsl:element name="Org{$fieldSuffix}">
