@@ -53,19 +53,19 @@
           }
         });
 
-        $http.get(cfg.SERVICES.samples + '/dashboardType.json').success(function (data) {
-          $scope.listOfDashboardToLoad = data;
-        });
+        // $http.get(cfg.SERVICES.samples + '/dashboardType.json').success(function (data) {
+        //   $scope.listOfDashboardToLoad = data;
+        // });
       };
 
       // TODO: Move to dashboard service
       $scope.loadDashboard = function (type) {
         $scope.dashboardsLoaded = null;
-        return $http.put(cfg.SERVICES.samples +
-          '/dashboard/' + type + '*.json').success(function (data) {
-          $scope.dashboardsLoaded = data;
-          init();
-        });
+        // return $http.put(cfg.SERVICES.samples +
+        //   '/dashboard/' + type + '*.json').success(function (data) {
+        //   $scope.dashboardsLoaded = data;
+        //   init();
+        // });
       };
 
       $scope.removeDashboard = function (id) {

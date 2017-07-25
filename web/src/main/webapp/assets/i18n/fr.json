@@ -43,7 +43,6 @@
   "configure": "Configurer",
   "viewRecords": "Voir les fiches",
   "remove": "Supprimer",
-  "reloadDashboards": "Charger ou recharger les tableaux de bords par défaut.",
   "errorGettingRemoteHits": "Échec lors de la demande du nombre de fiches.",
   "recordsInRemote": " fiches (dans le CSW)",
   "getHitsNumber": "Nombre de fiches dans le CSW",

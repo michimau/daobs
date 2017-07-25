@@ -92,39 +92,6 @@
       </ul>
     </div>
 
-<!-- TODO ES
-    <div class="pull-right" data-ng-show="getUser().authenticated">
-      <span data-ng-if="dashboards.length === 0"
-            data-translate="">noDashboard</span>
-      <div class="btn-group">
-        <button type="button"
-                class="btn btn-primary dropdown-toggle"
-                data-toggle="dropdown" aria-expanded="false"
-                title="{{'reloadDashboards' | translate}}">
-          <i class="fa fa-plus"></i>&nbsp;
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-          <li role="presentation"
-              class="dropdown-header"
-              data-translate="">chooseATypeOfDashboardToLoad
-          </li>
-          <li data-ng-repeat="item in listOfDashboardToLoad">
-            <a href=""
-               data-ng-click="loadDashboard(item)">{{item}}</a></li>
-        </ul>
-      </div>
-      <button class="btn btn-danger"
-              data-ng-show="dashboards.length > 1"
-              data-ng-click="removeDashboard()">
-        <span data-translate=""
-              data-translate-values="{number: '{{dashboards.length}}'}">
-          deleteAllDashboards</span>
-        <i class="fa fa-times"></i>
-      </button>
-    </div>-->
-    <br/><br/>
-
     <div class="alert alert-info"
          role="alert"
          data-ng-if="dashboardsLoaded !== null">
