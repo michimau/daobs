@@ -111,7 +111,8 @@
               "aggs": {
                 "top_territory": {
                   "terms":  {
-                    "field": "harvesterUuid"
+                    "field": "harvesterUuid",
+                    "size": "1000"
                   },
                   "aggs" : {
                     "isValid": {
