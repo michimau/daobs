@@ -2,8 +2,8 @@ DAOBS orchestration
 ===================
 This project orchestrates four containers, in order to serve the DAOBS dasboard application:
 * [Dashboard](https://github.com/INSPIRE-MIF/daobs/): web app which collects information and configures indicators to generate reporting.
-* [Elasticsearch](https://github.com/elastic/elasticsearch-docker/tree/5.5): ElasticSearch 5.4.3 - official image from elastic.
-* [Kibana](https://github.com/elastic/kibana): Kibana 5.4.3 - official image from elastic.
+* [Elasticsearch](https://github.com/elastic/elasticsearch-docker/tree/5.5): ElasticSearch 5 - official image from elastic.
+* [Kibana](https://github.com/elastic/kibana): Kibana 5 - official image from elastic.
 * [Nginx](https://hub.docker.com/_/nginx/): web server; configured as a proxy.
 
 In order to optimize image size, whenever possible [alpine](https://alpinelinux.org/) based images are used as base images. The only image we build is the `dashboard`; all other images are pulled from the relevant repositories, and configured using configuration files on mounted volumes; the `elasticsearch` and `kibana` images are pulled from the official elastic repositories, while `nginx` is pulled from the docker official repositories.
@@ -25,10 +25,8 @@ The dashboard application is available at:
 ```bash
 http://localhost/daobs
 ```
-It can also be accessed, directly at the dashboard container, at:
-```bash
-http://localhost:8080/daobs
-```
+
+
 The dashboard container
 -----------------------
 The dashboard container is based on a maven-alpine linux image.
@@ -50,12 +48,15 @@ RUN mvn install \
  -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
  -Detf.installation.path=${INSTALL_ETF_PATH}
 ```
+
 Elasticsearch reads its configuration from `./elasticsearch/elasticsearch.yml`.
+
 Kibana reads its configuration from `./kibana/kibana.yml`. XPack is disabled in both services. Additionally, these settings are relevant on `kibana.yml`:
 ```json
 server.basePath: "/daobs/dashboard"
 kibana.index: ".dashboards"
 ```
+
 Nginx is running on port 80. It can be configured as a proxy, using `nginx/nginx.conf`. The current configuration forwards all requests to `/daobs`, on port 80 to the dashboard container.
 
 ```
