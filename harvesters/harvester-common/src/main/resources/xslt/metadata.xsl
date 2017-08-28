@@ -72,6 +72,16 @@
   than the max length 32766. -->
   <xsl:variable name="maxFieldLength" select="32000" as="xs:integer"/>
 
+
+  <!-- When loading CSW response from a local file system. -->
+  <xsl:variable name="isFile"
+                select="starts-with(normalize-space(/harvestedContent/daobs:harvester/daobs:url), 'file://')"
+                as="xs:boolean?"/>
+
+  <xsl:variable name="territory"
+                select="/harvestedContent/daobs:harvester/daobs:territory"
+                as="xs:string?"/>
+
   <xsl:include href="fn.xsl"/>
   <xsl:include href="metadata-iso19139.xsl"/>
   <xsl:include href="metadata-iso19115-3.xsl"/>

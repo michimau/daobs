@@ -83,7 +83,8 @@
         <xsl:value-of select="saxon:serialize(., 'default-serialize-mode')"/>
       </document>
       <id>
-        <xsl:value-of select="$identifier"/>
+        <xsl:value-of select="if ($isFile) then concat($territory, '-', $identifier) else $identifier"/>
+        <!--<xsl:value-of select="$identifier"/>-->
       </id>
       <metadataIdentifier>
         <xsl:value-of select="$identifier"/>
@@ -222,7 +223,9 @@
               select="gmd:alternateTitle/gco:CharacterString/text()"/>
           </resourceAltTitle>
 
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:date/*/text() != '']">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[
+                                  gmd:date/*/text() != '' and
+                                  matches(gmd:date/*/text(), '[0-9]{4}.*')]">
             <xsl:variable name="dateType"
                           select="gmd:dateType[1]/gmd:CI_DateTypeCode/@codeListValue"
                           as="xs:string?"/>

@@ -21,6 +21,8 @@
 
 package org.daobs.harvester;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.google.common.base.Charsets;
 
 import org.apache.camel.Exchange;
@@ -37,6 +39,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +57,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+
 
 /**
  * Created by francois on 9/1/14.
@@ -117,6 +123,20 @@ public class CswHarvester {
     config.setRecordsFilter(filter.getFirstChild());
     harvesters.put(identifier, config);
     return config;
+  }
+
+
+  /**
+   * Load a file content as String.
+   *
+   * @param file The file name to load eg. file:///data/test.xml
+   * @return  The file content
+   */
+  public String loadFile(@ExchangeProperty("harvesterUrl") String file) throws IOException {
+    return String.join("",
+      Files.readAllLines(
+        Paths.get(file.replace("file:", "")),
+        UTF_8)).trim();
   }
 
   private Config getConfig(@ExchangeProperty("harvesterUrl") String identifier) {

@@ -23,6 +23,7 @@ package org.daobs.routing.utility;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
+import net.sf.json.JSONObject;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.FeatureKeys;
 
@@ -30,6 +31,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Header;
 import org.apache.camel.dataformat.xmljson.XmlJsonDataFormat;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.springframework.util.Assert;
 import org.w3c.dom.Document;
@@ -162,7 +164,7 @@ public class Utility {
                           !name.startsWith("conformTo_")) {
                         xcb.field(
                             name,
-                            node.getTextContent());
+                            StringEscapeUtils.escapeJavaScript(node.getTextContent()));
                       }
                     }
                   }

@@ -192,6 +192,8 @@
 
     <cm:route id="route-csw-run">
       <cm:from uri="direct:harvestRunNode"/>
+
+
       <cm:choice>
         <cm:when>
           <cm:xpath>daobs:harvester/daobs:filter/ogc:Filter</cm:xpath>
@@ -236,34 +238,71 @@
       <cm:from uri="direct:harvestNode"/>
       <cm:bean ref="cswHarvester" method="initialize"/>
       <cm:log
-        message="Query $simple{property.harvesterUrl} to get numberOfRecordsMatched ..."
+        message="Initializing $simple{property.harvesterUrl} ..."
         loggingLevel="INFO"
         logName="org.daobs.harvester.CswHarvester"/>
-      <!-- Add logger for time http://camel.apache.org/eventnotifier-to-log-details-about-all-sent-exchanges.html -->
-      <cm:setHeader headerName="camelHttpMethod">
-        <cm:constant>POST</cm:constant>
-      </cm:setHeader>
-      <cm:setHeader headerName="Content-Type">
-        <cm:constant>application/xml</cm:constant>
-      </cm:setHeader>
-      <cm:setBody>
-        <cm:simple>bean:cswHarvester?method=generateGetRecordsHitsQuery</cm:simple>
-      </cm:setBody>
-      <cm:to uri="log:org.daobs.harvester.CswHarvester?showBody=true"/>
-      <cm:setHeader headerName="Exchange.HTTP_URI">
-        <cm:simple>${property.harvesterUrl}</cm:simple>
-      </cm:setHeader>
-      <!--
-      The pl CSW looks to filter on user agent name
-      and camel was not having any response body for obscure reason?
-      Same for lv node which is filtering if User-Agent is set.
-      In some case, it needs to be removed or activated.
-      TODO: Add configuration option at node level.
-      -->
-      <cm:setHeader headerName="User-Agent">
-        <cm:constant>daobs/0.0.1</cm:constant>
-      </cm:setHeader>
-      <cm:to uri="http4://csw.server.url"/>
+      <cm:setProperty propertyName="isFile">
+        <cm:simple resultType="boolean">${property.harvesterUrl} contains 'file://'</cm:simple>
+      </cm:setProperty>
+
+      <cm:log
+        message="Initializing $simple{property.isFile} ..."
+        loggingLevel="INFO"
+        logName="org.daobs.harvester.CswHarvester"/>
+      <!-- Load file or URL -->
+      <cm:choice>
+        <cm:when>
+          <!--<cm:simple resultType="boolean">${property.harvesterUrl} contains 'file://'</cm:simple>-->
+          <cm:simple>${property.isFile}</cm:simple>
+          <!--<cm:bean ref="cswHarvester" method="loadFile"/>-->
+          <cm:log
+            message="Loading file content $simple{property.harvesterUrl}..."
+            loggingLevel="INFO"
+            logName="org.daobs.harvester.CswHarvester"/>
+          <cm:setBody>
+            <cm:simple>bean:cswHarvester?method=loadFile
+            </cm:simple>
+          </cm:setBody>
+          <cm:convertBodyTo type="org.w3c.dom.Document"/>
+          <cm:bean ref="harvesterDetailsAgg"
+                   method="doTransform($simple{body}, $simple{property.harvesterConfig})"/>
+          <cm:to uri="direct-vm:indexDocuments"/>
+        </cm:when>
+        <cm:otherwise>
+          <cm:log
+            message="Query $simple{property.harvesterUrl} to get numberOfRecordsMatched ..."
+            loggingLevel="INFO"
+            logName="org.daobs.harvester.CswHarvester"/>
+
+          <!-- Add logger for time http://camel.apache.org/eventnotifier-to-log-details-about-all-sent-exchanges.html -->
+          <cm:setHeader headerName="camelHttpMethod">
+            <cm:constant>POST</cm:constant>
+          </cm:setHeader>
+          <cm:setHeader headerName="Content-Type">
+            <cm:constant>application/xml</cm:constant>
+          </cm:setHeader>
+          <cm:setBody>
+            <cm:simple>bean:cswHarvester?method=generateGetRecordsHitsQuery</cm:simple>
+          </cm:setBody>
+          <cm:to uri="log:org.daobs.harvester.CswHarvester?showBody=true"/>
+          <cm:setHeader headerName="Exchange.HTTP_URI">
+            <cm:simple>${property.harvesterUrl}</cm:simple>
+          </cm:setHeader>
+          <!--
+          The pl CSW looks to filter on user agent name
+          and camel was not having any response body for obscure reason?
+          Same for lv node which is filtering if User-Agent is set.
+          In some case, it needs to be removed or activated.
+          TODO: Add configuration option at node level.
+          -->
+          <cm:setHeader headerName="User-Agent">
+            <cm:constant>daobs/0.0.1</cm:constant>
+          </cm:setHeader>
+          <cm:to uri="http4://csw.server.url"/>
+
+        </cm:otherwise>
+      </cm:choice>
+
       <cm:convertBodyTo type="org.w3c.dom.Document"/>
       <cm:choice>
         <cm:when>
