@@ -136,7 +136,9 @@ public class CswHarvester {
     return String.join("",
       Files.readAllLines(
         Paths.get(file.replace("file:", "")),
-        UTF_8)).trim();
+        UTF_8)).trim()
+      // Remove BOM if present (Avoid content not allowed in prolog error)
+      .replace("\uFEFF", "");
   }
 
   private Config getConfig(@ExchangeProperty("harvesterUrl") String identifier) {
