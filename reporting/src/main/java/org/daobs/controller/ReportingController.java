@@ -209,7 +209,7 @@ public class ReportingController {
                          defaultValue = "",
                          required = false) String fq) throws FileNotFoundException {
     IndicatorCalculatorImpl indicatorCalculator = null;
-    indicatorCalculator = generateReporting(request, reporting, scopeId, fq.trim(), true);
+    indicatorCalculator = generateReporting(request, reporting, scopeId, fq.trim(), true, null);
     return indicatorCalculator.getConfiguration();
   }
 
@@ -336,7 +336,7 @@ public class ReportingController {
       throws IOException {
     IndicatorCalculatorImpl indicatorCalculator = null;
     try {
-      indicatorCalculator = generateReporting(request, reporting, null, null, false);
+      indicatorCalculator = generateReporting(request, reporting, null, null, false, null);
 
       indicatorCalculator.addIndicator(indicator);
 
@@ -380,7 +380,7 @@ public class ReportingController {
       throws IOException, org.daobs.api.exception.ResourceNotFoundException {
     IndicatorCalculatorImpl indicatorCalculator = null;
     try {
-      indicatorCalculator = generateReporting(request, reporting, null, null, false);
+      indicatorCalculator = generateReporting(request, reporting, null, null, false, null);
 
       indicatorCalculator.removeIndicator(indicatorId);
 
@@ -427,7 +427,7 @@ public class ReportingController {
       throws IOException {
     IndicatorCalculatorImpl indicatorCalculator = null;
     try {
-      indicatorCalculator = generateReporting(request, reporting, null, null, false);
+      indicatorCalculator = generateReporting(request, reporting, null, null, false, null);
 
       indicatorCalculator.addVariable(variable);
 
@@ -471,7 +471,7 @@ public class ReportingController {
       throws IOException, org.daobs.api.exception.ResourceNotFoundException {
     IndicatorCalculatorImpl indicatorCalculator = null;
     try {
-      indicatorCalculator = generateReporting(request, reporting, null, null, false);
+      indicatorCalculator = generateReporting(request, reporting, null, null, false, null);
 
       indicatorCalculator.removeVariable(variableId);
 
@@ -555,6 +555,12 @@ public class ReportingController {
                          defaultValue = "",
                          required = false) String scopeId,
                        @ApiParam(
+                         value = "An optional date. If not set, default is now.")
+                         @RequestParam(
+                           value = "date",
+                           defaultValue = "",
+                           required = false) String date,
+                       @ApiParam(
                          value = "An optional filter query to generate report on a subset",
                          required = true)
                        @RequestParam(
@@ -565,7 +571,7 @@ public class ReportingController {
     IndicatorCalculatorImpl indicatorCalculator = null;
     try {
       indicatorCalculator = generateReporting(request, reporting, scopeId, "+territory:" + territory
-        + (StringUtils.isEmpty(fq) ? "" : " " + fq.trim()), true);
+        + (StringUtils.isEmpty(fq) ? "" : " " + fq.trim()), true, date);
     } catch (FileNotFoundException exception) {
       throw new ResourceNotFoundException(String.format(
         "Report with identifier '%s' not found.", reporting), exception);
@@ -635,15 +641,21 @@ public class ReportingController {
          required = false) String scopeId,
        @ApiParam(
          value = "An optional filter query to generate report on a subset",
-         required = true)
+         required = false)
        @RequestParam(
          value = "fq",
          defaultValue = "",
-         required = false) String fq)
+         required = false) String fq,
+       @ApiParam(
+         value = "An optional date. If not set, default is now.")
+       @RequestParam(
+         value = "date",
+         defaultValue = "",
+         required = false) String date)
         throws IOException {
     IndicatorCalculatorImpl indicatorCalculator =
         generateReporting(request, reporting, scopeId, "+territory:" + territory
-        + (StringUtils.isEmpty(fq) ? "" : " " + fq.trim()), true);
+        + (StringUtils.isEmpty(fq) ? "" : " " + fq.trim()), true, date);
 
     File xmlFile = indicatorCalculator.toFile();
     try {
@@ -689,7 +701,7 @@ public class ReportingController {
         required = false) Boolean withRowData,
       @ApiParam(
         value = "An optional filter query to generate report on a subset",
-        required = true)
+        required = false)
       @RequestParam(
         value = "fq",
         defaultValue = "",
@@ -701,6 +713,12 @@ public class ReportingController {
         defaultValue = "",
         required = false) String scopeId,
       @ApiParam(
+        value = "An optional date. If not set, default is now.")
+      @RequestParam(
+        value = "date",
+        defaultValue = "",
+        required = false) String date,
+      @ApiParam(
         value = "Max number of documents to add in the raw data section")
       @RequestParam(
         value = "rows",
@@ -708,7 +726,7 @@ public class ReportingController {
         required = false) int rows)
       throws IOException {
     IndicatorCalculatorImpl indicatorCalculator =
-        generateReporting(request, reporting, scopeId, fq, true);
+        generateReporting(request, reporting, scopeId, fq, true, date);
 
     ModelAndView model = new ModelAndView("reporting-xslt-" + reporting);
     model.addObject("xmlSource", indicatorCalculator.toSource());
@@ -750,7 +768,7 @@ public class ReportingController {
         required = false) Boolean withRowData,
       @ApiParam(
         value = "An optional filter query to generate report on a subset",
-        required = true)
+        required = false)
       @RequestParam(
         value = "fq",
         defaultValue = "",
@@ -761,6 +779,12 @@ public class ReportingController {
         value = "scopeId",
         defaultValue = "",
         required = false) String scopeId,
+      @ApiParam(
+        value = "An optional date. If not set, default is now.")
+      @RequestParam(
+        value = "date",
+        defaultValue = "",
+        required = false) String date,
       @ApiParam(
         value = "Max number of documents to add in the raw data section")
       @RequestParam(
@@ -778,7 +802,7 @@ public class ReportingController {
       throws IOException {
     String filter = fq + " +territory:" + territory;
     IndicatorCalculatorImpl indicatorCalculator =
-        generateReporting(request, reporting, scopeId, filter, true);
+        generateReporting(request, reporting, scopeId, filter, true, date);
 
 
     ModelAndView model = new ModelAndView("reporting-xslt-" + reporting);
@@ -828,7 +852,7 @@ public class ReportingController {
         required = false) Boolean withRowData,
       @ApiParam(
         value = "An optional filter query to generate report on a subset",
-        required = true)
+        required = false)
       @RequestParam(
         value = "fq",
         defaultValue = "",
@@ -839,6 +863,12 @@ public class ReportingController {
         value = "scopeId",
         defaultValue = "",
         required = false) String scopeId,
+      @ApiParam(
+        value = "An optional date. If not set, default is now.")
+      @RequestParam(
+        value = "date",
+        defaultValue = "",
+        required = false) String date,
       @ApiParam(
         value = "Max number of documents to add in the raw data section")
       @RequestParam(
@@ -857,7 +887,7 @@ public class ReportingController {
       throws IOException {
     String filter = fq + " +territory:" + territory;
     IndicatorCalculatorImpl indicatorCalculator =
-        generateReporting(request, reporting, scopeId, filter, true);
+        generateReporting(request, reporting, scopeId, filter, true, date);
 
     ModelAndView model = new ModelAndView("reporting-xslt-" + reporting);
     model.addObject("xmlSource", indicatorCalculator.toSource());
@@ -1177,10 +1207,10 @@ public class ReportingController {
    * Render reporting using XSLT view.
    */
   public IndicatorCalculatorImpl generateReporting(HttpServletRequest request,
-                                                          String reporting,
-                                                          String scopeId,
-                                                          String fq,
-                                                          boolean calculate)
+                                                   String reporting,
+                                                   String scopeId,
+                                                   String fq,
+                                                   boolean calculate, String date)
       throws ResourceNotFoundException, FileNotFoundException {
     String configurationFilePath =
         indicatorConfigurationDir
@@ -1194,7 +1224,7 @@ public class ReportingController {
           new IndicatorCalculatorImpl(configurationFile);
 
       if (calculate) {
-        indicatorCalculator.computeIndicators(scopeId, fq);
+        indicatorCalculator.computeIndicators(scopeId, date, fq);
       }
       // adds the XML source file to the model so the XsltView can detect
       return indicatorCalculator;

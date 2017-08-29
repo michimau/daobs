@@ -67,7 +67,7 @@ public interface IndicatorCalculator {
    * Compute indicators.
    *
    */
-  IndicatorCalculator computeIndicators(String scopeId, String... filterQuery);
+  IndicatorCalculator computeIndicators(String scopeId, String date, String... filterQuery);
 
   Map<String, Double> getResults();
 }

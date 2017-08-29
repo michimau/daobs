@@ -36,6 +36,8 @@
   "viewRules": "View report rules",
   "chooseMonitoring": "Choose monitoring",
   "customFilter": "Query filter",
+  "customDate": "Reporting date",
+  "customDateHelp": "Define a specific date for the report. If not set, date is now.",
   "preview": "Preview",
   "download": "Download",
   "JSON": "JSON format",

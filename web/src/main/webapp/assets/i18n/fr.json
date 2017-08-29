@@ -36,6 +36,8 @@
   "viewRules": "Consulter les indicateurs",
   "chooseMonitoring": "Choisir un type de rapport",
   "customFilter": "Filtre",
+  "customDate": "Date du rapport",
+  "customDateHelp": "Define a specific date for the report. If not set, date is now.",
   "preview": "Prévisualiser",
   "download": "Télécharger",
   "JSON": "Format JSON",

@@ -73,22 +73,33 @@ using one character or two. Prepend 0 when needed. -->
 
 
   <xsl:variable name="reportingDate"
-                select="if ($isDaobsFormat) then xs:dateTime(substring-before(/daobs:reporting/@dateTime, '.'))
+                select="if ($isDaobsFormat)
+                        then xs:dateTime(
+                          if (contains(/daobs:reporting/@dateTime, '.'))
+                          then substring-before(/daobs:reporting/@dateTime, '.')
+                          else /daobs:reporting/@dateTime)
                         else daobs:get-date(/monitoring:Monitoring/documentYear)"/>
   <xsl:variable name="reportingDateSubmission"
-                select="if ($isDaobsFormat) then xs:dateTime(substring-before(/daobs:reporting/@dateTime, '.'))
+                select="if ($isDaobsFormat)
+                        then xs:dateTime(
+                          if (contains(/daobs:reporting/@dateTime, '.'))
+                          then substring-before(/daobs:reporting/@dateTime, '.')
+                          else /daobs:reporting/@dateTime)
                         else daobs:get-date(/monitoring:Monitoring/MonitoringMD/monitoringDate)"/>
 
   <xsl:variable name="reportingYear"
-                select="if ($isDaobsFormat) then format-dateTime($reportingDate, '[Y0001]')
+                select="if ($isDaobsFormat)
+                        then format-dateTime($reportingDate, '[Y0001]')
                         else /monitoring:Monitoring/documentYear/year"/>
 
   <xsl:variable name="reportingTerritory"
-                select="if ($isDaobsFormat) then /daobs:reporting/@scopeId
+                select="if ($isDaobsFormat)
+                        then /daobs:reporting/@scopeId
                         else /monitoring:Monitoring/memberState"/>
 
   <xsl:variable name="reportIdentifier"
-                select="if ($isDaobsFormat) then /daobs:reporting/@id
+                select="if ($isDaobsFormat)
+                        then /daobs:reporting/@id
                         else 'inspire'"/>
 
 

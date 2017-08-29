@@ -76,6 +76,23 @@
             </div>
             <p class="help-block" data-translate="">customFilterHelp</p>
           </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label"
+                   data-translate="">customDate</label>
+            <div class="col-sm-5">
+              <input type="date"
+                     data-ng-model="date"
+                     class="form-control"/>
+            </div>
+            <div class="col-sm-5">
+              <input type="time"
+                     data-ng-model="time"
+                     class="form-control"/>
+            </div>
+            <p class="help-block" data-translate="">customDateHelp</p>
+          </div>
+
           <p class="alert alert-info"
              data-ng-show="filterCount"
              data-translate=""
@@ -173,35 +190,35 @@
                 <ul class="dropdown-menu" role="menu">
                   <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
                     <a target="_blank"
-                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : ''}}&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
+                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
                        data-translate=""
                        title="{{('inspireMonitoringFormat-help' | translate) !== '' ? ('inspireMonitoringFormat-help' | translate) : ''}}">
                       inspireMonitoringFormat</a></li>
                   <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
                     <a target="_blank"
-                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
+                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
                        data-translate=""
                        title="{{('inspireMonitoringFormatWithRowData-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowData-help' | translate) : ''}}">
                       inspireMonitoringFormatWithRowData</a></li>
                   <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
                     <a target="_blank"
-                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=onlyFirstInspireTheme"
+                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=onlyFirstInspireTheme"
                        data-translate=""
                        title="{{('inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme-help' | translate) : ''}}">
                       inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme</a>
                   </li>
                   <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
                     <a target="_blank"
-                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=asManyDatasetsAsInspireThemes"
+                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=asManyDatasetsAsInspireThemes"
                        data-translate=""
                        title="{{('inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes-help' | translate) : ''}}">
                       inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes</a>
                   </li>
                   <li><a target="_blank"
-                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.xml{{fq ? '?fq=' + fq : ''}}&scopeId={{territory.label}}"
+                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.xml{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{territory.label}}"
                          data-translate="">XML</a></li>
                   <li><a target="_blank"
-                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.json{{fq ? '?fq=' + fq : ''}}&scopeId={{territory.label}}"
+                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.json{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{territory.label}}"
                          data-translate="">JSON</a></li>
                 </ul>
               </div>
@@ -242,7 +259,7 @@
         </div>
       </div>
     </form>
-    
+
     <div data-ng-show="report != null && overview"
          id="ds-report-results">
       <h2 data-translate="">
@@ -302,7 +319,7 @@
             </samp>
           </td>
           <td>
-            <h4><span ng-if="v.query" class="label label-info">V</span></h4> 
+            <h4><span ng-if="v.query" class="label label-info">V</span></h4>
             <h4><span ng-if="v.expression" class="label label-success">I</span></h4>
           </td>
           <td>
@@ -343,8 +360,8 @@
       </div>
       <div ng-if="displayAddRule" class="col-12">
         <br>
-        <form class="form-horizontal" role="form"  
-            name="ruleForm" ng-submit="submitForm(ruleForm.$valid)" 
+        <form class="form-horizontal" role="form"
+            name="ruleForm" ng-submit="submitForm(ruleForm.$valid)"
             novalidate>
           <div class="row">
             <div class="col-sm-10">
@@ -368,7 +385,7 @@
                     class="form-control" required/>
                 </div>
               </div>
-              <div ng-if="displayAddIndicator" class="form-group" 
+              <div ng-if="displayAddIndicator" class="form-group"
                 id="ds-inputform-rule">
                 <label for="ds-input-ruleExpression"
                   class="col-sm-3 control-label"
@@ -380,8 +397,8 @@
                   <p class="help-block ng-binding" data-translate="">expressionLink</p>
                 </div>
               </div>
-              <div ng-if="!displayAddIndicator" class="form-group" 
-                id="ds-inputform-rule">         
+              <div ng-if="!displayAddIndicator" class="form-group"
+                id="ds-inputform-rule">
                 <label for="ds-input-ruleQuery"
                   class="col-sm-3 control-label"
                   data-translate="">query</label>
@@ -392,7 +409,7 @@
                     <p class="help-block ng-binding" data-translate="">queryLink</p>
                 </div>
               </div>
-              <div class="form-group" id="ds-inputform-rule">  
+              <div class="form-group" id="ds-inputform-rule">
                 <label for="ds-input-ruleDefinition"
                   class="col-sm-3 control-label"
                   data-translate="">definition</label>

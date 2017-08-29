@@ -127,6 +127,20 @@
       $scope.listOfTerritory = [];
       $scope.filterCount = null;
       $scope.fq = null;
+      $scope.dateTime = null;
+      $scope.date = null;
+      $scope.time = null;
+
+      var buildDate = function(o, n) {
+        if (o !== n) {
+          $scope.dateTime =
+            moment($scope.date).format('YYYY-MM-DD') + 'T' +
+            moment($scope.time || moment()).format('HH:mm:ss')
+        }
+      };
+      $scope.$watch('date', buildDate);
+      $scope.$watch('time', buildDate);
+
       $scope.facetFields = ['resourceType', 'Org',
         'OrgForResource', 'isValid', 'territory'];
       var facetParam = '';
@@ -321,9 +335,6 @@
 
       // View report configuration
       $scope.getReportDetails = function () {
-        //$scope.territory = null;
-        console.log(cfg.SERVICES.reports + '/' +
-          $scope.reporting.id + '.json');
         return $http.get(cfg.SERVICES.reports + '/' +
           $scope.reporting.id + '.json').success(function (data) {
           setReport(data);
@@ -336,7 +347,9 @@
         $scope.overview = false;
         $scope.report = null;
         var area = $scope.territory && $scope.territory.label,
-          filterParameter = $scope.filter ? '?fq=' + encodeURIComponent($scope.filter) : '?';
+          filterParameter =
+            ($scope.filter ? '?fq=' + encodeURIComponent($scope.filter) : '?') +
+            ($scope.dateTime ? '&date=' + $scope.dateTime : '');
         return $http.get(cfg.SERVICES.reports + '/' +
           $scope.reporting.id +
           (area ? '/' + area : '') +
@@ -463,7 +476,7 @@
               $scope.getReportDetails();
               $scope.elem = {};
               $scope.displayAddRule = false;
-          }); 
+          });
         }
       }
 
@@ -474,7 +487,8 @@
         var area = $scope.territory && $scope.territory.label,
           filterParameter =
             ($scope.filter ? '?fq=' + encodeURIComponent($scope.filter) : '?') +
-            '&scopeId=' + area; // TODO: add more specific id when using fq
+            '&scopeId=' + area + // TODO: add more specific id when using fq
+            ($scope.dateTime ? '&date=' + $scope.dateTime : '');
         return $http.put(cfg.SERVICES.reports +
           (type === 'xml' ? '/' : '/custom/') +
           $scope.reporting.id +

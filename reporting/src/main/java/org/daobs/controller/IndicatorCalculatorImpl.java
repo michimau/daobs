@@ -33,6 +33,7 @@ import org.daobs.indicator.config.Parameter;
 import org.daobs.indicator.config.Query;
 import org.daobs.indicator.config.Reporting;
 import org.daobs.indicator.config.Variable;
+import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 
 import java.io.File;
@@ -155,7 +156,7 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
         return this;
       }
     }
-    
+
     throw new ResourceNotFoundException(String.format(
       "Variable with id '%s' not found.", indicatorId));
   }
@@ -205,7 +206,7 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
   }
 
   @Override
-  public IndicatorCalculator computeIndicators(String scopeId, String... filterQuery) {
+  public IndicatorCalculator computeIndicators(String scopeId, String date, String... filterQuery) {
     final long start = System.currentTimeMillis();
 
     String allFilters = "";
@@ -358,7 +359,8 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
     try {
       datatypeFactory = DatatypeFactory.newInstance();
       reporting.setDateTime(
-          datatypeFactory.newXMLGregorianCalendar(gregorianCalendar)
+          StringUtils.isEmpty(date) ? datatypeFactory.newXMLGregorianCalendar(gregorianCalendar) :
+              datatypeFactory.newXMLGregorianCalendar(date)
       );
     } catch (DatatypeConfigurationException e1) {
       e1.printStackTrace();
