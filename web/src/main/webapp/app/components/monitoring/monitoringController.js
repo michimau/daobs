@@ -129,9 +129,10 @@
       $scope.fq = null;
       $scope.dateTime = null;
       $scope.date = null;
+      $scope.scopeId = null;
       $scope.time = null;
 
-      var buildDate = function(o, n) {
+      var buildDate = function(n, o) {
         if (o !== n) {
           $scope.dateTime =
             moment($scope.date).format('YYYY-MM-DD') + 'T' +
@@ -140,6 +141,11 @@
       };
       $scope.$watch('date', buildDate);
       $scope.$watch('time', buildDate);
+      $scope.$watch('territory', function(n, o) {
+        if (o !== n) {
+          $scope.scopeId = n.label;
+        }
+      });
 
       $scope.facetFields = ['resourceType', 'Org',
         'OrgForResource', 'isValid', 'territory'];

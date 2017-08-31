@@ -36,6 +36,8 @@
   "viewRules": "View report rules",
   "chooseMonitoring": "Choose monitoring",
   "customFilter": "Query filter",
+  "customTerritory": "Report identifier",
+  "customTerritoryHelp": "This field allows to define a custom report identifiers which will be used as 'territory' once indicator loaded. This is useful to make distinction between reports made with custom filters (eg. computing indicators for a specific organization).",
   "customDate": "Reporting date",
   "customDateHelp": "Define a specific date for the report. If not set, date is now.",
   "preview": "Preview",
