@@ -493,7 +493,7 @@
         var area = $scope.territory && $scope.territory.label,
           filterParameter =
             ($scope.filter ? '?fq=' + encodeURIComponent($scope.filter) : '?') +
-            '&scopeId=' + area + // TODO: add more specific id when using fq
+            '&scopeId=' + $scope.scopeId +
             ($scope.dateTime ? '&date=' + $scope.dateTime : '');
         return $http.put(cfg.SERVICES.reports +
           (type === 'xml' ? '/' : '/custom/') +
