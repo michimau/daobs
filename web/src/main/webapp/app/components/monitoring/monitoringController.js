@@ -79,7 +79,7 @@
     function ($scope, $http, $timeout, cfg, monitoringService) {
       $scope.listOfMonitoring = null;
       $scope.monitoringFacet = null;
-      $scope.monitoringFilter = {};
+      $scope.monitoringFilter = {_source: {}};
 
       var init = function () {
         monitoringService.loadMonitoring().then(function (response) {
@@ -89,7 +89,7 @@
       };
 
       $scope.setMonitoringFilter = function (field, value) {
-        $scope.monitoringFilter[field] = value;
+        $scope.monitoringFilter._source[field] = value;
       };
 
       $scope.removeMonitoring = function (m) {
