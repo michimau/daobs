@@ -29,6 +29,7 @@
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:gn="http://www.fao.org/geonetwork"
                 xmlns:daobs="http://daobs.org"
                 xmlns:solr="java:org.daobs.index.EsRequestBean"
                 xmlns:saxon="http://saxon.sf.net/"
@@ -119,6 +120,10 @@
                               else format-dateTime(current-dateTime(), $dateFormat)"/>
       </harvestedDate>
 
+
+      <isPublishedToAll>
+        <xsl:value-of select="gn:info/isPublishedToAll"/>
+      </isPublishedToAll>
 
       <!-- Indexing record information -->
       <!-- # Date -->
