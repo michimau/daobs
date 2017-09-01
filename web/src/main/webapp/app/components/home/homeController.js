@@ -35,6 +35,9 @@
       $scope.hasOnlyINSPIREdashboard = true;
       $scope.solrConnectionError = null;
 
+      // Set to last 5 years the default dashboard parameters.
+      $scope.dashboardParams = '?_g=(time:(from:now-5y,mode:quick,to:now))';
+
       var init = function () {
         $scope.dashboardBaseURL = cfg.SERVICES.dashboardBaseURL;
         $http.get(cfg.SERVICES.esdashboardCore +

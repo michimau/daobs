@@ -62,7 +62,7 @@
         <li class="list-group-item"
             data-ng-repeat="dashboard in dashboards | filter:'inspire':startsWith">
           <a href=""
-             data-ng-href="{{dashboardBaseURL}}{{dashboard._id}}">
+             data-ng-href="{{dashboardBaseURL}}{{dashboard._id}}{{dashboardParams}}">
             {{dashboard._source.title}}
           </a>
           <!--TODO ES <button class="btn btn-link btn-sm pull-right"
@@ -81,7 +81,7 @@
         <li class="list-group-item"
             data-ng-repeat="dashboard in dashboards | filter:'inspire':notStartsWith">
           <a href=""
-             data-ng-href="{{dashboardBaseURL}}{{dashboard._id}}">
+             data-ng-href="{{dashboardBaseURL}}{{dashboard._id}}{{dashboardParams}}">
             {{dashboard._source.title}}
           </a>
           <!-- TODO ES<button class="btn btn-link btn-sm pull-right" data-ng-show="getUser().authenticated"
