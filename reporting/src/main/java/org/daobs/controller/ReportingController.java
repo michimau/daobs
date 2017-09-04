@@ -1109,7 +1109,7 @@ public class ReportingController {
    */
   private Map<String, String> indexIndicators(String filename, File xmlFile) throws Exception {
     Map<String, String> errors = new HashMap();
-    final String xslt = "/xslt/inspire-monitoring-reporting.xsl";
+    final String xslt = "/xslt/index-indicators.xsl";
     InputStream streamSource = this.getClass().getResourceAsStream(xslt);
     Source stylesheet = new StreamSource(streamSource);
     URL url = this.getClass().getResource(xslt);

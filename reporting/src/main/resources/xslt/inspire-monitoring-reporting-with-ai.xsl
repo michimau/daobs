@@ -30,7 +30,7 @@
                 version="2.0">
 
 
-  <xsl:import href="inspire-monitoring-reporting.xsl"/>
+  <xsl:import href="index-indicators.xsl"/>
 
   <!-- Ancillary information are extra information not
   available in the metadata records that need to be

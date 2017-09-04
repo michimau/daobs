@@ -148,7 +148,16 @@ using one character or two. Prepend 0 when needed. -->
         "email": "<xsl:value-of select="email"/>"
         }
       </field>
-      <!-- TODO: Add parameter -->
+
+      <xsl:message>Report</xsl:message>
+      <xsl:apply-templates mode="indicatorValue"
+                           select="
+                daobs:variables/daobs:variable|
+                daobs:indicators/daobs:indicator|
+                //Indicators/*|
+                //RowData/SpatialDataService/NetworkService/userRequest|
+                //RowData/SpatialDataSet/Coverage/(relevantArea|actualArea)"/>
+
       <field name="isOfficial">true</field>
     </doc>
   </xsl:template>
@@ -189,6 +198,22 @@ using one character or two. Prepend 0 when needed. -->
         </field>
       </doc>
     </xsl:for-each>
+  </xsl:template>
+
+
+  <xsl:template match="daobs:variable|daobs:indicator"
+                mode="indicatorValue">
+    <xsl:variable name="indicatorType" select="local-name()"/>
+    <xsl:variable name="indicatorIdentifier" select="@id"/>
+
+    <xsl:message>indicator <xsl:value-of select="$indicatorIdentifier"/></xsl:message>
+    <field name="indicator{$indicatorIdentifier}">
+      <xsl:value-of select="daobs:value"/>
+    </field>
+  </xsl:template>
+
+  <xsl:template match="*"
+                mode="indicatorValue">
   </xsl:template>
 
   <xsl:template match="daobs:variable|daobs:indicator">
