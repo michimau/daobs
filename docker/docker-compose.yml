@@ -1,11 +1,11 @@
-version: '2'
+version: '3'
 services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.5.0
     volumes:
       - esdata:/usr/share/elasticsearch/data
-      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ${PWD}/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     #ports:
      # - "9200:9200"
      # - "9300:9300"
@@ -22,9 +22,9 @@ services:
     expose:
       - "5601"
     volumes:
-      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-      - ./kibana/wait-for-it.sh:/wait-for-it.sh
-      - ./kibana/docker-entry.sh:/docker-entry.sh
+      - ${PWD}/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
+      - ${PWD}/kibana/docker-entry.sh:/docker-entry.sh
     depends_on:
       - "elasticsearch"
     command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
