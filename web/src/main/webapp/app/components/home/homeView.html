@@ -61,7 +61,7 @@
       <ul class="list-group">
         <li class="list-group-item"
             data-ng-repeat="dashboard in dashboards | filter:'inspire':startsWith">
-          <a href=""
+          <a href="" target="_blank"
              data-ng-href="{{dashboardBaseURL}}{{dashboard._id}}{{dashboardParams}}">
             {{dashboard._source.title}}
           </a>
@@ -80,7 +80,7 @@
           data-ng-show="dashboards.length > 0">
         <li class="list-group-item"
             data-ng-repeat="dashboard in dashboards | filter:'inspire':notStartsWith">
-          <a href=""
+          <a href="" target="_blank"
              data-ng-href="{{dashboardBaseURL}}{{dashboard._id}}{{dashboardParams}}">
             {{dashboard._source.title}}
           </a>
