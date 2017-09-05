@@ -164,7 +164,7 @@ public class Utility {
                           !name.startsWith("conformTo_")) {
                         xcb.field(
                             name,
-                            StringEscapeUtils.escapeJavaScript(node.getTextContent()));
+                            node.getTextContent());
                       }
                     }
                   }
