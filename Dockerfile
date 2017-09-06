@@ -134,6 +134,7 @@ RUN npm install elasticdump -g
 
 # Cleanup
 RUN rm -rf ${CATALINA_HOME}/tomcat/daobs/
+RUN rm -rf /root/.m2/repos
 
 COPY ./wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh

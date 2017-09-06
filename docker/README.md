@@ -4,7 +4,7 @@ This project orchestrates four containers, in order to serve the DAOBS dasboard 
 * [Dashboard](https://github.com/INSPIRE-MIF/daobs/): web app which collects information and configures indicators to generate reporting.
 * [Elasticsearch](https://github.com/elastic/elasticsearch-docker/tree/5.5): ElasticSearch 5 - official image from elastic.
 * [Kibana](https://github.com/elastic/kibana): Kibana 5 - official image from elastic.
-* [Nginx](https://hub.docker.com/_/nginx/): web server; configured as a proxy.
+* [Nginx](https://hub.docker.com/_/nginx/): web server; configured as a reverse proxy.
 
 In order to optimize image size, whenever possible [alpine](https://alpinelinux.org/) based images are used as base images. The only image we build is the `dashboard`; all other images are pulled from the relevant repositories, and configured using configuration files on mounted volumes; the `elasticsearch` and `kibana` images are pulled from the official elastic repositories, while `nginx` is pulled from the docker official repositories.
 
@@ -26,12 +26,11 @@ The dashboard application is available at:
 http://localhost/daobs
 ```
 
-
 The dashboard container
 -----------------------
 The dashboard container is based on a maven-alpine linux image.
 * It installs npm, tomcat and the ETF application.
-* It clones and builds the [daobs](https://github.com/INSPIRE-MIF/daobs/) project.
+* It builds the [daobs] project, using the src code on the top-level repository (`../`).
 *  It deploys the resulting war on Tomcat. The application is served at `/usr/local/tomcat/webapps/daobs`.
 
 Configuration
@@ -78,21 +77,57 @@ Depending on your docker configuration, the volumes are stored on the host on th
 
 Security
 --------
-Only the web container (nginx) publishes its ports (80 and 443). All other containers communicate *only* using docker's internal network. If you need to use kibana or elasticsearch **directly**, you just need to uncomment the exposed ports on docker-compose.
+Only the web container (nginx) publishes its ports (either 80 or 443). All other containers communicate *only* using docker's internal network. If you need to use kibana or elasticsearch **directly**, you just need to uncomment the exposed ports on docker-compose.
 
-In theory, to support SSL in nginx, you need to copy the public certificate and private key to `./nginx/certs` and `./nginx/private`, enable the mounting of these folders on docker-compose and enable the SSL configuration on `./nginx/nginx.conf`:
+To enable SSL, you need to export some environment variables, with the **location** and **name** of your private and public keys:
 
+* `SSL_CERTS_DIR`: path on disk of the public key (without a trailing `/` on the end).
+* `SSL_PUB`: name of the file which stores the public key.
+* `SSL_KEY_DIR`: path on disk of the private key (without a trailing `/` on the end).
+* `SSL_PRIV`: name of the file which stores the private key.
+
+You will also need to point nginx to the SSL enabled configuration file. The nginx section of docker-compose should look like this:
+
+```json
+nginx:
+  hostname: nginx
+  image: nginx:stable-alpine
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+    - ${SSL_CERTS_DIR}/${SSL_PUB}:/etc/nginx/certs/cert.crt
+    - ${SSL_KEY_DIR}/${SSL_PRIV}:/etc/nginx/private/priv.key
+    #- ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./nginx/nginx-ssl.conf:/etc/nginx/nginx.conf
+    - ./nginx/wait-for-it.sh:/wait-for-it.sh
+  depends_on:
+    - "dashboard"
 ```
-#listen          80;
 
-listen 443;
+The default configuration, does **not** enable SSL:
 
-ssl on;
-
-ssl_certificate /etc/nginx/certs/cert.crt;
-ssl_certificate_key /etc/nginx/private/priv.key;
+```json
+nginx:
+  hostname: nginx
+  image: nginx:stable-alpine
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+    - ${SSL_CERTS_DIR}/${SSL_PUB}:/etc/nginx/certs/cert.crt
+    - ${SSL_KEY_DIR}/${SSL_PRIV}:/etc/nginx/private/priv.key
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    #- ./nginx/nginx-ssl.conf:/etc/nginx/nginx.conf
+    - ./nginx/wait-for-it.sh:/wait-for-it.sh
+  depends_on:
+    - "dashboard"
 ```
 
 Known Issues
 ------------
 When loading the dashboard, there is this message, which means kibana does not detect any indexes: *There is currently no dashboard available in the system. Use the above menu to load some or move to the dashboard configuration to upload some new ones.*
+
+License
+========
+#TODO
