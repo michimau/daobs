@@ -126,7 +126,7 @@ nginx:
 
 Known Issues
 ------------
-When loading the dashboard, there is this message, which means kibana does not detect any indexes: *There is currently no dashboard available in the system. Use the above menu to load some or move to the dashboard configuration to upload some new ones.*
+When loading the dashboard, the default index is not loaded. After manually setting .dashboards as the default index, everything works fine.
 
 License
 ========
