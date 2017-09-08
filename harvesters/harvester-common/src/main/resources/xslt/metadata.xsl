@@ -157,7 +157,7 @@
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()" mode="copy">
     <xsl:copy>
-      <xsl:apply-templates select="@*|node()"/>
+      <xsl:apply-templates select="@*|node()" mode="copy"/>
     </xsl:copy>
   </xsl:template>
 
