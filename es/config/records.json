@@ -1065,7 +1065,12 @@
           "type": "keyword"
         },
         "geom": {
-          "type": "text"
+          "type": "geo_shape",
+          "tree": "quadtree",
+          "precision": "10km"
+        },
+        "location": {
+          "type": "geo_point"
         },
         "harvesterId": {
           "type": "keyword"

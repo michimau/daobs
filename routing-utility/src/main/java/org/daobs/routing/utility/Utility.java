@@ -23,6 +23,8 @@ package org.daobs.routing.utility;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONObject;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.FeatureKeys;
@@ -48,6 +50,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -82,6 +85,13 @@ public class Utility {
     return DigestUtils.sha256Hex(stringToEncrypt);
   }
 
+  public String encodeForJson(Exchange exchange) {
+    String body = exchange.getIn().getBody(String.class);
+    body = body.replaceAll("\"", "\\\"");
+    exchange.getOut().setBody(body);
+    return body;
+  }
+
   /**
    * Convert document to string.
    *
@@ -114,6 +124,8 @@ public class Utility {
       Map<String, String> listOfXcb = new HashMap<>();
       if (root != null) {
         NodeList records = addNode.getChildNodes();
+
+        ObjectMapper mapper = new ObjectMapper();
 
         // Loop on docs
         for (int i = 0; i < records.getLength(); i++) {
@@ -150,15 +162,11 @@ public class Utility {
                       if (name.equals("id")) {
                         id = node.getTextContent();
                       }
-
-                      if (name.equals("geom")) {
-                        continue;
-                      }
-
                       if (isArray) {
                         xcb.value(node.getTextContent());
-                      } else if (name.equals("geojson")) {
-                        xcb.field("geom", node.getTextContent());
+                      } else if (name.equals("geom")) {
+                        JsonNode obj = mapper.readTree(node.getTextContent().getBytes(StandardCharsets.UTF_8));
+                        xcb.field(name, obj);
                       } else if (
                           // Skip some fields causing errors / TODO
                           !name.startsWith("conformTo_")) {
