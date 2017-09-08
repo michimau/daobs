@@ -52,6 +52,7 @@
         name="esClient"
         class="org.daobs.index.EsClientBean">
     <property name="serverUrl" value="${es.url}"/>
+    <property name="serverHost" value="${es.host}"/>
     <property name="collection" value="records"/><!-- TODO ES from config -->
   </bean>
 

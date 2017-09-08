@@ -206,7 +206,7 @@ using one character or two. Prepend 0 when needed. -->
     <xsl:variable name="indicatorType" select="local-name()"/>
     <xsl:variable name="indicatorIdentifier" select="@id"/>
 
-    <field name="indicator{$indicatorIdentifier}">
+    <field name="iv{$indicatorIdentifier}">
       <xsl:value-of select="daobs:value"/>
     </field>
   </xsl:template>

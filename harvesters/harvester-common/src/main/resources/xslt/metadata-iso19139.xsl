@@ -81,7 +81,10 @@
 
       <!-- Index the metadata document as XML -->
       <document>
-        <xsl:value-of select="saxon:serialize(., 'default-serialize-mode')"/>
+        <xsl:variable name="document">
+          <xsl:apply-templates select="." mode="copy"/>
+        </xsl:variable>
+        <xsl:value-of select="saxon:serialize($document, 'default-serialize-mode')"/>
       </document>
       <id>
         <xsl:value-of select="if ($isFile) then concat($territory, '-', $identifier) else $identifier"/>
@@ -574,63 +577,33 @@
                               -90 &lt;= number($n) and number($n) &lt;= 90">
                 <xsl:choose>
                   <xsl:when test="$e = $w and $s = $n">
-                    <geom>
-                      <xsl:text>POINT(</xsl:text>
-                      <xsl:value-of select="concat($w, ' ', $s)"/>
-                      <xsl:text>)</xsl:text>
-                    </geom>
-
-                    <geojson>
-                      <xsl:text>{"type": "point",</xsl:text>
-                      <xsl:text>"coordinates": "</xsl:text><xsl:value-of select="concat($w, ' ', $s)"/>"
-                      <xsl:text>}</xsl:text>
-                    </geojson>
+                    <location><xsl:value-of select="concat($s, ',', $w)"/></location>
                   </xsl:when>
                   <xsl:when
                     test="($e = $w and $s != $n) or ($e != $w and $s = $n)">
                     <!-- Probably an invalid bbox indexing a point only -->
-                    <geom>
-                      <xsl:text>POINT(</xsl:text>
-                      <xsl:value-of select="concat($w, ' ', $s)"/>
-                      <xsl:text>)</xsl:text>
-                    </geom>
-
-                    <geojson>
-                      <xsl:text>{"type": "point",</xsl:text>
-                      <xsl:text>"coordinates": "</xsl:text><xsl:value-of select="concat($w, ' ', $s)"/>"
-                      <xsl:text>}</xsl:text>
-                    </geojson>
+                    <location><xsl:value-of select="concat($s, ',', $w)"/></location>
                   </xsl:when>
                   <xsl:otherwise>
                     <geom>
-                      <xsl:text>POLYGON((</xsl:text>
-                      <xsl:value-of select="concat($w, ' ', $s)"/>
-                      <xsl:text>,</xsl:text>
-                      <xsl:value-of select="concat($e, ' ', $s)"/>
-                      <xsl:text>,</xsl:text>
-                      <xsl:value-of select="concat($e, ' ', $n)"/>
-                      <xsl:text>,</xsl:text>
-                      <xsl:value-of select="concat($w, ' ', $n)"/>
-                      <xsl:text>,</xsl:text>
-                      <xsl:value-of select="concat($w, ' ', $s)"/>
-                      <xsl:text>))</xsl:text>
-                    </geom>
-
-
-                    <geojson>
                       <xsl:text>{"type": "polygon",</xsl:text>
                       <xsl:text>"coordinates": [</xsl:text>
-                      <xsl:value-of select="concat('[', $w, ' ', $s, ']')"/>
+                      <xsl:value-of select="concat('[', $w, ',', $s, ']')"/>
                       <xsl:text>,</xsl:text>
-                      <xsl:value-of select="concat('[', $e, ' ', $s, ']')"/>
+                      <xsl:value-of select="concat('[', $e, ',', $s, ']')"/>
                       <xsl:text>,</xsl:text>
-                      <xsl:value-of select="concat('[', $e, ' ', $n, ']')"/>
+                      <xsl:value-of select="concat('[', $e, ',', $n, ']')"/>
                       <xsl:text>,</xsl:text>
-                      <xsl:value-of select="concat('[', $w, ' ', $n, ']')"/>
+                      <xsl:value-of select="concat('[', $w, ',', $n, ']')"/>
                       <xsl:text>,</xsl:text>
-                      <xsl:value-of select="concat('[', $w, ' ', $s, ']')"/>
+                      <xsl:value-of select="concat('[', $w, ',', $s, ']')"/>
                       <xsl:text>]}</xsl:text>
-                    </geojson>
+                    </geom>
+
+                    <location><xsl:value-of select="concat(
+                                              (number($s) + number($n)) div 2,
+                                              ',',
+                                              (number($w) + number($e)) div 2)"/></location>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:when>

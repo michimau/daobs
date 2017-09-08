@@ -27,6 +27,7 @@
                 xmlns:gmi="http://www.isotc211.org/2005/gmi"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
+                xmlns:gn="http://www.fao.org/geonetwork"
                 xmlns:daobs="http://daobs.org"
                 xmlns:saxon="http://saxon.sf.net/"
                 extension-element-prefixes="saxon"
@@ -152,5 +153,15 @@
   <!-- then after the doc, the 'index-extra-documents' mode
   could be used to create more doc. -->
   <xsl:template mode="index-extra-documents" match="*"/>
+
+  <!-- Do a copy of every nodes and attributes -->
+  <xsl:template match="@*|node()" mode="copy">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Remove geonet:* elements. -->
+  <xsl:template match="gn:*"  mode="copy" priority="2"/>
 
 </xsl:stylesheet>
