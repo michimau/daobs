@@ -48,12 +48,12 @@
           <div class="form-group" id="ds-reportarea-choose">
             <label for="ds-reportarea-field"
                    class="col-sm-2 control-label"
-                   data-translate="">chooseTerritory</label>
+                   data-translate="">chooseScope</label>
             <div class="col-sm-10">
               <select id="ds-reportarea-field"
                       class="form-control"
-                      data-ng-model="territory"
-                      data-ng-options="value.label for (key, value) in listOfTerritory | orderBy:'label'">
+                      data-ng-model="scope"
+                      data-ng-options="value.label for (key, value) in listOfScope | orderBy:'label'">
               </select>
             </div>
           </div>
@@ -96,20 +96,20 @@
 
           <div class="form-group">
             <label class="col-sm-2 control-label"
-                   data-translate="">customTerritory</label>
+                   data-translate="">customScope</label>
             <div class="col-sm-10">
               <input type="text"
                      data-ng-model="scopeId"
                      class="form-control"/>
             </div>
-            <p class="help-block" data-translate="">customTerritoryHelp</p>
+            <p class="help-block" data-translate="">customScopeHelp</p>
           </div>
 
           <p class="alert alert-info"
              data-ng-show="filterCount"
              data-translate=""
              data-translate-values="{
-                territory: '{{territory.label}}',
+                scope: '{{scope.label}}',
                 filter: '{{filter}}',
                 count: '{{filterCount}}'}">
             matchingRecordsForFilter
@@ -202,35 +202,35 @@
                 <ul class="dropdown-menu" role="menu">
                   <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
                     <a target="_blank"
-                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
+                       data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
                        data-translate=""
                        title="{{('inspireMonitoringFormat-help' | translate) !== '' ? ('inspireMonitoringFormat-help' | translate) : ''}}">
                       inspireMonitoringFormat</a></li>
                   <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
                     <a target="_blank"
-                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
+                       data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
                        data-translate=""
                        title="{{('inspireMonitoringFormatWithRowData-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowData-help' | translate) : ''}}">
                       inspireMonitoringFormatWithRowData</a></li>
                   <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
                     <a target="_blank"
-                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=onlyFirstInspireTheme"
+                       data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=onlyFirstInspireTheme"
                        data-translate=""
                        title="{{('inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme-help' | translate) : ''}}">
                       inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme</a>
                   </li>
                   <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
                     <a target="_blank"
-                       data-ng-href="api/reports/custom/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=asManyDatasetsAsInspireThemes"
+                       data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=asManyDatasetsAsInspireThemes"
                        data-translate=""
                        title="{{('inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes-help' | translate) : ''}}">
                       inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes</a>
                   </li>
                   <li><a target="_blank"
-                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.xml{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{scopeId}}"
+                         data-ng-href="api/reports/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}.xml{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{scopeId}}"
                          data-translate="">XML</a></li>
                   <li><a target="_blank"
-                         data-ng-href="api/reports/{{reporting.id}}{{territory.label ? '/' + territory.label : ''}}.json{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{scopeId}}"
+                         data-ng-href="api/reports/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}.json{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{scopeId}}"
                          data-translate="">JSON</a></li>
                 </ul>
               </div>
@@ -449,7 +449,7 @@
       <h2 data-translate=""
           data-translate-values="{
           title: '{{report.identification.title.content}}',
-          territory: '{{territory.label}}',
+          scope: '{{scope.label}}',
           count: '{{filterCount}}'}">
         monitoringDetails</h2>
 
@@ -521,6 +521,6 @@
       </table>
     </div>
   </div>
-  
+
   </div>
 </div>

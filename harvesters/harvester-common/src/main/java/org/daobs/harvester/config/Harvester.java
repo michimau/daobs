@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element ref="{http://daobs.org}uuid"/>
- *         &lt;element ref="{http://daobs.org}territory"/>
+ *         &lt;element ref="{http://daobs.org}scope"/>
  *         &lt;element ref="{http://daobs.org}folder"/>
  *         &lt;element ref="{http://daobs.org}name"/>
  *         &lt;element ref="{http://daobs.org}url"/>
@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
   "uuid",
-  "territory",
+  "scope",
   "folder",
   "name",
   "url",
@@ -77,7 +77,7 @@ public class Harvester implements Serializable {
   @XmlElement(namespace = "http://daobs.org", required = true)
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
   @XmlSchemaType(name = "NCName")
-  protected String territory;
+  protected String scope;
   @XmlElement(namespace = "http://daobs.org", required = true)
   protected String folder;
   @XmlElement(namespace = "http://daobs.org", required = true)
@@ -122,27 +122,27 @@ public class Harvester implements Serializable {
   }
 
   /**
-   * Gets the value of the territory property.
+   * Gets the value of the scope property.
    *
    * @return
    *     possible object is
    *     {@link String }
    *
    */
-  public String getTerritory() {
-    return territory;
+  public String getScope() {
+    return scope;
   }
 
   /**
-   * Sets the value of the territory property.
+   * Sets the value of the scope property.
    *
    * @param value
    *     allowed object is
    *     {@link String }
    *
    */
-  public void setTerritory(String value) {
-    this.territory = value;
+  public void setScope(String value) {
+    this.scope = value;
   }
 
   /**

@@ -224,19 +224,19 @@ Main fields for metadata document are the following:
 
 Main fields for indicator document are the following:
 
-* ```id```: A unique identifier based on the territory and date
+* ```id```: A unique identifier based on the scope and date
 * ```documentType```: Fixed value ```indicator```
 * ```indicatorName```: Indicator name
 * ```indicatorValue```: Indicator value
 * ```reportingDateSubmission```: Reporting submission date
 * ```reportingDate```: Reporting date
 * ```reportingYear```: Reporting date year only
-* ```territory```: The member state code
+* ```scope```: The scope of the report. Usually a member state code
 * ```contact```: The contact information
 * ```contact```: The contact information
 
 Main fields for monitoringMetadata document are the following:
 
-* See https://github.com/INSPIRE-MIF/daobs/blob/1.0.x/reporting/src/main/resources/xslt/inspire-monitoring-reporting.xsl#L169
+* See https://github.com/INSPIRE-MIF/daobs/blob/2.0.x/reporting/src/main/resources/xslt/inspire-monitoring-reporting.xsl#L169
 
 

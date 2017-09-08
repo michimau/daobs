@@ -79,8 +79,8 @@
                 select="starts-with(normalize-space(/harvestedContent/daobs:harvester/daobs:url), 'file://')"
                 as="xs:boolean?"/>
 
-  <xsl:variable name="territory"
-                select="/harvestedContent/daobs:harvester/daobs:territory"
+  <xsl:variable name="scope"
+                select="/harvestedContent/daobs:harvester/daobs:scope"
                 as="xs:string?"/>
 
   <xsl:include href="fn.xsl"/>

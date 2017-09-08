@@ -124,7 +124,7 @@
       $scope.rules = null;
       $scope.overview = false;
       $scope.reportingConfig = null;
-      $scope.listOfTerritory = [];
+      $scope.listOfScope = [];
       $scope.filterCount = null;
       $scope.fq = null;
       $scope.dateTime = null;
@@ -141,14 +141,14 @@
       };
       $scope.$watch('date', buildDate);
       $scope.$watch('time', buildDate);
-      $scope.$watch('territory', function(n, o) {
+      $scope.$watch('scope', function(n, o) {
         if (o !== n) {
           $scope.scopeId = n.label;
         }
       });
 
       $scope.facetFields = ['resourceType', 'Org',
-        'OrgForResource', 'isValid', 'territory'];
+        'OrgForResource', 'isValid', 'scope'];
       var facetParam = '';
       $.each($scope.facetFields, function (item) {
         facetParam += '&facet.field=' + $scope.facetFields[item];
@@ -189,7 +189,7 @@
 
       function guessLanguage(code) {
         // Check if the 2 first letters of a language code
-        // match the selected territory
+        // match the selected scope
         for (var i = 0; i < $scope.listOfLanguages.length; i++) {
           if ($scope.listOfLanguages[i].code.indexOf(code) === 0) {
             $scope.monitoringLanguage = $scope.listOfLanguages[i].code;
@@ -199,7 +199,7 @@
       };
 
       function init() {
-        //Get list of territory available
+        //Get list of scope available
         // $http.get(cfg.SERVICES.dataCore +
         //   '?q=' +
         //   'documentType%3Ametadata&' +
@@ -211,9 +211,9 @@
             "query" : {
             },
             "aggs": {
-              "territory": {
+              "scope": {
                 "terms":  {
-                  "field": "territory",
+                  "field": "scope",
                   "size": "100"
                 }
               },
@@ -241,23 +241,23 @@
           }
         ).success(function (r) {
           $scope.facetValues = {};
-          var i = 0, facet = r.aggregations.territory.buckets;
+          var i = 0, facet = r.aggregations.scope.buckets;
 
           // The facet response contains an array
           for (var i = 0; i < facet.length; i ++) {
-            $scope.listOfTerritory.push({
+            $scope.listOfScope.push({
               label: facet[i].key,
               count: facet[i].doc_count
             });
           }
 
-          var territoryParam = $location.search().territory,
+          var scopeParam = $location.search().scope,
             filterParam = $location.search().filter;
 
-          if (territoryParam) {
-            angular.forEach($scope.listOfTerritory, function (item) {
-              if (item.label === territoryParam) {
-                $scope.territory = item;
+          if (scopeParam) {
+            angular.forEach($scope.listOfScope, function (item) {
+              if (item.label === scopeParam) {
+                $scope.scope = item;
               }
             });
           }
@@ -295,7 +295,7 @@
       function getMatchingRecord() {
         var fq =
           ($scope.filter ? $scope.filter : '') +
-          ($scope.territory ? ' +territory:' + $scope.territory.label : '');
+          ($scope.scope ? ' +scope:' + $scope.scope.label : '');
         $scope.filterCount = null;
         $scope.filterError = null;
         $scope.fq = encodeURIComponent(fq);
@@ -352,7 +352,7 @@
       $scope.preview = function () {
         $scope.overview = false;
         $scope.report = null;
-        var area = $scope.territory && $scope.territory.label,
+        var area = $scope.scope && $scope.scope.label,
           filterParameter =
             ($scope.filter ? '?fq=' + encodeURIComponent($scope.filter) : '?') +
             ($scope.dateTime ? '&date=' + $scope.dateTime : '');
@@ -490,7 +490,7 @@
       $scope.submit = function (type) {
         $scope.overview = false;
         $scope.report = null;
-        var area = $scope.territory && $scope.territory.label,
+        var area = $scope.scope && $scope.scope.label,
           filterParameter =
             ($scope.filter ? '?fq=' + encodeURIComponent($scope.filter) : '?') +
             '&scopeId=' + $scope.scopeId +
@@ -507,11 +507,11 @@
       $scope.$watch('reporting', function () {
         $scope.reporting && $location.search('reporting', $scope.reporting.id);
       });
-      // Reset report on territory changes
-      $scope.$watch('territory', function (oldValue, newValue) {
+      // Reset report on scope changes
+      $scope.$watch('scope', function (oldValue, newValue) {
         $scope.report = null;
         if (oldValue !== newValue) {
-          $scope.territory && $location.search('territory', $scope.territory.label);
+          $scope.scope && $location.search('scope', $scope.scope.label);
           getMatchingRecord();
           guessLanguage(newValue);
         }

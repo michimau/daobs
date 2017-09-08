@@ -35,9 +35,9 @@
             // TODO: Move to solrService
             // $http.get(cfg.SERVICES.dataCore +
             //   '?q=documentType%3Amonitoring&' +
-            //   'sort=reportingDate+desc,territory+asc&' +
+            //   'sort=reportingDate+desc,scope+asc&' +
             //   'start=0&rows=' + rows + '&' +
-            //   'facet=true&facet.field=reportingYear&facet.field=territory&' +
+            //   'facet=true&facet.field=reportingYear&facet.field=scope&' +
             //   'wt=json')
             $http.post(
               cfg.SERVICES.esindicatorCore + '/_search?size=' + rows, {
@@ -62,9 +62,9 @@
                       "size": "100"
                     }
                   },
-                  "territory": {
+                  "scope": {
                     "terms":  {
-                      "field": "territory",
+                      "field": "scope",
                       "size": "100"
                     }
                   }
@@ -114,7 +114,7 @@
           /**
            * Remove monitoring and related indicators.
            *
-           * @param m MUST contains a reportingDate and territory which
+           * @param m MUST contains a reportingDate and scope which
            * is applied as filter. If undefined, all monitoring and
            * indicators are removed.
            *
@@ -124,7 +124,7 @@
             // Remove indicator
             var filter = m === undefined ? '' :
               '+reportingDate:"' + m.reportingDate + '" ' +
-              '+territory:"' + m.territory + '"',
+              '+scope:"' + m.scope + '"',
               indicatorFilter = '+documentType:indicator ' + filter,
               monitoringFilter = '+documentType:monitoring* ' + filter,
               deferred = $q.defer();

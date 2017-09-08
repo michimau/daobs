@@ -8,7 +8,7 @@
       "hits": 0,
       "columns": [
         "resourceTitle",
-        "territory"
+        "scope"
       ],
       "sort": [
         "creationDateForResource",

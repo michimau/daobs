@@ -148,8 +148,8 @@ public class HarvesterConfigRepository implements InitializingBean {
       listOfErrors.add(String.format("Harvester with UUID '%s' does not have folder.",
           harvester.getUuid()));
     }
-    if (harvester.getTerritory() == null) {
-      listOfErrors.add(String.format("Harvester with UUID '%s' does not have territory.",
+    if (harvester.getScope() == null) {
+      listOfErrors.add(String.format("Harvester with UUID '%s' does not have scope.",
           harvester.getUuid()));
     }
     String filter = harvester.getFilter();
@@ -172,16 +172,16 @@ public class HarvesterConfigRepository implements InitializingBean {
   /**
    * Set defaults for an incomplete harvester.
    * <ul>
-   * <li>territory is set to UUID</li>
-   * <li>folder is set to territory</li>
+   * <li>scope is set to UUID</li>
+   * <li>folder is set to scope</li>
    * </ul>
    */
   private void accomodate(Harvester harvester) {
-    if (harvester.getTerritory() == null) {
-      harvester.setTerritory(harvester.getUuid());
+    if (harvester.getScope() == null) {
+      harvester.setScope(harvester.getUuid());
     }
     if (harvester.getFolder() == null) {
-      harvester.setFolder(harvester.getTerritory());
+      harvester.setFolder(harvester.getScope());
     }
   }
 

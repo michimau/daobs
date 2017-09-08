@@ -117,9 +117,9 @@
       </xsl:for-each>
 
       <!-- Harvester details -->
-      <territory>
-        <xsl:value-of select="normalize-space($harvester/daobs:territory)"/>
-      </territory>
+      <scope>
+        <xsl:value-of select="normalize-space($harvester/daobs:scope)"/>
+      </scope>
       <harvesterId>
         <xsl:value-of select="normalize-space($harvester/daobs:url)"/>
       </harvesterId>
