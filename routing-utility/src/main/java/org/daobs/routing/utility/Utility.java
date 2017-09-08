@@ -85,6 +85,9 @@ public class Utility {
     return DigestUtils.sha256Hex(stringToEncrypt);
   }
 
+  /**
+   * Encode double quote for JSON outpur.
+   */
   public String encodeForJson(Exchange exchange) {
     String body = exchange.getIn().getBody(String.class);
     body = body.replaceAll("\"", "\\\"");
@@ -165,7 +168,8 @@ public class Utility {
                       if (isArray) {
                         xcb.value(node.getTextContent());
                       } else if (name.equals("geom")) {
-                        JsonNode obj = mapper.readTree(node.getTextContent().getBytes(StandardCharsets.UTF_8));
+                        JsonNode obj = mapper.readTree(
+                            node.getTextContent().getBytes(StandardCharsets.UTF_8));
                         xcb.field(name, obj);
                       } else if (
                           // Skip some fields causing errors / TODO

@@ -416,6 +416,9 @@
           <cm:transform>
             <cm:simple>${bodyAs(String)}</cm:simple>
           </cm:transform>
+          <cm:setBody>
+            <cm:simple>bean:utility?method=encodeForJson</cm:simple>
+          </cm:setBody>
           <cm:log message="Errors are: ${body}. Failure."
                   loggingLevel="INFO"
                   logName="org.daobs.task.ValidationChecker"/>
