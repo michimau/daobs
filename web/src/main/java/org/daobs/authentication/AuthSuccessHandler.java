@@ -23,6 +23,7 @@ package org.daobs.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -57,6 +58,13 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
 
     Map<String, Object> map = new LinkedHashMap<>();
     if (authentication.isAuthenticated()) {
+
+      String location = request.getParameter("targetUrl");
+      if (StringUtils.isNotEmpty(location)) {
+        response.sendRedirect(response.encodeRedirectURL(location));
+        return;
+      }
+      
       map.put("authenticated", Boolean.TRUE);
       map.put("username", authentication.getName());
       map.put("roles", AuthorityUtils.authorityListToSet(authentication
