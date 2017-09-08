@@ -467,6 +467,9 @@
     application -->
     <war.name>daobs</war.name>
 
+    <!-- A custom application name displayed in browser tab. -->
+    <app.name>daobs</app.name>
+
     <!-- The web application name. Could be run
     as root context using "/" or using a custom
     name eg. "/dashboard". -->
