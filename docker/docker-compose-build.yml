@@ -1,21 +1,14 @@
 version: '3'
 services:
 
-  dashboard:
-    image: inspiremif/daobs
-    volumes:
-       - daobsdir:/daobs-data-dir/
-    expose:
-      - "8080"
-    depends_on:
-      - "kibana"
-    command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.5.0
     volumes:
       - esdata:/usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    #ports:
+     # - "9200:9200"
+     # - "9300:9300"
     expose:
       - "9200"
       - "9300"
@@ -24,6 +17,8 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.5.0
+    #ports:
+    #  - "5601:5601"
     expose:
       - "5601"
     volumes:
@@ -33,6 +28,20 @@ services:
     depends_on:
       - "elasticsearch"
     command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
+
+  dashboard:
+    build:
+      context: ../
+    volumes:
+       - daobsdir:/daobs-data-dir/
+    #ports:
+    #  - "8080:8080"
+    #- m2:/usr/share/maven/ref/repository
+    expose:
+      - "8080"
+    depends_on:
+      - "kibana"
+    command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
 
   nginx:
     hostname: nginx
@@ -54,3 +63,5 @@ volumes:
        driver: local
     daobsdir:
        driver: local
+    #m2:
+    #   driver: local
