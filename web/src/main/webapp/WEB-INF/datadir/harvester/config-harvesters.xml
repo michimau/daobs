@@ -28,7 +28,7 @@
   <!-- Configuration example with all options -->
   <!--<daobs:harvester>
     <daobs:uuid>0000</daobs:uuid>
-    <daobs:territory>test</daobs:territory>
+    <daobs:scope>test</daobs:scope>
     <daobs:folder>test</daobs:folder>
     <daobs:name>Test</daobs:name>
     <daobs:url>http://localhost:8080/geonetwork/srv/eng/csw</daobs:url>
@@ -48,7 +48,7 @@
 
   <daobs:harvester>
     <daobs:uuid>0ab2a240-4f61-46a4-a274-97df2b7c33b1</daobs:uuid>
-    <daobs:territory>EU</daobs:territory>
+    <daobs:scope>EU</daobs:scope>
     <daobs:folder>EU</daobs:folder>
     <daobs:name>INSPIRE Geoportal</daobs:name>
     <daobs:url>http://inspire-geoportal.ec.europa.eu/GeoportalProxyWebServices/resources/OGCCSW202</daobs:url>
@@ -60,7 +60,7 @@
   -->
   <daobs:harvester>
     <daobs:uuid>0a8b54e3-a216-43aa-a132-096eb72197cc</daobs:uuid>
-    <daobs:territory>NL</daobs:territory>
+    <daobs:scope>NL</daobs:scope>
     <daobs:folder>NL</daobs:folder>
     <daobs:name>Nationaal Georegister (BeheerPDOK)</daobs:name>
     <daobs:url>http://www.nationaalgeoregister.nl/geonetwork/srv/dut/inspire
@@ -71,7 +71,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>0a8b54e3-a216-43aa-a132-096eb72197cc</daobs:uuid>
-    <daobs:territory>MT</daobs:territory>
+    <daobs:scope>MT</daobs:scope>
     <daobs:folder>MT</daobs:folder>
     <daobs:name>Malta</daobs:name>
     <daobs:url>https://msdi.data.gov.mt/geonetwork/srv/eng/csw</daobs:url>
@@ -83,7 +83,7 @@
 
   <daobs:harvester>
     <daobs:uuid>1e420e84-e683-4b91-a1f1-db5b68320ee3</daobs:uuid>
-    <daobs:territory>LI</daobs:territory>
+    <daobs:scope>LI</daobs:scope>
     <daobs:folder>LI</daobs:folder>
     <daobs:name>geocat.ch - liechtenstein</daobs:name>
     <daobs:url>https://www.geocat.ch/geonetwork/srv/ger/csw-liechtenstein-inspire</daobs:url>
@@ -93,7 +93,7 @@
 
   <daobs:harvester>
     <daobs:uuid>9da7a1e6-101d-4053-9cc9-31e30a89d4fa</daobs:uuid>
-    <daobs:territory>LV</daobs:territory>
+    <daobs:scope>LV</daobs:scope>
     <daobs:folder>LV-LGIA</daobs:folder>
     <daobs:name>ArcGIS Server Geoportal Extension 10 - OGC CSW 2.0.2 ISO AP</daobs:name>
     <daobs:url>https://metadati.lgia.gov.lv/geoportal/csw</daobs:url>
@@ -104,7 +104,7 @@
 
   <daobs:harvester>
     <daobs:uuid>37300ca5-fffc-4214-9a10-34e32ed25b8b</daobs:uuid>
-    <daobs:territory>IT</daobs:territory>
+    <daobs:scope>IT</daobs:scope>
     <daobs:folder>IT</daobs:folder>
     <daobs:name>RNDT - Repertorio Nazionale dei Dati Territoriali - Servizio di
       ricerca
@@ -113,7 +113,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>c32c9922-00d6-11e6-9c5d-52540023a883</daobs:uuid>
-    <daobs:territory>BG</daobs:territory>
+    <daobs:scope>BG</daobs:scope>
     <daobs:folder>BG</daobs:folder>
     <daobs:name>Услуга за откриване</daobs:name>
     <daobs:url>http://gis.armf.bg:8080/geonetwork/srv/eng/csw</daobs:url>
@@ -122,7 +122,7 @@
 
   <daobs:harvester>
     <daobs:uuid>5d395fd3-aff2-4a27-959b-bcc5099f8725</daobs:uuid>
-    <daobs:territory>EL</daobs:territory>
+    <daobs:scope>EL</daobs:scope>
     <daobs:folder>EL</daobs:folder>
     <daobs:name>ΚΑΤΑΛΟΓΟΣ (Elena)</daobs:name>
     <daobs:url>http://www1.okxe.gr:80/geonetwork/srv/en/csw</daobs:url>
@@ -133,7 +133,7 @@
 
   <daobs:harvester>
     <daobs:uuid>6f77b9f1-aa4f-4688-ab32-2e721bcfefd9</daobs:uuid>
-    <daobs:territory>FI</daobs:territory>
+    <daobs:scope>FI</daobs:scope>
     <daobs:folder>FI</daobs:folder>
     <daobs:name>Paikkatietohakemisto (Maanmittauslaitos)</daobs:name>
     <daobs:url>http://www.paikkatietohakemisto.fi:80/geonetwork/srv/fin/csw
@@ -153,7 +153,7 @@
 
   <daobs:harvester>
     <daobs:uuid>4d1adfec-73a8-4036-a633-c83b6b12fad9</daobs:uuid>
-    <daobs:territory>BE</daobs:territory>
+    <daobs:scope>BE</daobs:scope>
     <daobs:folder>BE-METAWAL</daobs:folder>
     <daobs:name>Metawal - Catalogue pour l'information géographique de
       Wallonie
@@ -167,7 +167,7 @@
 
   <daobs:harvester>
     <daobs:uuid>cccfbb63-b713-47ec-962f-bb24ee02fd12</daobs:uuid>
-    <daobs:territory>BE</daobs:territory>
+    <daobs:scope>BE</daobs:scope>
     <daobs:folder>BE-GEOPUNT</daobs:folder>
     <daobs:name>Geopunt-Metadatacenter zoekdienst (AGIV)</daobs:name>
     <daobs:url>http://metadata.geopunt.be/zoekdienst/srv/dut/csw</daobs:url>
@@ -187,7 +187,7 @@
 
   <daobs:harvester>
     <daobs:uuid>44133c9a-f551-4fe4-ad83-0b14eff3a1e6</daobs:uuid>
-    <daobs:territory>DK</daobs:territory>
+    <daobs:scope>DK</daobs:scope>
     <daobs:folder>DK</daobs:folder>
     <daobs:name>(Geodatastyrelsen, Miljøministeriet)</daobs:name>
     <daobs:url>http://www.geodata-info.dk/registrant/srv/en/csw</daobs:url>
@@ -198,7 +198,7 @@
 
   <daobs:harvester>
     <daobs:uuid>08980fe1-c0a6-4916-bf7d-ae6536edc8e2</daobs:uuid>
-    <daobs:territory>CY</daobs:territory>
+    <daobs:scope>CY</daobs:scope>
     <daobs:folder>CY</daobs:folder>
     <daobs:name>Cyprus eservices</daobs:name>
     <daobs:url>http://eservices.dls.moi.gov.cy/geoportal_inspire/csw</daobs:url>
@@ -207,7 +207,7 @@
 
   <daobs:harvester>
     <daobs:uuid>64490bc7-c90f-4511-9b39-42e60def45cd</daobs:uuid>
-    <daobs:territory>BE</daobs:territory>
+    <daobs:scope>BE</daobs:scope>
     <daobs:folder>BE-GEO</daobs:folder>
     <daobs:name>CSW service of the belgian federal government (National
       geographic Institute/DG-INSPIRE)
@@ -219,7 +219,7 @@
 
   <daobs:harvester>
     <daobs:uuid>d8942689-c642-4708-8427-5a993a5f2663</daobs:uuid>
-    <daobs:territory>NO</daobs:territory>
+    <daobs:scope>NO</daobs:scope>
     <daobs:folder>NO</daobs:folder>
     <daobs:name>Geonorge metadataportal (SKLD)</daobs:name>
     <daobs:url>http://www.geonorge.no/geonetwork/srv/nor/csw-inspire</daobs:url>
@@ -230,7 +230,7 @@
 
   <daobs:harvester>
     <daobs:uuid>04e5f2e4-59f1-4995-a170-fef88bd4b84a</daobs:uuid>
-    <daobs:territory>BE</daobs:territory>
+    <daobs:scope>BE</daobs:scope>
     <daobs:folder>BE-IRISNET</daobs:folder>
     <daobs:name>GeoCatalogue de la Région de Bruxelles-Capitale (CIRB/CIBG)
     </daobs:name>
@@ -250,7 +250,7 @@
 
   <daobs:harvester>
     <daobs:uuid>3447dcce-ef22-43b1-8852-5778c252c572</daobs:uuid>
-    <daobs:territory>EE</daobs:territory>
+    <daobs:scope>EE</daobs:scope>
     <daobs:folder>EE</daobs:folder>
     <daobs:name>Estonia Discovery Service. (Estonian Land Board)</daobs:name>
     <daobs:url>http://inspire.maaamet.ee/geoportal/csw</daobs:url>
@@ -266,7 +266,7 @@
 
   <daobs:harvester>
     <daobs:uuid>c1f4ab0f-bb9f-4ba3-8c83-54fd3b3c8b71</daobs:uuid>
-    <daobs:territory>HU</daobs:territory>
+    <daobs:scope>HU</daobs:scope>
     <daobs:folder>HU</daobs:folder>
     <daobs:name>FÖMI catalog service / FÖMI katalógus szolgáltatás</daobs:name>
     <daobs:url>http://www.geoshop.hu:80/geonetwork/srv/en/csw</daobs:url>
@@ -277,7 +277,7 @@
 
   <daobs:harvester>
     <daobs:uuid>f87e28a9-d61e-4499-bd7b-e387069e8c79</daobs:uuid>
-    <daobs:territory>UK</daobs:territory>
+    <daobs:scope>UK</daobs:scope>
     <daobs:folder>UK</daobs:folder>
     <daobs:name>UK Location Catalogue Publishing Service (Ordnance Survey, GB)
     </daobs:name>
@@ -289,7 +289,7 @@
 
   <daobs:harvester>
     <daobs:uuid>6c3ec9e7-d505-4bc7-a4cf-69169b8be597</daobs:uuid>
-    <daobs:territory>LU</daobs:territory>
+    <daobs:scope>LU</daobs:scope>
     <daobs:folder>LU</daobs:folder>
     <daobs:name>INSPIRE Geoportal CSW des Großherzogtums Luxembourg</daobs:name>
     <daobs:url>http://inspire.geoportail.lu/geoportal/csw</daobs:url>
@@ -297,7 +297,7 @@
 
   <daobs:harvester>
     <daobs:uuid>f17bb142-be5e-4c33-bfa7-b52c3a18660e</daobs:uuid>
-    <daobs:territory>SE</daobs:territory>
+    <daobs:scope>SE</daobs:scope>
     <daobs:folder>SE</daobs:folder>
     <daobs:name>Nationell svensk metadatakatalog ()</daobs:name>
     <daobs:url>https://www.geodata.se/InspireCswProxy/csw</daobs:url>
@@ -305,7 +305,7 @@
 
   <daobs:harvester>
     <daobs:uuid>fe1cebf2-784e-4412-ab0f-3a405803a0d3</daobs:uuid>
-    <daobs:territory>HR</daobs:territory>
+    <daobs:scope>HR</daobs:scope>
     <daobs:folder>HR</daobs:folder>
     <daobs:name>Pilot kataloškog servera (Otišao)</daobs:name>
     <daobs:url>http://geoportal.nipp.hr/geonetwork/srv/hrv/csw-inspire
@@ -317,7 +317,7 @@
 
   <daobs:harvester>
     <daobs:uuid>2e121468-8fa4-461a-a5a1-553810a8642a</daobs:uuid>
-    <daobs:territory>CZ</daobs:territory>
+    <daobs:scope>CZ</daobs:scope>
     <daobs:folder>CZ</daobs:folder>
     <daobs:name>Czech Republic INSPIRE metadata catalogue (CENIA, Czech
       Environmental Information Agency)
@@ -328,7 +328,7 @@
 
   <daobs:harvester>
     <daobs:uuid>ea8fbb18-4dda-47b4-a61b-dff6b6cafd8a</daobs:uuid>
-    <daobs:territory>AT</daobs:territory>
+    <daobs:scope>AT</daobs:scope>
     <daobs:folder>AT</daobs:folder>
     <daobs:name>INSPIRE Geo-Portal Katalogservice BMLFUW/Österreich
       (Bundesministerium für Land- und Forstwirtschaft, Umwelt und Was...
@@ -344,7 +344,7 @@
 
   <daobs:harvester>
     <daobs:uuid>3a6341a4-1984-4d31-8523-b943d859dc51</daobs:uuid>
-    <daobs:territory>IE</daobs:territory>
+    <daobs:scope>IE</daobs:scope>
     <daobs:folder>IE</daobs:folder>
     <daobs:name>Geoportal IE - INSPIRE Discovery Service (Department of
       Environment, Community and Local Government)
@@ -357,7 +357,7 @@
 
   <daobs:harvester>
     <daobs:uuid>8406e8cb-6edd-435b-8801-762c71616cc5</daobs:uuid>
-    <daobs:territory>DE</daobs:territory>
+    <daobs:scope>DE</daobs:scope>
     <daobs:folder>DE</daobs:folder>
     <daobs:name>GeoDatenKatalog.De (BKG)</daobs:name>
     <daobs:url>http://ims.geoportal.de/gdi-de/srv/eng/csw</daobs:url>
@@ -375,7 +375,7 @@
 
   <daobs:harvester>
     <daobs:uuid>08ce8000-58b1-431f-a0ee-071b1ce438d0</daobs:uuid>
-    <daobs:territory>RO</daobs:territory>
+    <daobs:scope>RO</daobs:scope>
     <daobs:folder>RO</daobs:folder>
     <daobs:name>Serviciul de căutare al geo-portalului INSPIRE al României
       (ANCPI)
@@ -385,7 +385,7 @@
 
   <daobs:harvester>
     <daobs:uuid>be1da986-42f6-4566-afdc-33bc05b5a0c0</daobs:uuid>
-    <daobs:territory>IS</daobs:territory>
+    <daobs:scope>IS</daobs:scope>
     <daobs:folder>IS</daobs:folder>
     <daobs:name>Iceland Service</daobs:name>
     <daobs:url>http://gatt.lmi.is/geoportal122/csw</daobs:url>
@@ -393,7 +393,7 @@
 
   <daobs:harvester>
     <daobs:uuid>14341989-de18-4453-ade0-082cab1f0812</daobs:uuid>
-    <daobs:territory>PT</daobs:territory>
+    <daobs:scope>PT</daobs:scope>
     <daobs:folder>PT</daobs:folder>
     <daobs:name>INSPIRE-PT Catalog Service</daobs:name>
     <daobs:url>http://snig.dgterritorio.pt/geoportal/csw/discovery</daobs:url>
@@ -412,7 +412,7 @@
 
   <daobs:harvester>
     <daobs:uuid>6f332d05-c29e-4b1d-9b8f-a4fb0df67c7f</daobs:uuid>
-    <daobs:territory>LV</daobs:territory>
+    <daobs:scope>LV</daobs:scope>
     <daobs:folder>LV-VISS</daobs:folder>
     <daobs:name>Latvian metadata catalogue. GDC (Geospatial data connector)
       (organization name)
@@ -429,7 +429,7 @@
 
   <daobs:harvester>
     <daobs:uuid>6fe4fea2-55af-4aaf-b12e-68a6841dfa2b</daobs:uuid>
-    <daobs:territory>ES</daobs:territory>
+    <daobs:scope>ES</daobs:scope>
     <daobs:folder>ES</daobs:folder>
     <daobs:name>IDEE Discovery service (CNIG en nombre del Consejo Superior
       Geográfico)
@@ -460,7 +460,7 @@
 
   <daobs:harvester>
     <daobs:uuid>3f25ac7a-35fa-4a38-ae8b-68f05c8967aa</daobs:uuid>
-    <daobs:territory>FR</daobs:territory>
+    <daobs:scope>FR</daobs:scope>
     <daobs:folder>FR</daobs:folder>
     <daobs:name>Geocatalogue Catalogue Server INSPIRE (BRGM)</daobs:name>
     <daobs:url>http://www.geocatalogue.fr/api-public/inspire/servicesRest
@@ -470,7 +470,7 @@
 
   <daobs:harvester>
     <daobs:uuid>a0e38db0-904f-477b-afdd-339ac304db53</daobs:uuid>
-    <daobs:territory>SK</daobs:territory>
+    <daobs:scope>SK</daobs:scope>
     <daobs:folder>SK</daobs:folder>
     <daobs:name>Katalógová služba Národného Geoportálu (Slovenská agentúra
       životného prostredia)
@@ -480,7 +480,7 @@
 
   <daobs:harvester>
     <daobs:uuid>218a6808-049c-11e7-93ae-92361f002671</daobs:uuid>
-    <daobs:territory>SK</daobs:territory>
+    <daobs:scope>SK</daobs:scope>
     <daobs:folder>SK2</daobs:folder>
     <daobs:name>Národná vyhľadávacia služba (Register priestorových informácií)</daobs:name>
     <daobs:url>https://rpi.gov.sk/rpi_csw/service.svc/get?</daobs:url>
@@ -488,7 +488,7 @@
 
   <daobs:harvester>
     <daobs:uuid>b207c9b4-cc15-4a09-88e0-ef8785bfa657</daobs:uuid>
-    <daobs:territory>SI</daobs:territory>
+    <daobs:scope>SI</daobs:scope>
     <daobs:folder>SI</daobs:folder>
     <daobs:name>Slovenski Inspire metadata sistem (admin)</daobs:name>
     <daobs:url>http://prostor4.gov.si/imps/srv/slv/csw-INSPIRE</daobs:url>
@@ -498,7 +498,7 @@
 
   <daobs:harvester>
     <daobs:uuid>35872ce0-d55e-4e41-a4a7-343737598fe3</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL</daobs:folder>
     <daobs:name>Geoportal - Polska Usługa Wyszukiwania INSPIRE (Centralny
       Ośrodek Dokumentacji Geodezyjnej i Kartograficznej)
@@ -510,7 +510,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-00</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-00</daobs:folder>
     <daobs:name>Portal Geostatystyczny - Usługa wyszukiwania metadanych (Główny
       Urząd Statystyczny)
@@ -521,7 +521,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-01</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-01</daobs:folder>
     <daobs:name>metadane.gison.pl / csw-zawoja</daobs:name>
     <daobs:url>http://metadane.gison.pl/geonetwork/srv/eng/csw-zawoja
@@ -532,7 +532,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-03</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-03</daobs:folder>
     <daobs:name>G-SIP Konstancin-Jeziorna Metadata Catalog (Urząd Miasta i Gminy
       Konstancin-Jeziorna)
@@ -546,7 +546,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-04</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-04</daobs:folder>
     <daobs:name>GDOŚ Geoportal usługa katalogowa - INSPIRE Usługa wyszukania
     </daobs:name>
@@ -556,7 +556,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-05</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-05</daobs:folder>
     <daobs:name>metadane.gison.pl / csw-zabierzow</daobs:name>
     <daobs:url>http://metadane.gison.pl/geonetwork/srv/eng/csw-zabierzow
@@ -567,7 +567,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-06</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-06</daobs:folder>
     <daobs:name>Katalog metadanych firmy J.O.C.GIS (J.O.C.GIS)</daobs:name>
     <daobs:url>http://metadane.jocgis.pl/geonetwork/srv/eng/csw</daobs:url>
@@ -577,7 +577,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-07</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-07</daobs:folder>
     <daobs:name>Usługa wyszukiwania INSPIRE - Catalogue Services for Web (CSW)
     </daobs:name>
@@ -587,7 +587,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-08</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-08</daobs:folder>
     <daobs:name>metadane-inspire.pgi.gov.pl</daobs:name>
     <daobs:url>http://metadane-inspire.pgi.gov.pl/geonetwork/srv/eng/csw
@@ -599,7 +599,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-09</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-09</daobs:folder>
     <daobs:name>metadane.gison.pl / csw-mszanadolna</daobs:name>
     <daobs:url>http://metadane.gison.pl/geonetwork/srv/eng/csw-mszanadolna
@@ -610,7 +610,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-10</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-10</daobs:folder>
     <daobs:name>Narodowy Instytut Dziedzictwa - discovery service (CSW)
     </daobs:name>
@@ -620,7 +620,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-11</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-11</daobs:folder>
     <daobs:name>Usługa wyszukiwania INSPIRE - Catalogue Services for Web (CSW)
     </daobs:name>
@@ -630,7 +630,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-12</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-12</daobs:folder>
     <daobs:name>Usługa wyszukiwania Systemu Informacji Przestrzennej Urzędu
       Miasta Racibórz
@@ -641,7 +641,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-13</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-13</daobs:folder>
     <daobs:name>Serwer katalogowy Geo-System (Geo)</daobs:name>
     <daobs:url>http://metadane.podgik.pl/geonetwork26/srv/en/csw</daobs:url>
@@ -652,7 +652,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-14</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-14</daobs:folder>
     <daobs:name>Miasto Głogów - usługa wyszukiwania CSW - zagospodarowanie
       przestrzenne
@@ -663,7 +663,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-15</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-15</daobs:folder>
     <daobs:name>Usługa wyszukiwania Systemu Informacji Przestrzennej Związku
       Miast i Gmin Dorzecza Parsęty
@@ -674,7 +674,7 @@
   </daobs:harvester>
   <daobs:harvester>
     <daobs:uuid>INSPIRE-d81e48c4-b4cf-11e3-a455-52540004b857-16</daobs:uuid>
-    <daobs:territory>PL</daobs:territory>
+    <daobs:scope>PL</daobs:scope>
     <daobs:folder>PL-16</daobs:folder>
     <daobs:name>Usługa katalogowa Modułu SDI gmin zrzeszonych w Związku Miast i Gmin dorzecza
       Parsęty
