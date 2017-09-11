@@ -627,12 +627,12 @@
   <!-- Dataset is duplicated as many time as the number of INSPIRE themes -->
   <xsl:template mode="SpatialDataSetFactoryForEachInspireTheme"
                 match="doc">
-    <xsl:variable name="numberOfInspireThemes"
+    <xsl:variable name="inspireThemeNumbers"
                   select="count(distinct-values(arr[@name = 'inspireTheme']/str))"/>
 
-    <xsl:if test="$numberOfInspireThemes > 1">
+    <xsl:if test="$inspireThemeNumbers > 1">
       <xsl:comment>This data set contains
-        <xsl:value-of select="$numberOfInspireThemes"/> INSPIRE themes.
+        <xsl:value-of select="$inspireThemeNumbers"/> INSPIRE themes.
         It was duplicated for each themes.
       </xsl:comment>
     </xsl:if>

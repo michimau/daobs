@@ -206,7 +206,7 @@ Main fields for metadata document are the following:
 * ```inspireThemeFirst_syn```: First INSPIRE theme values 
 * ```inspireThemeFirst```: First INSPIRE theme id
 * ```inspireAnnexForFirstTheme```: INSPIRE annex for the first INSPIRE theme
-* ```numberOfInspireTheme```: Number of INSPIRE theme
+* ```inspireThemeNumber```: Number of INSPIRE theme
 * ```isOpenData```: true if contains opendata tag in keywords
 * ```topic```: ISO topic category
 * ```resolutionScaleDenominator```: Scale denominator

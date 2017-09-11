@@ -365,10 +365,10 @@
         <!-- For services, the count does not take into account
         dataset's INSPIRE themes which are transfered to the service
         by service-dataset-task. -->
-        <numberOfInspireTheme>
+        <inspireThemeNumber>
           <xsl:value-of
             select="count($inspireKeywords)"/>
-        </numberOfInspireTheme>
+        </inspireThemeNumber>
 
         <hasInspireTheme>
           <xsl:value-of
@@ -382,6 +382,11 @@
                               */gmd:MD_Keywords/
                                 gmd:keyword/gmd:PT_FreeText/gmd:textGroup/
                                   gmd:LocalisedCharacterString"/>
+
+        <tagNumber>
+          <xsl:value-of select="count($keywords)"/>
+        </tagNumber>
+
         <xsl:for-each select="$keywords">
           <tag>
             <xsl:value-of select="text()"/>

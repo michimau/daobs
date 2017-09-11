@@ -81,9 +81,7 @@
                               mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue='service']) > 0"/>
 
     <xsl:message>#<xsl:value-of
-      select="count(preceding-sibling::mdb:MD_Metadata)"/>.
-      <xsl:value-of select="$identifier"/>
-    </xsl:message>
+      select="count(preceding-sibling::mdb:MD_Metadata)"/>. <xsl:value-of select="$identifier"/></xsl:message>
 
     <!-- Create a first document representing the main record. -->
     <doc>
@@ -359,10 +357,10 @@
           </inspireAnnex>
         </xsl:for-each>
 
-        <numberOfInspireTheme>
+        <inspireThemeNumber>
           <xsl:value-of
             select="count($inspireKeywords)"/>
-        </numberOfInspireTheme>
+        </inspireThemeNumber>
 
         <hasInspireTheme>
           <xsl:value-of

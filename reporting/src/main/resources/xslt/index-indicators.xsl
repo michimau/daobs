@@ -105,11 +105,11 @@ using one character or two. Prepend 0 when needed. -->
 
   <xsl:template match="/">
     <add>
-      <xsl:message>
+      <!--<xsl:message>
         <xsl:text>Indexing indicators for </xsl:text>
         <xsl:value-of select="$reportingScope"/>
         <xsl:value-of select="concat(' Report: ', $reportIdentifier, ' (', $reportingDate, ') - DAOBS format: ', $isDaobsFormat)"/>
-      </xsl:message>
+      </xsl:message>-->
 
       <xsl:apply-templates select="
                 //daobs:reporting|
@@ -149,7 +149,6 @@ using one character or two. Prepend 0 when needed. -->
         }
       </field>
 
-      <xsl:message>Report</xsl:message>
       <xsl:apply-templates mode="indicatorValue"
                            select="
                 daobs:variables/daobs:variable|

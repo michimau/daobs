@@ -116,10 +116,7 @@
         <xsl:variable name="numberOfRecordWithThatUUID"
                       select="count(../*[gmd:fileIdentifier/gco:CharacterString = $identifier])"/>
         <xsl:if test="$numberOfRecordWithThatUUID > 1">
-          <xsl:message>WARNING:
-            <xsl:value-of select="$numberOfRecordWithThatUUID"/> record(s)
-            having UUID '<xsl:value-of select="$identifier"/>' in that set.
-          </xsl:message>
+          <xsl:message>WARNING: <xsl:value-of select="$numberOfRecordWithThatUUID"/> record(s) having UUID '<xsl:value-of select="$identifier"/>' in that set.</xsl:message>
         </xsl:if>
       </xsl:for-each>
 
@@ -133,9 +130,7 @@
         <xsl:choose>
           <xsl:when test="normalize-space($identifier) = ''">
             <xsl:message>WARNING: Record with null UUID found.</xsl:message>
-            <xsl:message>
-              <xsl:copy-of select="."/>
-            </xsl:message>
+            <xsl:message><xsl:copy-of select="."/></xsl:message>
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates mode="index" select="."/>

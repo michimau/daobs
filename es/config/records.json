@@ -1126,7 +1126,7 @@
         "metadataIdentifier": {
           "type": "keyword"
         },
-        "numberOfInspireTheme": {
+        "inspireThemeNumber": {
           "type": "short"
         },
         "otherConstraints": {
@@ -1203,6 +1203,9 @@
         },
         "standardName": {
           "type": "keyword"
+        },
+        "tagNumber": {
+          "type": "short"
         },
         "tag": {
           "type": "keyword"

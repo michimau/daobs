@@ -556,7 +556,7 @@
       <arr name="inspireAnnex">
         <str>iii</str>
       </arr>
-      <int name="numberOfInspireTheme">1</int>
+      <int name="inspireThemeNumber">1</int>
       <arr name="tag">
         <str>Land use</str>
         <str>urban area</str>
