@@ -90,9 +90,19 @@ public class Utility {
    */
   public String encodeForJson(Exchange exchange) {
     String body = exchange.getIn().getBody(String.class);
-    body = body.replaceAll("\"", "\\\"");
-    exchange.getOut().setBody(body);
+    exchange.getOut().setBody(encodeForJson(body));
     return body;
+  }
+
+
+  /**
+   * Encode a string for JSON.
+   */
+  public static String encodeForJson(String string) {
+    return string
+      .replace("\\", "\\\\")
+      .replaceAll("\"", "\\\\\"")
+      .replaceAll("(\\r|\\n|\\r\\n)+", "\\\\n");
   }
 
   /**

@@ -82,7 +82,7 @@ public class ValidationController {
    * Run INSPIRE validation.
    */
   @ApiOperation(value = "Start INSPIRE validation",
-      nickname = "runEtf")
+      nickname = "runInspireValidation")
   @RequestMapping(value = "/validate/inspire",
       produces = {
         MediaType.APPLICATION_XML_VALUE,
@@ -100,18 +100,20 @@ public class ValidationController {
   /**
    * Run service/dataset link builder.
    */
-  @ApiOperation(value = "Analyze service/dataset links and add dataset's INSPIRE themes to services.",
-    nickname = "runEtf")
+  @ApiOperation(value =
+      "Analyze service/dataset links and add dataset's INSPIRE themes to services.",
+      nickname = "runRecordLinkAnalysis")
   @RequestMapping(value = "/validate/linkrecord",
-    produces = {
-      MediaType.APPLICATION_XML_VALUE,
-      MediaType.APPLICATION_JSON_VALUE
-    },
-    method = RequestMethod.GET)
+      produces = {
+        MediaType.APPLICATION_XML_VALUE,
+        MediaType.APPLICATION_JSON_VALUE
+      },
+      method = RequestMethod.GET)
   @ResponseBody
   public RequestResponse runLinkRecord(@RequestParam(required = true) String fq)
-    throws Exception {
+      throws Exception {
     jmsMessager.sendMessage("task-analyze", fq);
-    return new RequestResponse("Service/dataset link records started", "success");
+    return new RequestResponse(
+        "Service/dataset link records analysis started", "success");
   }
 }
