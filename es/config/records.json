@@ -1056,7 +1056,9 @@
           "type": "date"
         },
         "document": {
-          "type": "text"
+          "type" : "string",
+          "index" : "no",
+          "doc_values": false
         },
         "documentStandard": {
           "type": "keyword"
@@ -1219,6 +1221,11 @@
         "validDate": {
           "type": "date",
           "format": "date_hour_minute_second"
+        },
+        "validReport": {
+          "type" : "string",
+          "index" : "no",
+          "doc_values": false
         },
         "schemaValidDate": {
           "type": "date",
