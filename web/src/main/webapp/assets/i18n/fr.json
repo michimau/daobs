@@ -66,6 +66,8 @@
   "monitoringUrlLink": "Plus d'information <a href='{{url}}'>{{url}}</a>",
   "monitoringHelp": "Un rapport est créé à partir d'un ensemble de variables et d'indicateurs. Les variables sont définies à partir d'une requête qui sera calculé par le moteur de recherche. Les indicateurs sont calculés à partir d'expression mathématique reposant sur les variables.",
   "name": "Nom",
+  "addVariableTitle": "Une variable est calculé à partir d'une requête.",
+  "addIndicatorTitle": "Un indicateur repose sur d'autres variables.",
   "name-placeholder": "",
   "addMoreFilter": "Ajouter d'autres filtres",
   "name-help": "",

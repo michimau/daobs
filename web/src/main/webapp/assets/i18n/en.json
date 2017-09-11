@@ -123,6 +123,8 @@
   "harvesterConfigPage": "Configure harvester here. When starting a harvester, a task is created and will be started in the next {{pollingInterval}}. For the time being, harvester task status can't be monitored",
   "harvest": "Harvest",
   "details": "Details",
+  "addVariableTitle": "Variable is based on custom query.",
+  "addIndicatorTitle": "Indicator is based on other variables.",
   "harvesterConfiguration": "Configuration",
   "harvesterMonitoring": "Monitoring",
   "url": "URL",
