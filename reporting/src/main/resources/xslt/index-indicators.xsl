@@ -153,10 +153,7 @@ using one character or two. Prepend 0 when needed. -->
                            select="
                 daobs:variables/daobs:variable|
                 daobs:indicators/daobs:indicator|
-                //Indicators/*|
-                //RowData/SpatialDataService/NetworkService/userRequest|
-                //RowData/SpatialDataSet/Coverage/(relevantArea|actualArea)"/>
-
+                ../Indicators//*[count(*) = 0 and text() != '']"/>
       <field name="isOfficial">true</field>
     </doc>
   </xsl:template>
@@ -200,19 +197,21 @@ using one character or two. Prepend 0 when needed. -->
   </xsl:template>
 
 
-  <xsl:template match="daobs:variable|daobs:indicator"
+  <xsl:template match="daobs:variable|daobs:indicator|
+                       *[count(*) = 0 and text() != '']"
                 mode="indicatorValue">
-    <xsl:variable name="indicatorType" select="local-name()"/>
-    <xsl:variable name="indicatorIdentifier" select="@id"/>
+    <xsl:variable name="indicatorType"
+                  select="local-name()"/>
+    <xsl:variable name="indicatorIdentifier"
+                  select="if (@id) then @id else local-name()"/>
 
     <field name="iv{$indicatorIdentifier}">
-      <xsl:value-of select="daobs:value"/>
+      <xsl:value-of select="if (daobs:value) then daobs:value else text()"/>
     </field>
   </xsl:template>
 
   <xsl:template match="*"
-                mode="indicatorValue">
-  </xsl:template>
+                mode="indicatorValue"/>
 
   <xsl:template match="daobs:variable|daobs:indicator">
     <xsl:variable name="indicatorType" select="local-name()"/>
