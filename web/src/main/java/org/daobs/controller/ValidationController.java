@@ -95,4 +95,23 @@ public class ValidationController {
     jmsMessager.sendMessage("task-validate", fq);
     return new RequestResponse("INSPIRE validation started", "success");
   }
+
+
+  /**
+   * Run service/dataset link builder.
+   */
+  @ApiOperation(value = "Analyze service/dataset links and add dataset's INSPIRE themes to services.",
+    nickname = "runEtf")
+  @RequestMapping(value = "/validate/linkrecord",
+    produces = {
+      MediaType.APPLICATION_XML_VALUE,
+      MediaType.APPLICATION_JSON_VALUE
+    },
+    method = RequestMethod.GET)
+  @ResponseBody
+  public RequestResponse runLinkRecord(@RequestParam(required = true) String fq)
+    throws Exception {
+    jmsMessager.sendMessage("task-analyze", fq);
+    return new RequestResponse("Service/dataset link records started", "success");
+  }
 }
