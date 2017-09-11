@@ -150,6 +150,7 @@
   "cancel": "Cancel",
   "licence": "<a href='api-doc'>API</a> - Licensed under the <a href='https://joinup.ec.europa.eu/community/eupl'>EUPL</a> - Powered by <a href='https://github.com/INSPIRE-MIF/daobs/'>Daobs</a>",
   "actions": "Actions",
+  "addMoreFilter": "Add other filters",
   "restartInspireAll": "INSPIRE validation (all records)",
   "restartEtfAll": "ETF validation (all service records)",
   "restartEtfMissing": "ETF validation (missing service records)",

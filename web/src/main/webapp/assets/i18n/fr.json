@@ -67,6 +67,7 @@
   "monitoringHelp": "Un rapport est créé à partir d'un ensemble de variables et d'indicateurs. Les variables sont définies à partir d'une requête qui sera calculé par le moteur de recherche. Les indicateurs sont calculés à partir d'expression mathématique reposant sur les variables.",
   "name": "Nom",
   "name-placeholder": "",
+  "addMoreFilter": "Ajouter d'autres filtres",
   "name-help": "",
   "language": "Langue",
   "harvesterRecordsDeleted": "Toutes les fiches supprimées.",

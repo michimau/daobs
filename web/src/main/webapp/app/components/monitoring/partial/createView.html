@@ -1,28 +1,14 @@
 <div class="row" data-ng-controller="MonitoringCreateCtrl">
 <div class="container">
-<div class="col-md-12">
-    <br/>
-    <p class="alert alert-info" data-translate="">monitoringCreationPage</p>
-
-    <ul>
-      <li data-ng-repeat="(key, value) in facetValues">
-        <h3>{{key | translate}}</h3>
-        <ul>
-          <li data-ng-repeat="v in value track by $index"
-              data-ng-hide="$odd"
-              data-ng-click="addFacet(key, v)">
-            {{v}} ({{value[$index + 1]}})
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
   <div class="col-md-12">
     <br/>
 
     <form class="form-horizontal" role="form">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-7">
+
+          <p class="alert alert-info" data-translate="">monitoringCreationPage</p>
+
           <div class="form-group" id="ds-report-choose">
             <label for="ds-report-field"
                    class="col-sm-2 control-label"
@@ -105,20 +91,7 @@
             <p class="help-block" data-translate="">customScopeHelp</p>
           </div>
 
-          <p class="alert alert-info"
-             data-ng-show="filterCount"
-             data-translate=""
-             data-translate-values="{
-                scope: '{{scope.label}}',
-                filter: '{{filter}}',
-                count: '{{filterCount}}'}">
-            matchingRecordsForFilter
-          </p>
-          <p class="alert alert-danger" data-ng-show="filterError">
-            {{filterError}}
-          </p>
-        </div>
-        <div class="col-sm-5">
+
           <fieldset data-ng-show="reporting.id.indexOf('inspire') !== -1">
             <legend>
               <i class="fa fa-user"></i>&nbsp;
@@ -174,6 +147,37 @@
             <p class="help-block" data-translate="">
               inspireMonitoringInstructions</p>
           </fieldset>
+
+
+          <p class="alert alert-info"
+             data-ng-show="filterCount"
+             data-translate=""
+             data-translate-values="{
+                scope: '{{scope.label}}',
+                filter: '{{filter}}',
+                count: '{{filterCount}}'}">
+            matchingRecordsForFilter
+          </p>
+
+          <p class="alert alert-danger" data-ng-show="filterError">
+            {{filterError}}
+          </p>
+        </div>
+        <div class="col-sm-5">
+
+          <p class="alert alert-info" data-translate="">addMoreFilter</p>
+
+          <ul>
+            <li data-ng-repeat="(key, value) in facetValues">
+              <h3>{{key | translate}}</h3>
+              <ul>
+                <li data-ng-repeat="v in value.buckets track by $index"
+                    data-ng-click="addFacet(key, v.key)">
+                  {{v.key}} ({{v.doc_count}})
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="row">

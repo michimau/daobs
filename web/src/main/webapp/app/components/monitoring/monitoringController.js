@@ -154,6 +154,38 @@
         facetParam += '&facet.field=' + $scope.facetFields[item];
       });
       $scope.facetValues = {};
+      var aggs = {
+        "scope": {
+          "terms":  {
+            "field": "scope",
+            "size": "100"
+          }
+        },
+        "resourceType": {
+          "terms":  {
+            "field": "resourceType",
+            "size": "100"
+          }
+        },
+        "isValid": {
+          "terms":  {
+            "field": "isValid"
+          }
+        },
+        "OrgForResource": {
+          "terms":  {
+            "field": "OrgForResource",
+            "size": "100"
+          }
+        },
+        "Org": {
+          "terms":  {
+            "field": "Org",
+            "size": "100"
+          }
+        }
+      };
+
       $scope.listOfLanguages = [
         {code: 'bul', label: 'bul'},
         {code: 'cze', label: 'cze'},
@@ -210,34 +242,7 @@
           cfg.SERVICES.esdataCore + '/_search?size=0', {
             "query" : {
             },
-            "aggs": {
-              "scope": {
-                "terms":  {
-                  "field": "scope",
-                  "size": "100"
-                }
-              },
-              "resourceType": {
-                "terms":  {
-                  "field": "resourceType"
-                }
-              },
-              "isValid": {
-                "terms":  {
-                  "field": "isValid"
-                }
-              },
-              "OrgForResource": {
-                "terms":  {
-                  "field": "OrgForResource"
-                }
-              },
-              "Org": {
-                "terms":  {
-                  "field": "Org"
-                }
-              }
-            }
+            "aggs": aggs
           }
         ).success(function (r) {
           $scope.facetValues = {};
@@ -306,17 +311,12 @@
               "query_string" : {
                 "query" : "+documentType:metadata " + fq
               }
-            }
+            },
+            "aggs": aggs
           })
-        // $http.get(cfg.SERVICES.dataCore +
-        //   '?q=' +
-        //   'documentType%3Ametadata&' +
-        //   'start=0&rows=0&' +
-        //   'facet=true&facet.sort=index&facet.mincount=1' + facetParam +
-        //   '&wt=json&indent=true&fq=' + encodeURIComponent(fq))
         .success(function (data) {
           $scope.filterCount = data.hits.total;
-          $scope.facetValues = {};
+          $scope.facetValues = data.aggregations;
           $scope.preview();
         }).error(function (response) {
           $scope.filterError = response.error.msg;
