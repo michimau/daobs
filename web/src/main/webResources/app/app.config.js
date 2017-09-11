@@ -28,6 +28,7 @@
   app.constant('cfg', {
     'repository': '${repository}',
     'version': '${buildNumber}',
+    'name': '${app.name}',
     'defaultDashboard': '${dashboard.default}',
     'SERVICES': {
       root: context,

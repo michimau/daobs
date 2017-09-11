@@ -34,12 +34,12 @@
 
   <!-- Aggregation criteria for searches. Could be null to report
   on all harvested records. Should be a valid member states code. -->
-  <xsl:param name="territory" select="''" as="xs:string"/>
+  <xsl:param name="scope" select="''" as="xs:string"/>
 
   <!-- The filter query used to retrieve document -->
   <xsl:param name="fq" select="''" as="xs:string"/>
 
-  <!-- Override territory -->
+  <!-- Override scope -->
   <xsl:param name="scopeId" select="''" as="xs:string"/>
 
   <xsl:param name="language" select="'eng'" as="xs:string"/>
@@ -105,7 +105,7 @@
              use it as a memberState key. This is usefull when
              creating report at local level eg. -->
         <xsl:value-of select="if ($scopeId != '') then $scopeId
-                              else upper-case($territory)"/>
+                              else upper-case($scope)"/>
       </memberState>
       <MonitoringMD>
         <organizationName>

@@ -87,7 +87,7 @@
         <xsl:value-of select="saxon:serialize($document, 'default-serialize-mode')"/>
       </document>
       <id>
-        <xsl:value-of select="if ($isFile) then concat($territory, '-', $identifier) else $identifier"/>
+        <xsl:value-of select="if ($isFile) then concat($scope, '-', $identifier) else $identifier"/>
         <!--<xsl:value-of select="$identifier"/>-->
       </id>
       <metadataIdentifier>
@@ -108,9 +108,9 @@
       </xsl:for-each>
 
       <!-- Harvester details -->
-      <territory>
-        <xsl:value-of select="normalize-space($harvester/daobs:territory)"/>
-      </territory>
+      <scope>
+        <xsl:value-of select="normalize-space($harvester/daobs:scope)"/>
+      </scope>
       <harvesterId>
         <xsl:value-of select="normalize-space($harvester/daobs:url)"/>
       </harvesterId>

@@ -67,7 +67,7 @@
       $scope.pollingInterval = '10s';
       $scope.adding = false;
       $scope.harvesterTpl = {
-        territory: null,
+        scope: null,
         name: null,
         url: null,
         filter: null,
@@ -94,10 +94,10 @@
         $scope.translations = translations;
       });
 
-      $scope.statsForTerritory = {};
+      $scope.statsForScope = {};
       $scope.statsForRemote = {};
 
-      function loadStatsForTerritory() {
+      function loadStatsForScope() {
         if ($location.path().indexOf('/harvesting/manage') === 0) {
           var statsField = ['isValid', 'etfIsValid'], statsFieldConfig = [];
           for (var i = 0; i < statsField.length; i++) {
@@ -109,7 +109,7 @@
               "query" : {
               },
               "aggs": {
-                "top_territory": {
+                "top_scope": {
                   "terms":  {
                     "field": "harvesterUuid",
                     "size": "1000"
@@ -136,10 +136,10 @@
               }
             }
           ).then(function (r) {
-            if (r.data.aggregations.top_territory && r.data.aggregations.top_territory.buckets) {
-              var facets = r.data.aggregations.top_territory.buckets;
+            if (r.data.aggregations.top_scope && r.data.aggregations.top_scope.buckets) {
+              var facets = r.data.aggregations.top_scope.buckets;
               for (var i = 0; i < facets.length; i++) {
-                $scope.statsForTerritory[facets[i].key] = {
+                $scope.statsForScope[facets[i].key] = {
                   count: facets[i].doc_count,
                   isValid: facets[i].isAboveThreshold
                 };
@@ -148,31 +148,31 @@
           });
         }
         $timeout(function () {
-          loadStatsForTerritory()
+          loadStatsForScope()
         }, 10000);
       };
 
       $scope.loading = false;
       function init() {
         $scope.loading = true;
-        $scope.statsForTerritory = {};
+        $scope.statsForScope = {};
         harvesterService.getAll().success(function (list) {
           $scope.loading = false;
           $scope.harvesterConfig = list.harvester;
           if (list.harvester.length > 0) {
-            loadStatsForTerritory();
+            loadStatsForScope();
           }
         });
       }
-      $scope.orderByFields = ['name', 'territory', 'url', 'count', 'remoteError'];
-      $scope.predicate = 'territory';
+      $scope.orderByFields = ['name', 'scope', 'url', 'count', 'remoteError'];
+      $scope.predicate = 'scope';
       $scope.order = function (predicate, reverse) {
         var isNewPredicate = $scope.predicate === predicate;
 
         if (predicate === 'count') {
           $scope.predicate = function (h) {
-            return $scope.statsForTerritory[h.uuid] &&
-                    $scope.statsForTerritory[h.uuid].count;
+            return $scope.statsForScope[h.uuid] &&
+                    $scope.statsForScope[h.uuid].count;
           };
         } else if (predicate === 'remoteError') {
           $scope.predicate = function (h) {

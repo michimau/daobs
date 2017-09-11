@@ -32,7 +32,7 @@
 
     <table class="table table-striped ds-harvester-table">
       <tr>
-        <th data-translate="">territory</th>
+        <th data-translate="">scope</th>
         <th data-translate="">name</th>
         <th>
           <span data-translate="">details</span>
@@ -108,7 +108,7 @@
                  data-ng-repeat="(key, value) in harvesterTpl">
               <label for="field-{{key}}"
                      class="col-sm-4 control-label"
-                     data-ng-class="{'required' : key === 'territory' || key === 'name' || key === 'url'}">
+                     data-ng-class="{'required' : key === 'scope' || key === 'name' || key === 'url'}">
                 {{key | translate}}</label>
               <div class="col-sm-8" data-ng-switch="key">
                 <textarea data-ng-switch-when="filter"
@@ -153,7 +153,7 @@
       <tr data-ng-show="harvesterConfig">
         <td>
           <input class="form-control"
-                 data-ng-model="harvesterSearch.territory"
+                 data-ng-model="harvesterSearch.scope"
                  autofocus="">
         </td>
         <td colspan="2">
@@ -165,18 +165,18 @@
       <tr data-ng-show="harvesterConfig"
           data-ng-repeat="h in harvesterConfig | filter:harvesterSearch | orderBy:predicate:reverse">
         <td class=""
-            title="{{h.territory}}">
-          <strong>{{h.territory}}</strong>
+            title="{{h.scope}}">
+          <strong>{{h.scope}}</strong>
         </td>
         <td>
           <strong>{{h.name}}</strong><br/>
-          <small data-ng-show="statsForTerritory[h.uuid]">
+          <small data-ng-show="statsForScope[h.uuid]">
             <strong>
-              {{statsForTerritory[h.uuid].count}}
+              {{statsForScope[h.uuid].count}}
               <span data-translate="">records</span>
             </strong>
           </small>
-          <small data-ng-show="statsForTerritory[h.uuid].count && statsForRemote[h.uuid] && statsForRemote[h.uuid].count">&nbsp;/&nbsp;</small>
+          <small data-ng-show="statsForScope[h.uuid].count && statsForRemote[h.uuid] && statsForRemote[h.uuid].count">&nbsp;/&nbsp;</small>
           <small data-ng-show="statsForRemote[h.uuid].count"
                  title="{{statsForRemote[h.uuid].when | date:'M/d/yyyy HH:mm:ss'}}">
             <span>
@@ -184,7 +184,7 @@
               <span data-translate="">recordsInRemote</span>
             </span>
           </small>
-          <small data-ng-repeat="(key, value) in statsForTerritory[h.uuid]"
+          <small data-ng-repeat="(key, value) in statsForScope[h.uuid]"
                  data-ng-if="key !== 'count' && key !== 'val'">
             <h6>{{key | translate}}</h6>
             <ul>
@@ -208,7 +208,7 @@
         <td>
           <ul>
             <li data-ng-repeat="(key, value) in h"
-                data-ng-show="value && key !== 'territory' && key !== 'name'">
+                data-ng-show="value && key !== 'scope' && key !== 'name'">
               <span>{{key | translate}}</span>&nbsp;
               <strong data-ng-if="value.indexOf === undefined || value.indexOf('http') === -1">
                 {{value || ('undefined' | translate)}}
@@ -254,9 +254,9 @@
                 <li>
                   <a role="button"
                      title="{{'viewRecords' | translate}}"
-                     data-ng-show="statsForTerritory[h.uuid].count > 0"
+                     data-ng-show="statsForScope[h.uuid].count > 0"
                      target="daobsDocuments"
-                     data-ng-href="dashboard/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fw,mode:quick,to:now%2Fw))&_a=(columns:!(territory,resourceTitle,numberOfInspireThemeColor,isOpenData,isSchemaValid,isAboveThreshold,isValid,overviewUrl),index:records,interval:auto,query:(query_string:(analyze_wildcard:!t,query:'%2BharvesterUuid:{{h.uuid}}')),sort:!(_score,desc))&embed=true">
+                     data-ng-href="dashboard/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fw,mode:quick,to:now%2Fw))&_a=(columns:!(scope,resourceTitle,numberOfInspireThemeColor,isOpenData,isSchemaValid,isAboveThreshold,isValid,overviewUrl),index:records,interval:auto,query:(query_string:(analyze_wildcard:!t,query:'%2BharvesterUuid:{{h.uuid}}')),sort:!(_score,desc))&embed=true">
                     <i class="fa fa-eye"></i>&nbsp;
                     <span data-translate="">viewRecords</span>
                   </a>
@@ -264,7 +264,7 @@
                 <li>
                   <a role="button"
                      data-ng-click="removeRecords(h)"
-                     data-ng-show="statsForTerritory[h.uuid].count > 0"
+                     data-ng-show="statsForScope[h.uuid].count > 0"
                      title="{{'removeRecords' | translate}}">
                     <i
                       class="fa fa-remove text-danger"></i>&nbsp;
@@ -280,11 +280,11 @@
                   </a>
                 </li>
                 <li role="separator" class="divider"
-                    data-ng-show="statsForTerritory[h.uuid].count > 0"></li>
+                    data-ng-show="statsForScope[h.uuid].count > 0"></li>
                 <li>
                   <a role="button"
                      data-ng-click="inspireValidation(h)"
-                     data-ng-show="statsForTerritory[h.uuid].count > 0"
+                     data-ng-show="statsForScope[h.uuid].count > 0"
                      title="{{'restartInspireAll' | translate}}">
                     <i class="fa fa-fw"></i>&nbsp;
                     <span data-translate="">restartInspireAll</span>
@@ -293,7 +293,7 @@
                 <li>
                   <a role="button"
                      data-ng-click="eftValidation(h, true)"
-                     data-ng-show="statsForTerritory[h.uuid].count > 0"
+                     data-ng-show="statsForScope[h.uuid].count > 0"
                      title="{{'restartEtfAll' | translate}}">
                     <i class="fa fa-fw"></i>&nbsp;
                     <span data-translate="">restartEtfAll</span>
@@ -302,7 +302,7 @@
                 <li>
                   <a role="button"
                      data-ng-click="eftValidation(h, false)"
-                     data-ng-show="statsForTerritory[h.uuid].count > 0"
+                     data-ng-show="statsForScope[h.uuid].count > 0"
                      title="{{'restartEtfMissing' | translate}}">
                     <i class="fa fa-fw"></i>&nbsp;
                     <span data-translate="">restartEtfMissing</span>

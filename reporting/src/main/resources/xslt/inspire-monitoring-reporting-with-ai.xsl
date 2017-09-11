@@ -42,7 +42,7 @@
    documentType:ai
    indicatorName:userRequestview
    indicatorValue:100
-   territory:be
+   scope:be
    Dates will be indexed but for the time being no history
    of the ancillary information will be maintained (ie.
    stats will be provided on all ai).-->
@@ -55,7 +55,7 @@
       <field name="id">
         <xsl:value-of
           select="concat('ai', $indicatorIdentifier,
-              $reportingDate, $reportingTerritory)"/>
+              $reportingDate, $reportingScope)"/>
       </field>
       <field name="documentType">ai</field>
       <field name="indicatorName">
@@ -66,8 +66,8 @@
           <xsl:value-of select="text()"/>
         </field>
       </xsl:if>
-      <field name="territory">
-        <xsl:value-of select="$reportingTerritory"/>
+      <field name="scope">
+        <xsl:value-of select="$reportingScope"/>
       </field>
       <field name="reportingDateSubmission">
         <xsl:value-of select="$reportingDateSubmission"/>
@@ -90,7 +90,7 @@
       <field name="id">
         <xsl:value-of
           select="concat('ai', $indicatorIdentifier,
-              $reportingDate, $reportingTerritory, ../../uuid/text())"/>
+              $reportingDate, $reportingScope, ../../uuid/text())"/>
       </field>
       <field name="documentType">ai</field>
       <field name="indicatorName">
@@ -101,8 +101,8 @@
           <xsl:value-of select="text()"/>
         </field>
       </xsl:if>
-      <field name="territory">
-        <xsl:value-of select="$reportingTerritory"/>
+      <field name="scope">
+        <xsl:value-of select="$reportingScope"/>
       </field>
       <field name="reportingDateSubmission">
         <xsl:value-of select="$reportingDateSubmission"/>

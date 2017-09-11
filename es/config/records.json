@@ -1207,7 +1207,7 @@
         "tag": {
           "type": "keyword"
         },
-        "territory": {
+        "scope": {
           "type": "keyword"
         },
         "topic": {

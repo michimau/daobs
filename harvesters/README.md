@@ -30,7 +30,7 @@ and can be configured through the admin interface.
 
 The configuration parameters are:
 
-* ```territory```: A representative geographic area for the node
+* ```scope```: An identifier for the node. Usually match a geographic area like a country code.
 * ```folder```: The folder name where harvested records are stored
 * ```name```: The name of the node
 * ```url```: The server URL to request (should provide GetCapabilities and GetRecords operations)
@@ -41,7 +41,7 @@ Example:
 
 ```
 <harvester>
-  <territory>de</territory>
+  <scope>de</scope>
   <folder>de</folder>
   <name>GeoDatenKatalog.De</name>
   <url>http://ims.geoportal.de/inspire/srv/eng/csw</url>

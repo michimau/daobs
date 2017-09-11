@@ -81,6 +81,10 @@
       };
 
 
+      $scope.$on('$locationChangeSuccess', function() {
+        $scope.redirectLocation = encodeURIComponent(window.location.href);
+      });
+
 
       // Change class based on route path
       $scope.currentRoute = null;
