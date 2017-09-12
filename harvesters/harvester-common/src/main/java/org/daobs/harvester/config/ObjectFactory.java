@@ -46,7 +46,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-  private final static QName _Territory_QNAME = new QName("http://daobs.org", "territory");
+  private final static QName _Scope_QNAME = new QName("http://daobs.org", "scope");
   private final static QName _Folder_QNAME = new QName("http://daobs.org", "folder");
   private final static QName _Name_QNAME = new QName("http://daobs.org", "name");
   private final static QName _NbOfRecordsPerPage_QNAME = new QName("http://daobs.org", "nbOfRecordsPerPage");
@@ -83,10 +83,10 @@ public class ObjectFactory {
    * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
    *
    */
-  @XmlElementDecl(namespace = "http://daobs.org", name = "territory")
+  @XmlElementDecl(namespace = "http://daobs.org", name = "scope")
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-  public JAXBElement<String> createTerritory(String value) {
-    return new JAXBElement<String>(_Territory_QNAME, String.class, null, value);
+  public JAXBElement<String> createScope(String value) {
+    return new JAXBElement<String>(_Scope_QNAME, String.class, null, value);
   }
 
   /**

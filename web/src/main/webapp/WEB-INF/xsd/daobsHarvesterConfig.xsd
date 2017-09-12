@@ -47,7 +47,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="daobs:uuid"/>
-        <xs:element ref="daobs:territory"/>
+        <xs:element ref="daobs:scope"/>
         <xs:element ref="daobs:folder"/>
         <xs:element ref="daobs:name"/>
         <xs:element ref="daobs:url"/>
@@ -73,10 +73,10 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="territory" type="xs:NCName">
+  <xs:element name="scope" type="xs:NCName">
     <xs:annotation>
       <xs:documentation>
-        A "territory" identifier which allows to group records
+        An identifier which allows to group records
         from different harvesters in the same group. It could be
         a country code, a region code. Usually, this key is
         something that can't be extracted from the metadata records.
@@ -92,7 +92,7 @@
 
         {{YYYYMMDD}}-{{pageNumberStartingAt0}}.xml
 
-        It could be the same value as territory if there is no
+        It could be the same value as scope if there is no
         need to make distinction between harvesters.
       </xs:documentation>
     </xs:annotation>

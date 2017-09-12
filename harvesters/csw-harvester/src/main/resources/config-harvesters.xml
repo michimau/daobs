@@ -26,7 +26,7 @@
 
  <!-- <daobs:harvester>
     <daobs:uuid>0a8b54e3-a216-43aa-a132-096eb72197cc</daobs:uuid>
-    <daobs:territory>NL</daobs:territory>
+    <daobs:scope>NL</daobs:scope>
     <daobs:folder>NL</daobs:folder>
     <daobs:name>Nationaal Georegister (BeheerPDOK)</daobs:name>
     <daobs:url>http://www.nationaalgeoregister.nl/geonetwork/srv/dut/inspire
@@ -38,7 +38,7 @@
 
   <daobs:harvester>
     <daobs:uuid>6f77b9f1-aa4f-4688-ab32-2e721bcfefd9</daobs:uuid>
-    <daobs:territory>FI</daobs:territory>
+    <daobs:scope>FI</daobs:scope>
     <daobs:folder>FI</daobs:folder>
     <daobs:name>Paikkatietohakemisto (Maanmittauslaitos)</daobs:name>
     <daobs:url>http://www.paikkatietohakemisto.fi:80/geonetwork/srv/fi/csw

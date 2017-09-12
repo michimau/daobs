@@ -416,6 +416,9 @@
           <cm:transform>
             <cm:simple>${bodyAs(String)}</cm:simple>
           </cm:transform>
+          <cm:setBody>
+            <cm:simple>bean:utility?method=encodeForJson</cm:simple>
+          </cm:setBody>
           <cm:log message="Errors are: ${body}. Failure."
                   loggingLevel="INFO"
                   logName="org.daobs.task.ValidationChecker"/>
@@ -436,6 +439,11 @@
               "schemaValidReport": "$simple{body}"
               }}</cm:simple>
           </cm:setBody>
+
+          <cm:log message="$simple{body}"
+                  loggingLevel="INFO"
+                  logName="org.daobs.task.ValidationChecker"/>
+
           <cm:setHeader headerName="Exchange.HTTP_URI">
             <cm:groovy>'{{es.url}}/{{es.index.records}}/{{es.index.records}}/' +
               URLEncoder.encode(exchange.in.headers.documentIdentifier, 'UTF-8') + '/_update'</cm:groovy>
@@ -484,6 +492,12 @@
             "validInfo": "${body.info} - ${body.completenessIndicator}"
           }}</cm:simple>
       </cm:setBody>
+
+      <cm:log message="$simple{body}"
+              loggingLevel="INFO"
+              logName="org.daobs.task.ValidationChecker"/>
+
+
       <cm:setHeader headerName="Exchange.HTTP_URI">
         <cm:groovy>'{{es.url}}/{{es.index.records}}/{{es.index.records}}/' +
           URLEncoder.encode(exchange.in.headers.documentIdentifier, 'UTF-8') + '/_update'</cm:groovy>

@@ -130,4 +130,4 @@ When loading the dashboard, the default index is not loaded. After manually sett
 
 License
 ========
-#TODO
+View [license information](https://github.com/INSPIRE-MIF/daobs/blob/2.0.x/LICENCE.md) for the software contained in this image.

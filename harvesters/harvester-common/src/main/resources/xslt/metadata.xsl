@@ -27,6 +27,7 @@
                 xmlns:gmi="http://www.isotc211.org/2005/gmi"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
+                xmlns:gn="http://www.fao.org/geonetwork"
                 xmlns:daobs="http://daobs.org"
                 xmlns:saxon="http://saxon.sf.net/"
                 extension-element-prefixes="saxon"
@@ -78,8 +79,8 @@
                 select="starts-with(normalize-space(/harvestedContent/daobs:harvester/daobs:url), 'file://')"
                 as="xs:boolean?"/>
 
-  <xsl:variable name="territory"
-                select="/harvestedContent/daobs:harvester/daobs:territory"
+  <xsl:variable name="scope"
+                select="/harvestedContent/daobs:harvester/daobs:scope"
                 as="xs:string?"/>
 
   <xsl:include href="fn.xsl"/>
@@ -115,10 +116,7 @@
         <xsl:variable name="numberOfRecordWithThatUUID"
                       select="count(../*[gmd:fileIdentifier/gco:CharacterString = $identifier])"/>
         <xsl:if test="$numberOfRecordWithThatUUID > 1">
-          <xsl:message>WARNING:
-            <xsl:value-of select="$numberOfRecordWithThatUUID"/> record(s)
-            having UUID '<xsl:value-of select="$identifier"/>' in that set.
-          </xsl:message>
+          <xsl:message>WARNING: <xsl:value-of select="$numberOfRecordWithThatUUID"/> record(s) having UUID '<xsl:value-of select="$identifier"/>' in that set.</xsl:message>
         </xsl:if>
       </xsl:for-each>
 
@@ -132,9 +130,7 @@
         <xsl:choose>
           <xsl:when test="normalize-space($identifier) = ''">
             <xsl:message>WARNING: Record with null UUID found.</xsl:message>
-            <xsl:message>
-              <xsl:copy-of select="."/>
-            </xsl:message>
+            <xsl:message><xsl:copy-of select="."/></xsl:message>
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates mode="index" select="."/>
@@ -152,5 +148,15 @@
   <!-- then after the doc, the 'index-extra-documents' mode
   could be used to create more doc. -->
   <xsl:template mode="index-extra-documents" match="*"/>
+
+  <!-- Do a copy of every nodes and attributes -->
+  <xsl:template match="@*|node()" mode="copy">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()" mode="copy"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- Remove geonet:* elements. -->
+  <xsl:template match="gn:*"  mode="copy" priority="2"/>
 
 </xsl:stylesheet>

@@ -21,6 +21,8 @@
 
 package org.daobs.tasks.validation.inspire;
 
+import static org.daobs.routing.utility.Utility.encodeForJson;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -222,14 +224,14 @@ public class OnlineServiceValidatorClient {
         // or of the resource metadata if no issues were found
         String xml = org.apache.commons.io.IOUtils.toString(
             validatorResponse.getEntity().getContent(), "UTF-8");
-        report.setReport(xml.replace("\"", "\\\""));
+        report.setReport(encodeForJson(xml));
       } else {
         report.setInfo(String.format(
             "Exception. HTTP status is %d expected 201.", responseStatusCode
         ));
       }
     } catch (IOException ex) {
-      report.setInfo("Exception: " + ex.getMessage().replace("\"", "\\\""));
+      report.setInfo("Exception: " + encodeForJson(ex.getMessage()));
     }
   }
 }

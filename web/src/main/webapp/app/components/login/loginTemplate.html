@@ -12,6 +12,7 @@
          data-ng-model="loginObj.password"
          placeholder="{{'login.password-placeholder' | translate}}" required>
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
   <button class="btn btn-lg btn-primary btn-block" type="submit" data-ng-disabled="loginProcessing">
     <i class="fa fa-sign-in" data-ng-hide="loginProcessing"></i>
     <i class="fa fa-circle-o-notch fa-spin fa-fw" data-ng-show="loginProcessing"></i>

@@ -524,18 +524,18 @@ public class ReportingController {
   /**
    * Generate a specific report for a specific area in XML or JSON format.
    *
-   * @param fq Filter query to be applied on top of the territory filter
+   * @param fq Filter query to be applied on top of the scope filter
    */
   @ApiOperation(value = "Generate a XML or JSON report",
       nickname = "getReports")
-  @RequestMapping(value = "/reports/{reporting}/{territory}",
+  @RequestMapping(value = "/reports/{reporting}/{scope}",
       produces = {
           MediaType.APPLICATION_XML_VALUE,
           MediaType.APPLICATION_JSON_VALUE
       },
       method = RequestMethod.GET)
   @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "Return a report for a territory."),
+      @ApiResponse(code = 200, message = "Return a report for a scope."),
       @ApiResponse(code = 404, message = "Report not found.")
       })
   @ResponseBody
@@ -545,9 +545,9 @@ public class ReportingController {
                          required = true)
                        @PathVariable(value = "reporting") String reporting,
                        @ApiParam(
-                         value = "A territory",
+                         value = "A scope",
                          required = true)
-                       @PathVariable(value = "territory") String territory,
+                       @PathVariable(value = "scope") String scope,
                        @ApiParam(
                          value = "An optional scope")
                        @RequestParam(
@@ -570,7 +570,7 @@ public class ReportingController {
       throws IOException {
     IndicatorCalculatorImpl indicatorCalculator = null;
     try {
-      indicatorCalculator = generateReporting(request, reporting, scopeId, "+territory:" + territory
+      indicatorCalculator = generateReporting(request, reporting, scopeId, "+scope:" + scope
         + (StringUtils.isEmpty(fq) ? "" : " " + fq.trim()), true, date);
     } catch (FileNotFoundException exception) {
       throw new ResourceNotFoundException(String.format(
@@ -613,11 +613,11 @@ public class ReportingController {
   /**
    * Generate a specific report for a specific area in XML or JSON format.
    *
-   * @param fq Filter query to be applied on top of the territory filter
+   * @param fq Filter query to be applied on top of the scope filter
    */
   @ApiOperation(value = "Save a report",
       nickname = "buildAndIndexReport")
-  @RequestMapping(value = "/reports/{reporting}/{territory}",
+  @RequestMapping(value = "/reports/{reporting}/{scope}",
       produces = {
           MediaType.APPLICATION_JSON_VALUE
       },
@@ -630,9 +630,9 @@ public class ReportingController {
          required = true)
        @PathVariable(value = "reporting") String reporting,
        @ApiParam(
-         value = "A territory",
+         value = "A scope",
          required = true)
-       @PathVariable(value = "territory") String territory,
+       @PathVariable(value = "scope") String scope,
        @ApiParam(
          value = "An optional scope")
        @RequestParam(
@@ -654,7 +654,7 @@ public class ReportingController {
          required = false) String date)
         throws IOException {
     IndicatorCalculatorImpl indicatorCalculator =
-        generateReporting(request, reporting, scopeId, "+territory:" + territory
+        generateReporting(request, reporting, scopeId, "+scope:" + scope
         + (StringUtils.isEmpty(fq) ? "" : " " + fq.trim()), true, date);
 
     File xmlFile = indicatorCalculator.toFile();
@@ -752,7 +752,7 @@ public class ReportingController {
   @ApiOperation(value = "Generate a specific report "
       + "for a specific area in INSPIRE monitoring reporting format",
       nickname = "generateINSPIREReport")
-  @RequestMapping(value = "/reports/custom/{reporting}/{territory}",
+  @RequestMapping(value = "/reports/custom/{reporting}/{scope}",
       produces = {
           MediaType.APPLICATION_XML_VALUE
       },
@@ -796,11 +796,11 @@ public class ReportingController {
         required = true)
       @PathVariable(value = "reporting") String reporting,
       @ApiParam(
-        value = "A territory",
+        value = "A scope",
         required = true)
-      @PathVariable(value = "territory") String territory)
+      @PathVariable(value = "scope") String scope)
       throws IOException {
-    String filter = fq + " +territory:" + territory;
+    String filter = fq + " +scope:" + scope;
     IndicatorCalculatorImpl indicatorCalculator =
         generateReporting(request, reporting, scopeId, filter, true, date);
 
@@ -808,8 +808,8 @@ public class ReportingController {
     ModelAndView model = new ModelAndView("reporting-xslt-" + reporting);
     model.addObject("xmlSource", indicatorCalculator.toSource());
     // Add path parameters
-    if (territory != null) {
-      model.addObject("territory", territory);
+    if (scope != null) {
+      model.addObject("scope", scope);
     }
     if (filter != null) {
       model.addObject("filter", filter);
@@ -836,7 +836,7 @@ public class ReportingController {
   @ApiOperation(value = "Save a report "
       + "for a specific area in INSPIRE monitoring reporting format",
       nickname = "saveReport")
-  @RequestMapping(value = "/reports/custom/{reporting}/{territory}",
+  @RequestMapping(value = "/reports/custom/{reporting}/{scope}",
       produces = {
           MediaType.APPLICATION_XML_VALUE
       },
@@ -880,20 +880,20 @@ public class ReportingController {
         required = true)
       @PathVariable(value = "reporting") String reporting,
       @ApiParam(
-        value = "A territory",
+        value = "A scope",
         required = true)
-      @PathVariable(value = "territory") String territory,
+      @PathVariable(value = "scope") String scope,
       HttpServletResponse response)
       throws IOException {
-    String filter = fq + " +territory:" + territory;
+    String filter = fq + " +scope:" + scope;
     IndicatorCalculatorImpl indicatorCalculator =
         generateReporting(request, reporting, scopeId, filter, true, date);
 
     ModelAndView model = new ModelAndView("reporting-xslt-" + reporting);
     model.addObject("xmlSource", indicatorCalculator.toSource());
     // Add path parameters
-    if (territory != null) {
-      model.addObject("territory", territory);
+    if (scope != null) {
+      model.addObject("scope", scope);
     }
     if (filter != null) {
       model.addObject("filter", filter);

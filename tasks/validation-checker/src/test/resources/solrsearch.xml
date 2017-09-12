@@ -488,7 +488,7 @@
         &lt;/gmd:MD_Metadata&gt;</str>
       <str name="id">81aea739-4d21-427d-bec4-082cb64b825b</str>
       <str name="metadataIdentifier">81aea739-4d21-427d-bec4-082cb64b825b</str>
-      <str name="territory">demo</str>
+      <str name="scope">demo</str>
       <str name="harvesterId">http://apps.titellus.net/geonetwork/srv/eng/csw?
       </str>
       <arr name="harvestedDate">
@@ -556,7 +556,7 @@
       <arr name="inspireAnnex">
         <str>iii</str>
       </arr>
-      <int name="numberOfInspireTheme">1</int>
+      <int name="inspireThemeNumber">1</int>
       <arr name="tag">
         <str>Land use</str>
         <str>urban area</str>

@@ -155,8 +155,8 @@
         <cm:setProperty propertyName="workers-uuid">
           <cm:xpath resultType="java.lang.String">normalize-space(daobs:harvester/daobs:uuid)</cm:xpath>
         </cm:setProperty>
-        <cm:setProperty propertyName="harvesterTerritory">
-          <cm:xpath resultType="java.lang.String">normalize-space(daobs:harvester/daobs:territory)</cm:xpath>
+        <cm:setProperty propertyName="harvesterScope">
+          <cm:xpath resultType="java.lang.String">normalize-space(daobs:harvester/daobs:scope)</cm:xpath>
         </cm:setProperty>
         <cm:setProperty propertyName="harvesterNbRecordsPerPage">
           <cm:xpath resultType="java.lang.String">if (daobs:harvester/daobs:nbOfRecordsPerPage) then normalize-space(daobs:harvester/daobs:nbOfRecordsPerPage) else -1</cm:xpath>
@@ -215,7 +215,7 @@
 
 
       <cm:log
-        message="Harvesting node '$simple{property.harvesterName}' ($simple{property.harvesterTerritory}) at '$simple{property.harvesterURL}' [Number of records requested per page in config: $simple{property.harvesterNbRecordsPerPage}]"
+        message="Harvesting node '$simple{property.harvesterName}' ($simple{property.harvesterScope}) at '$simple{property.harvesterURL}' [Number of records requested per page in config: $simple{property.harvesterNbRecordsPerPage}]"
         loggingLevel="INFO"
         logName="org.daobs.harvester.CswHarvester"/>
       <cm:log message="CSW filter is $simple{property.harvesterFilter}"
@@ -267,6 +267,7 @@
           <cm:bean ref="harvesterDetailsAgg"
                    method="doTransform($simple{body}, $simple{property.harvesterConfig})"/>
           <cm:to uri="direct-vm:indexDocuments"/>
+          <cm:to uri="direct:sendValidationTrigger"/>
         </cm:when>
         <cm:otherwise>
           <cm:log
@@ -300,37 +301,37 @@
           </cm:setHeader>
           <cm:to uri="http4://csw.server.url"/>
 
-        </cm:otherwise>
-      </cm:choice>
 
-      <cm:convertBodyTo type="org.w3c.dom.Document"/>
-      <cm:choice>
-        <cm:when>
-          <!-- If records found, next route is direct:cswGetRecords. -->
-          <cm:xpath>/csw:GetRecordsResponse/csw:SearchResults[@numberOfRecordsMatched > 0]</cm:xpath>
-          <cm:setProperty propertyName="numberOfRecordsMatched">
-            <cm:xpath resultType="java.lang.String">/csw:GetRecordsResponse/csw:SearchResults/@numberOfRecordsMatched</cm:xpath>
-          </cm:setProperty>
-          <cm:log
-            message="$simple{property.numberOfRecordsMatched} record(s) to harvest."
-            loggingLevel="INFO"
-            logName="org.daobs.harvester.CswHarvester"/>
-          <cm:to
-            uri="bean:cswHarvester?method=setNumberOfRecords(${property.harvesterUrl}, ${property.numberOfRecordsMatched})"/>
-          <cm:to uri="direct:cswGetRecords"/>
-        </cm:when>
-        <cm:when>
-          <cm:xpath>/csw:GetRecordsResponse/csw:SearchResults[@numberOfRecordsMatched =
-            0]</cm:xpath>
-          <cm:log message="No record found."
-                  loggingLevel="INFO"
-                  logName="org.daobs.harvester.CswHarvester"/>
-        </cm:when>
-        <cm:otherwise>
-          <cm:log
-            message="Probably an exception occurred. Check CSW response: ${body}"
-            loggingLevel="INFO"
-            logName="org.daobs.harvester.CswHarvester"/>
+          <cm:convertBodyTo type="org.w3c.dom.Document"/>
+          <cm:choice>
+            <cm:when>
+              <!-- If records found, next route is direct:cswGetRecords. -->
+              <cm:xpath>/csw:GetRecordsResponse/csw:SearchResults[@numberOfRecordsMatched > 0]</cm:xpath>
+              <cm:setProperty propertyName="numberOfRecordsMatched">
+                <cm:xpath resultType="java.lang.String">/csw:GetRecordsResponse/csw:SearchResults/@numberOfRecordsMatched</cm:xpath>
+              </cm:setProperty>
+              <cm:log
+                message="$simple{property.numberOfRecordsMatched} record(s) to harvest."
+                loggingLevel="INFO"
+                logName="org.daobs.harvester.CswHarvester"/>
+              <cm:to
+                uri="bean:cswHarvester?method=setNumberOfRecords(${property.harvesterUrl}, ${property.numberOfRecordsMatched})"/>
+              <cm:to uri="direct:cswGetRecords"/>
+            </cm:when>
+            <cm:when>
+              <cm:xpath>/csw:GetRecordsResponse/csw:SearchResults[@numberOfRecordsMatched =
+                0]</cm:xpath>
+              <cm:log message="No record found."
+                      loggingLevel="INFO"
+                      logName="org.daobs.harvester.CswHarvester"/>
+            </cm:when>
+            <cm:otherwise>
+              <cm:log
+                message="Probably an exception occurred. Check CSW response: ${body}"
+                loggingLevel="INFO"
+                logName="org.daobs.harvester.CswHarvester"/>
+            </cm:otherwise>
+          </cm:choice>
         </cm:otherwise>
       </cm:choice>
     </cm:route>
@@ -399,7 +400,7 @@
         <!-- TODO: Add CSW request to the document -->
         <cm:bean ref="harvesterDetailsAgg"
                  method="doTransform($simple{body}, $simple{property.harvesterConfig})"/>
-        <!--method="doTransform($simple{body}, $simple{header.harvesterUrl}, $simple{header.harvesterTerritory})"/>-->
+        <!--method="doTransform($simple{body}, $simple{header.harvesterUrl}, $simple{header.harvesterScope})"/>-->
         <cm:multicast stopOnException="false"
                       parallelProcessing="false">
           <!-- Backup response as XML file
@@ -417,7 +418,7 @@
 
 
       <cm:log
-        message="End harvesting for node '$simple{property.harvesterName}' ($simple{property.harvesterTerritory})"
+        message="End harvesting for node '$simple{property.harvesterName}' ($simple{property.harvesterScope})"
         loggingLevel="INFO"
         logName="org.daobs.harvester.CswHarvester"/>
       <cm:log message="Ending at $simple{property.harvesterEndTime}"
@@ -428,8 +429,13 @@
         loggingLevel="INFO"
         logName="org.daobs.harvester.CswHarvester"/>
 
+      <cm:to uri="direct:sendValidationTrigger"/>
+    </cm:route>
+
+    <cm:route id="route-send-validation-message">
+      <cm:from uri="direct:sendValidationTrigger"/>
       <cm:log
-        message="Sending message to task-analyze queue for notification of ending '$simple{property.harvesterName}' ($simple{property.harvesterTerritory})"
+        message="Sending message to task-analyze queue for notification of ending '$simple{property.harvesterName}' ($simple{property.harvesterScope})"
         loggingLevel="INFO"
         logName="org.daobs.harvester.CswHarvester"/>
 

@@ -36,10 +36,10 @@
       select="$index"/>", "_type": "<xsl:value-of
       select="$type"/>", "_id" : "<xsl:value-of
       select="$serviceIdentifier"/>"}}
-{"script": { "inline": "<xsl:for-each
-      select="distinct-values(//inspireTheme//text())">ctx._source.inspireTheme.add(\"<xsl:value-of
-      select="."/>\");</xsl:for-each><xsl:for-each
-      select="distinct-values(//inspireAnnex//text())">ctx._source.inspireAnnex.add(\"<xsl:value-of
-      select="."/>\");</xsl:for-each>"}}</xsl:if>
+{"script": { "lang": "painless", "inline": "List a = new ArrayList();\r\nif (ctx._source.inspireTheme instanceof String) {a.add(ctx._source.inspireTheme)} else if (ctx._source.inspireTheme instanceof List) {a.addAll(ctx._source.inspireTheme)}\r\n<xsl:for-each
+      select="distinct-values(//inspireTheme//text())">a.add(\"<xsl:value-of
+      select="."/>\");\r\n</xsl:for-each>ctx._source.inspireTheme = a;List b = new ArrayList();\r\nif (ctx._source.inspireAnnex instanceof String) {b.add(ctx._source.inspireAnnex)} else if (ctx._source.inspireAnnex instanceof List) {b.addAll(ctx._source.inspireAnnex)}\r\n<xsl:for-each
+      select="distinct-values(//inspireAnnex//text())">b.add(\"<xsl:value-of
+      select="."/>\");\r\n</xsl:for-each>ctx._source.inspireAnnex = b;"}}</xsl:if>
   </xsl:template>
 </xsl:stylesheet>

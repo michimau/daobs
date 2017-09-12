@@ -27,12 +27,13 @@
 
 
       return {
-        login: function (username, password) {
+        login: function (username, password, redirect) {
           var deferred = $q.defer();
           $http.post(cfg.SERVICES.root + 'login',
             $httpParamSerializerJQLike({
               username: username,
-              password: password
+              password: password,
+              targetUrl: redirect
             }),
             {
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},

@@ -33,7 +33,7 @@
       $scope.listOfDashboardToLoad = null;
       $scope.hasINSPIREdashboard = false;
       $scope.hasOnlyINSPIREdashboard = true;
-      $scope.solrConnectionError = null;
+      $scope.indexConnectionError = null;
 
       // Set to last 5 years the default dashboard parameters.
       $scope.dashboardParams = '?_g=(time:(from:now-5y,mode:quick,to:now))';
@@ -41,10 +41,24 @@
       var init = function () {
         $scope.dashboardBaseURL = cfg.SERVICES.dashboardBaseURL;
         $http.get(cfg.SERVICES.esdashboardCore +
-          '/dashboard/_search').then(function (response) {
+          '/dashboard/_search?size=1000', {
+          "query" : {
+            "bool" : {
+              "filter" : {
+                "term" : {"type": "dashboard"}
+              }
+            }
+          },
+          "sort": [
+            {
+              "title": {
+                "order": "desc"
+              }
+            }
+          ]}).then(function (response) {
           $scope.dashboards = response.data.hits.hits;
           angular.forEach($scope.dashboards, function (d) {
-            if ($scope.startsWith(d._source.title, 'inspire')) {
+            if ($scope.startsWithInspire(d)) {
               $scope.hasINSPIREdashboard = true;
             } else {
               $scope.hasOnlyINSPIREdashboard = false;
@@ -52,23 +66,15 @@
           });
         }, function (response) {
           if (response.status = 500) {
-            $scope.solrConnectionError = response;
+            $scope.indexConnectionError = response;
           }
         });
-
-        // $http.get(cfg.SERVICES.samples + '/dashboardType.json').success(function (data) {
-        //   $scope.listOfDashboardToLoad = data;
-        // });
       };
 
       // TODO: Move to dashboard service
+      // Use Kibana export/import functionnalities
       $scope.loadDashboard = function (type) {
         $scope.dashboardsLoaded = null;
-        // return $http.put(cfg.SERVICES.samples +
-        //   '/dashboard/' + type + '*.json').success(function (data) {
-        //   $scope.dashboardsLoaded = data;
-        //   init();
-        // });
       };
 
       $scope.removeDashboard = function (id) {
@@ -76,15 +82,12 @@
         $http.delete(cfg.SERVICES.dashboards + documentFilter).then(init);
       };
 
-      $scope.startsWith = function (actual, expected) {
-        if (angular.isObject(actual)) {
-          actual = actual.title;
-        }
-        var lowerStr = (actual + "").toLowerCase();
-        return lowerStr.indexOf(expected.toLowerCase()) === 0;
+      $scope.startsWithInspire = function (e) {
+        var lowerStr = (e._source.title + "").toLowerCase();
+        return lowerStr.startsWith('inspire');
       };
-      $scope.notStartsWith = function (actual, expected) {
-        return !$scope.startsWith(actual, expected);
+      $scope.notStartsWithInspire = function (e) {
+        return !$scope.startsWithInspire(e);
       };
       init();
     }]);

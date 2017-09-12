@@ -83,7 +83,7 @@ public class WorkersManager {
         // to have workers id set by starter app.
         result.add(String.format("[%s:%s] %s (%dms/%dms) - step %s - Nb of records: %s",
             ex.getExchange().getUnitOfWork().getOriginalInMessage().getHeader("harvesterUuid"),
-            ex.getExchange().getUnitOfWork().getOriginalInMessage().getHeader("harvesterTerritory"),
+            ex.getExchange().getUnitOfWork().getOriginalInMessage().getHeader("harvesterScope"),
             ex.getExchange().getExchangeId(),
             ex.getElapsed(),
             ex.getDuration(),

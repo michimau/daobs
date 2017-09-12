@@ -1,5 +1,16 @@
 {
   "mappings": {
+    "_default_": {
+      "dynamic_templates": [
+        {
+          "indicatorValues": {
+            "match": "iv*",
+            "mapping": {
+              "type": "double"
+            }
+          }
+        }]
+    },
     "indicators": {
       "properties": {
         "reportingDateSubmission": {
@@ -24,7 +35,7 @@
         "isOfficial": {
           "type": "boolean"
         },
-        "territory": {
+        "scope": {
           "type": "keyword"
         }
       }

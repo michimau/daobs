@@ -22,17 +22,26 @@
   "use strict";
   var app = angular.module('login');
 
-  app.controller('LoginController', ['$scope', 'userService', '$timeout', 'cfg',
-                                     function($scope, userService, $timeout, cfg) {
-    $scope.loginObj = {};
+  app.controller('LoginController', [
+                      '$scope', 'userService', '$timeout', 'cfg', '$location',
+                      function($scope, userService, $timeout, cfg, $location) {
+    $scope.loginObj = {
+      redirect: $location.search().redirect || ''
+    };
+
 
     $scope.signIn = function() {
       $scope.loginProcessing = true;
       $scope.loginError = false;
-      userService.login($scope.loginObj.username, $scope.loginObj.password).then(
+      userService.login(
+        $scope.loginObj.username,
+        $scope.loginObj.password,
+        $scope.loginObj.redirect).then(
         function(data){
           $timeout(function() {
-            window.location= cfg.SERVICES.root;
+            window.location =
+              $location.search().redirect || cfg.SERVICES.root;
+            window.location.reload();
           }, 100);
 
         },

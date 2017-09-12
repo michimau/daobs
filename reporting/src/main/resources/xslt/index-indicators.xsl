@@ -92,7 +92,7 @@ using one character or two. Prepend 0 when needed. -->
                         then format-dateTime($reportingDate, '[Y0001]')
                         else /monitoring:Monitoring/documentYear/year"/>
 
-  <xsl:variable name="reportingTerritory"
+  <xsl:variable name="reportingScope"
                 select="if ($isDaobsFormat)
                         then /daobs:reporting/@scopeId
                         else /monitoring:Monitoring/memberState"/>
@@ -105,11 +105,11 @@ using one character or two. Prepend 0 when needed. -->
 
   <xsl:template match="/">
     <add>
-      <xsl:message>
+      <!--<xsl:message>
         <xsl:text>Indexing indicators for </xsl:text>
-        <xsl:value-of select="$reportingTerritory"/>
+        <xsl:value-of select="$reportingScope"/>
         <xsl:value-of select="concat(' Report: ', $reportIdentifier, ' (', $reportingDate, ') - DAOBS format: ', $isDaobsFormat)"/>
-      </xsl:message>
+      </xsl:message>-->
 
       <xsl:apply-templates select="
                 //daobs:reporting|
@@ -127,11 +127,11 @@ using one character or two. Prepend 0 when needed. -->
     <doc>
       <field name="id">
         <xsl:value-of
-          select="concat('monitoring', $reportIdentifier, $reportingTerritory, $reportingDate)"/>
+          select="concat('monitoring', $reportIdentifier, $reportingScope, $reportingDate)"/>
       </field>
       <field name="documentType">monitoring</field>
-      <field name="territory">
-        <xsl:value-of select="$reportingTerritory"/>
+      <field name="scope">
+        <xsl:value-of select="$reportingScope"/>
       </field>
       <field name="reportingDateSubmission">
         <xsl:value-of select="$reportingDateSubmission"/>
@@ -149,15 +149,11 @@ using one character or two. Prepend 0 when needed. -->
         }
       </field>
 
-      <xsl:message>Report</xsl:message>
       <xsl:apply-templates mode="indicatorValue"
                            select="
                 daobs:variables/daobs:variable|
                 daobs:indicators/daobs:indicator|
-                //Indicators/*|
-                //RowData/SpatialDataService/NetworkService/userRequest|
-                //RowData/SpatialDataSet/Coverage/(relevantArea|actualArea)"/>
-
+                ../Indicators//*[count(*) = 0 and text() != '']"/>
       <field name="isOfficial">true</field>
     </doc>
   </xsl:template>
@@ -170,7 +166,7 @@ using one character or two. Prepend 0 when needed. -->
         <field name="id">
           <xsl:value-of
             select="concat('indicator', $reportIdentifier, $indicatorIdentifier,
-                $reportingDate, $reportingTerritory)"/>
+                $reportingDate, $reportingScope)"/>
         </field>
         <field name="documentType">indicator</field>
         <field name="indicatorType">
@@ -184,8 +180,8 @@ using one character or two. Prepend 0 when needed. -->
             <xsl:value-of select="text()"/>
           </field>
         </xsl:if>
-        <field name="territory">
-          <xsl:value-of select="$reportingTerritory"/>
+        <field name="scope">
+          <xsl:value-of select="$reportingScope"/>
         </field>
         <field name="reportingDateSubmission">
           <xsl:value-of select="$reportingDateSubmission"/>
@@ -201,19 +197,21 @@ using one character or two. Prepend 0 when needed. -->
   </xsl:template>
 
 
-  <xsl:template match="daobs:variable|daobs:indicator"
+  <xsl:template match="daobs:variable|daobs:indicator|
+                       *[count(*) = 0 and text() != '']"
                 mode="indicatorValue">
-    <xsl:variable name="indicatorType" select="local-name()"/>
-    <xsl:variable name="indicatorIdentifier" select="@id"/>
+    <xsl:variable name="indicatorType"
+                  select="local-name()"/>
+    <xsl:variable name="indicatorIdentifier"
+                  select="if (@id) then @id else local-name()"/>
 
-    <field name="indicator{$indicatorIdentifier}">
-      <xsl:value-of select="daobs:value"/>
+    <field name="iv{$indicatorIdentifier}">
+      <xsl:value-of select="if (daobs:value) then daobs:value else text()"/>
     </field>
   </xsl:template>
 
   <xsl:template match="*"
-                mode="indicatorValue">
-  </xsl:template>
+                mode="indicatorValue"/>
 
   <xsl:template match="daobs:variable|daobs:indicator">
     <xsl:variable name="indicatorType" select="local-name()"/>
@@ -224,7 +222,7 @@ using one character or two. Prepend 0 when needed. -->
       <field name="id">
         <xsl:value-of
           select="concat('indicator', $reportIdentifier, $indicatorIdentifier,
-              $reportingDate, $reportingTerritory)"/>
+              $reportingDate, $reportingScope)"/>
       </field>
       <field name="documentType">indicator</field>
       <field name="indicatorType">
@@ -238,8 +236,8 @@ using one character or two. Prepend 0 when needed. -->
           <xsl:value-of select="daobs:value"/>
         </field>
       </xsl:if>
-      <field name="territory">
-        <xsl:value-of select="$reportingTerritory"/>
+      <field name="scope">
+        <xsl:value-of select="$reportingScope"/>
       </field>
       <field name="reportingDateSubmission">
         <xsl:value-of select="$reportingDateSubmission"/>
@@ -261,7 +259,7 @@ using one character or two. Prepend 0 when needed. -->
       <field name="id">
         <xsl:value-of
           select="concat('monitoring',
-                        $reportingTerritory, $reportingDate,
+                        $reportingScope, $reportingDate,
                         $uuid, '-', position())"/>
       </field>
       <field name="metadataIdentifier">
@@ -269,8 +267,8 @@ using one character or two. Prepend 0 when needed. -->
       </field>
       <field name="documentType">monitoringMetadata</field>
       <field name="resourceType">service</field>
-      <field name="territory">
-        <xsl:value-of select="$reportingTerritory"/>
+      <field name="scope">
+        <xsl:value-of select="$reportingScope"/>
       </field>
       <field name="reportingDateSubmission">
         <xsl:value-of select="$reportingDateSubmission"/>
@@ -329,7 +327,7 @@ using one character or two. Prepend 0 when needed. -->
       <field name="id">
         <xsl:value-of
           select="concat('monitoring',
-                        $reportingTerritory, $reportingDate,
+                        $reportingScope, $reportingDate,
                         $uuid, '-', position())"/>
       </field>
       <field name="metadataIdentifier">
@@ -337,8 +335,8 @@ using one character or two. Prepend 0 when needed. -->
       </field>
       <field name="documentType">monitoringMetadata</field>
       <field name="resourceType">dataset</field>
-      <field name="territory">
-        <xsl:value-of select="$reportingTerritory"/>
+      <field name="scope">
+        <xsl:value-of select="$reportingScope"/>
       </field>
       <field name="reportingDateSubmission">
         <xsl:value-of select="$reportingDateSubmission"/>

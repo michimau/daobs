@@ -25,7 +25,7 @@ public class HarvesterJaxbTest {
     harvester.setNbOfRecordsPerPage(10);
     harvester.setPointOfTruthURLPattern("http://example.com/register/{{uuid}}");
     harvester.setServiceMetadata("http://example.com/record");
-    harvester.setTerritory("ES");
+    harvester.setScope("ES");
     harvester.setUuid(UUID.randomUUID().toString());
     harvester.setUrl("http://example.com/service/csw");
     harvesters.getHarvester().add(harvester);

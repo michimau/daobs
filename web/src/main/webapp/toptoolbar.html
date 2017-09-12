@@ -37,7 +37,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li data-ng-class="navClass('#/login')" data-ng-hide="getUser().authenticated">
-          <a href="#/login"
+          <a href="#/login?redirect={{redirectLocation}}"
              title="{{'signInTitle' | translate}}"
              id="ds-menu-signin">
             <i class="fa fa-sign-in"></i>
