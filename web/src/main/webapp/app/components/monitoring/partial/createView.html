@@ -15,8 +15,8 @@
               <div class="form-group" id="ds-report-choose">
                 <label for="ds-report-field"
                        class="col-sm-2 control-label"
-                       data-translate="">chooseMonitoring</label>
-                <div class="col-sm-10">
+                       data-translate="">chooseReportType</label>
+                <div class="col-sm-5">
                   <div class="input-group">
                     <select id="ds-report-field"
                             class="form-control"
@@ -30,6 +30,15 @@
                               data-ng-click="getReportDetails()"
                               data-translate="">viewRules
                       </button>
+                    </div>
+                   </div>
+                   </div>
+                   <div class="col-sm-5">
+                    <div class="input-group">
+                      <input type="text" class="form-control" ng-model="reportTypeName" placeholder="Report type name...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-success" type="button" data-ng-click="createReportType(reportTypeName)" ng-disabled="!reportTypeName">Create</button>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -94,8 +103,7 @@
                 <p class="help-block" data-translate="">customScopeHelp</p>
               </div>
 
-
-              <fieldset data-ng-show="reporting.id.indexOf('inspire') !== -1">
+              <fieldset data-ng-show="reporting.id === 'inspire'">
                 <legend>
                   <i class="fa fa-user"></i>&nbsp;
                   <span data-translate="">contactDetails</span>
@@ -261,8 +269,8 @@
 
               <div data-ng-show="report != null && overview"
                    id="ds-report-results">
-                <h2 data-translate="">
-                  monitoringTitle
+                <h2><span data-translate="">
+                  monitoringTitle </span> - {{reporting.id}}
                 </h2>
 
                 <p data-ng-show="report.identification.url"
@@ -272,6 +280,18 @@
                 </p>
                 <div class="alert alert-info" data-translate="">
                   monitoringHelp
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-1 col-sm-11">
+                    <button id="ds-btn-reportType-remove"
+                        type="submit"
+                        class="btn btn-danger"
+                        data-ng-click="removeReportType()">
+                      <i class="fa fa-times"></i>&nbsp;
+                      <span data-translate="">removeReportType</span> - {{reporting.id}}
+                    </button>
+                  </div>
                 </div>
 
                 <table class="table table-striped">
@@ -319,12 +339,12 @@
                     </td>
                     <td>
                       <h4>
-              <span ng-if="v.query"
+                        <span ng-if="v.query"
                     title="{{'addVariableTitle' | translate}}"
                     class="label label-info">V</span>
                       </h4>
                       <h4>
-              <span ng-if="v.expression"
+                        <span ng-if="v.expression"
                     title="{{'addIndicatorTitle' | translate}}"
                     class="label label-success">I</span>
                       </h4>

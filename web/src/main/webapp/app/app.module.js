@@ -58,7 +58,8 @@
         icon: 'fa-bar-chart',
         // TODO: Should be displayed only if dashboard available
         // TODO: Should point to a dashboard that exist
-        url: cfg.SERVICES.dashboardBaseURL + cfg.defaultDashboard,
+        //url: cfg.SERVICES.dashboardBaseURL + cfg.defaultDashboard,
+        url: '#/dashboard',
         needsLogin: false
       }, {
         id: 'monitoring',

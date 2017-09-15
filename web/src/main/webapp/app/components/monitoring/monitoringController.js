@@ -112,9 +112,9 @@
    */
   app.controller('MonitoringCreateCtrl', [
     '$scope', '$http', '$location', '$translate',
-    'cfg', 'Notification',
+    'cfg', 'Notification', '$anchorScroll',
     function ($scope, $http, $location, $translate,
-              cfg, Notification) {
+              cfg, Notification, $anchorScroll) {
 
       $scope.translations = null;
       $translate(['monitoringSubmitSuccess']).then(function (translations) {
@@ -273,7 +273,7 @@
 
 
         // Get the list of monitoring types
-        $http.get(cfg.SERVICES.reportingConfig, {cache: true}).success(function (data) {
+        $http.get(cfg.SERVICES.reportingConfig, {cache: false}).success(function (data) {
           $scope.reportingConfig = data.reporting;
 
           // If reporting param defined in URL
@@ -345,8 +345,56 @@
           $scope.reporting.id + '.json').success(function (data) {
           setReport(data);
           $scope.overview = true;
+          // Scroll to the element related to the specified $location.hash
+          $location.hash('ds-report-results');
+          $anchorScroll();
         });
+        
       };
+
+      // Create report type
+      $scope.reportTypeName=null;
+      $scope.createReportType = function (id) {
+        var contentxml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+            '<reporting xmlns="http://daobs.org" id="'+ id.replace(/[\s]/g, '_')+'">'+
+            '<identification>'+
+            '<title xml:lang="en">'+
+            id+
+            '</title>'+
+            '<author>DAOBS Team</author>'+
+            '<url></url></identification><variables/><indicators/></reporting>';
+        var config = { headers: 
+          {
+            'Content-Type': 'application/xml',
+            'Accept': '*/*'
+          }
+        };
+        var data =null;
+        return $http.put(cfg.SERVICES.reports + '/' + id + '?specification='+ contentxml, data ,config).then(function successCallback(response) {
+              //console.log(response);
+              $scope.reportTypeName=null;
+              //console.log(cfg.SERVICES);
+              init();
+              $location.url($location.path() + '?reporting='+id);
+          }, function errorCallback(response) {
+              console.log(response);
+          });
+      };
+
+      // Remove report type
+      $scope.removeReportType = function () {
+        return $http.delete(cfg.SERVICES.reports + '/' +
+            $scope.reporting.id).then(function successCallback(response) {
+              $scope.report = null;
+              init();
+              $location.url($location.path());
+              $anchorScroll();
+            }, function errorCallback(response) {
+          });
+      }
+
+
+      
 
       // Preview report
       $scope.preview = function () {
