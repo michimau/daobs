@@ -60,7 +60,7 @@
       <h2 data-translate="">inspireOfficialMonitoringReporting</h2>
       <ul class="list-group">
         <li class="list-group-item"
-            data-ng-repeat="d in dashboards | filter:startsWithInspire">
+            data-ng-repeat="d in dashboards | filter:startsWithInspire | orderBy:sortByTitle">
           <a href="" target="_blank"
              data-ng-href="{{dashboardBaseURL}}{{d._id}}{{dashboardParams}}">
             {{d._source.title}}
@@ -75,7 +75,7 @@
       <ul class="list-group"
           data-ng-show="dashboards.length > 0">
         <li class="list-group-item"
-            data-ng-repeat="d in dashboards | filter:notStartsWithInspire">
+            data-ng-repeat="d in dashboards | filter:notStartsWithInspire | orderBy:sortByTitle">
           <a href="" target="_blank"
              data-ng-href="{{dashboardBaseURL}}{{d._id}}{{dashboardParams}}">
             {{d._source.title}}

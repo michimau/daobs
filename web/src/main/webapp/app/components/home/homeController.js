@@ -40,22 +40,23 @@
 
       var init = function () {
         $scope.dashboardBaseURL = cfg.SERVICES.dashboardBaseURL;
-        $http.get(cfg.SERVICES.esdashboardCore +
+        $http.post(cfg.SERVICES.esdashboardCore +
           '/dashboard/_search?size=1000', {
           "query" : {
             "bool" : {
               "filter" : {
-                "term" : {"type": "dashboard"}
+                "term" : {"_type": "dashboard"}
               }
             }
-          },
-          "sort": [
-            {
-              "title": {
-                "order": "desc"
-              }
-            }
-          ]}).then(function (response) {
+          // },
+          // "sort": [
+          //   {
+          //     "title": {
+          //       "order": "asc"
+          //     }
+          //   }
+          // ]
+          }}).then(function (response) {
           $scope.dashboards = response.data.hits.hits;
           angular.forEach($scope.dashboards, function (d) {
             if ($scope.startsWithInspire(d)) {
@@ -71,6 +72,10 @@
         });
       };
 
+      $scope.sortByTitle = function(d) {
+        return d._source.title;
+      };
+      
       // TODO: Move to dashboard service
       // Use Kibana export/import functionnalities
       $scope.loadDashboard = function (type) {
