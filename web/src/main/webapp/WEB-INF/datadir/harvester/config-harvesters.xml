@@ -483,7 +483,7 @@
     <daobs:scope>SK</daobs:scope>
     <daobs:folder>SK2</daobs:folder>
     <daobs:name>Národná vyhľadávacia služba (Register priestorových informácií)</daobs:name>
-    <daobs:url>https://rpi.gov.sk/rpi_csw/service.svc/get?</daobs:url>
+    <daobs:url>https://rpi.gov.sk/rpi_csw/service.svc/post?</daobs:url>
   </daobs:harvester>
 
   <daobs:harvester>
