@@ -75,7 +75,7 @@
       $scope.sortByTitle = function(d) {
         return d._source.title;
       };
-      
+
       // TODO: Move to dashboard service
       // Use Kibana export/import functionnalities
       $scope.loadDashboard = function (type) {

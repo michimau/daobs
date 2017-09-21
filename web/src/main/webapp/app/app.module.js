@@ -60,7 +60,7 @@
         // TODO: Should point to a dashboard that exist
         //url: cfg.SERVICES.dashboardBaseURL + cfg.defaultDashboard,
         url: '#/dashboard',
-        needsLogin: false
+        needsLogin: true
       }, {
         id: 'monitoring',
         icon: 'fa-list-alt',

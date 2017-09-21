@@ -276,16 +276,17 @@ public class ReportingController {
       @ApiResponse(code = 500, message = "Failed to upload report.")
       })
   @ResponseBody
-  public ResponseEntity addSpecification(HttpServletRequest request,
-                                         @ApiParam(
-                                           value = "The report type to generate",
-                                           required = true)
-                                         @PathVariable(value = "reporting")
-                                           String reporting,
-                                         @ApiParam(value = "The specification to add")
-                                         @RequestParam("specification")
-                                           String specification)
-      throws IOException {
+  public ResponseEntity addSpecification(
+      HttpServletRequest request,
+      @ApiParam(
+        value = "The report type to generate",
+        required = true)
+      @PathVariable(value = "reporting")
+        String reporting,
+      @ApiParam(value = "The specification to add as an XML string")
+      @RequestParam("specification")
+        String specification)
+    throws IOException {
 
     File tmpFile = File.createTempFile("report", ".xml");
     try {
