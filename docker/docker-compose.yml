@@ -12,7 +12,7 @@ services:
     command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.1
     volumes:
       - esdata:/usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -23,7 +23,7 @@ services:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:5.5.0
+    image: docker.elastic.co/kibana/kibana:5.6.1
     expose:
       - "5601"
     volumes:

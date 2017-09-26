@@ -490,7 +490,7 @@
     <!-- root.dir set by directory-maven-plugin -->
     <data.dir>${root.dir}/web/target/${war.name}/WEB-INF/datadir</data.dir>
 
-    <dashboard.default>INSPIRE%20Indicator%20trends</dashboard.default>
+    <dashboard.default>#/dashboards?_g=()</dashboard.default>
 
     <log.dir>/tmp</log.dir>
     <!--<log.dir>${catalina.home}/logs</log.dir>-->
@@ -525,10 +525,10 @@
     <ldap.base.search.base>ou=Users</ldap.base.search.base>
     <ldap.base.dn.pattern>uid={0}</ldap.base.dn.pattern>
 
-    <lucene.version>6.6.0</lucene.version>
+    <lucene.version>6.6.1</lucene.version>
 
-    <es.version>5.5.0</es.version>
-    <es.version.md5>01b2f91ed7a572139f4a06cb2505b679</es.version.md5>
+    <es.version>5.6.1</es.version>
+    <es.version.md5>9b426819d29ef8dd499c593629feede8</es.version.md5>
     <es.port>9200</es.port>
     <es.host>localhost</es.host>
     <!-- For docker, es.host is container
@@ -542,7 +542,7 @@
     <es.username></es.username>
     <es.password></es.password>
 
-    <kb.version.md5>1eabb59278f3fbe2115a8cb30b993070</kb.version.md5>
+    <kb.version.md5>e44777c3fb7ccfa4300884ce72869180</kb.version.md5>
     <kb.port>5601</kb.port>
     <kb.url>http://localhost:${kb.port}</kb.url>
 
