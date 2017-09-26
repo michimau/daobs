@@ -43,7 +43,7 @@
       reportingConfig: api + 'reports.json',
       reports: api + 'reports',
       samples: api + 'samples',
-      dashboardBaseURL: context + 'dashboard/app/kibana?#/dashboard/',
+      dashboardBaseURL: context + 'dashboard/app/kibana?',
       eftValidation: api + 'validate/etf',
       inspireValidation: api + 'validate/inspire'
     }
