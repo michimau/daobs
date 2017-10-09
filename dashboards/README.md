@@ -4,13 +4,30 @@
 
 Download Kibana from https://www.elastic.co/fr/downloads/kibana
 
-Set Kibana base path and index name in config/kibana.yml:
+Set the following properties in Kibana config (```config/kibana.yml```):
+* base path 
+* index name
+* region map
+
 
 ```
 server.basePath: "/<webappname>/dashboard"
 
 kibana.index: ".dashboards"
 
+regionmap:
+  layers:
+     - name: "EU countries"
+       url: "${webapp.rootUrl}assets/data/europe.geojson"
+       attribution: "NaturalEarth"
+       fields:
+          - name: "NAME"
+            description: "Full country name"
+          - name: "ISO_A2"
+            description: "ISO 2 letters code"
+          - name: "ISO_A3"
+            description: "ISO 3 letters code"
+            
 ```
 
 Adapt if needed ```elasticsearch.url``` and ```server.host```.
@@ -55,7 +72,7 @@ elasticdump \
 
 Maven could take care of the installation steps:
 * download
-* initialize collection
+* configure Kibana
 * start
 
 Use the following commands:
