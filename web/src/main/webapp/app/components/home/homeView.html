@@ -62,7 +62,7 @@
         <li class="list-group-item"
             data-ng-repeat="d in dashboards | filter:startsWithInspire | orderBy:sortByTitle">
           <a href=""
-             data-ng-href="#/dashboard?{{dashboardBaseURL}}{{d._id}}{{dashboardParams}}{{getUser().authenticated ? '' : '&embed'}}">
+             data-ng-href="#/dashboard?url={{(dashboardBaseURL + '#/dashboard/' + d._id + dashboardParams + (getUser().authenticated ? '' : '&embed')) | encodeURIComponent}}">
             {{d._source.title}}
           </a>
         </li>
@@ -77,8 +77,8 @@
         <li class="list-group-item"
             data-ng-repeat="d in dashboards | filter:notStartsWithInspire | orderBy:sortByTitle">
           <a href=""
-             data-ng-href="#/dashboard?{{dashboardBaseURL}}{{d._id}}{{dashboardParams}}{{getUser().authenticated ? '' : '&embed'}}">
-            {{d._source.title}}
+             data-ng-href="#/dashboard?url={{(dashboardBaseURL + '#/dashboard/' + d._id + dashboardParams + (getUser().authenticated ? '' : '&embed')) | encodeURIComponent}}">
+          {{d._source.title}}
           </a>
         </li>
       </ul>

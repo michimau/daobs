@@ -32,13 +32,15 @@
   ]);
 
   app.controller('DashboardCtrl', ['$scope','cfg','$location', '$routeParams',
-    function ($scope, cfg, $location,$routeParams) {
-      if ($routeParams && $location.hash()) {
-        $scope.dashboardURL= $location.protocol() + '://'+$location.host() + ':'+$location.port() + Object.keys($routeParams) + '#' +$location.hash();
-      }else {
-        $scope.dashboardURL= $location.protocol() + '://'+$location.host() + ':'+$location.port() + cfg.SERVICES.dashboardBaseURL + cfg.defaultDashboard;
+    function ($scope, cfg, $location, $routeParams) {
+      if ($location.search().url) {
+        $scope.dashboardURL = $location.search().url;
+      } else {
+        $scope.dashboardURL =
+          $location.protocol() + '://' + $location.host() + ':'+$location.port() +
+          cfg.SERVICES.dashboardBaseURL + cfg.defaultDashboard;
       }
       $('#ifrm').css('height', ($(window).height()-143) +'px');
     }]);
-  
+
 }());
