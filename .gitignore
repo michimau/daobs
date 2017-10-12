@@ -20,3 +20,5 @@ web/overlays/
 web/activemq-data/
 es/elasticsearch-*
 dashboards/kibana-*
+docker/elasticsearch/
+docker/kibana/config/kibana.yml

@@ -106,20 +106,12 @@ RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 # Adding the DAOS src
 ADD ./ ${CATALINA_HOME}/daobs
 
-# Fixing the pom
-RUN sed -i -e \
-    's#<es.host>localhost</es.host>#<es.host>elasticsearch</es.host>#g' \
- ${CATALINA_HOME}/daobs/pom.xml
-
 WORKDIR ${CATALINA_HOME}/daobs
 
 RUN mvn install \
- -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
- -Dwebapp.context=/daobs  \
- -Dwebapp.rootUrl=/daobs/ \
- -Des.host=elasticsearch \
- -Des.url=http://elasticsearch:9200 \
- -Dkb.url=http://kibana:5601 \
+ -DskipTests -Drelax \
+ -gs /usr/share/maven/ref/settings-docker.xml \
+ -Pdocker
  -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
  -Detf.installation.path=${INSTALL_ETF_PATH}
 

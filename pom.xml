@@ -535,7 +535,13 @@
     name elasticsearch
     <es.host>elasticsearch</es.host>
     -->
-    <es.url>http://${es.host}:${es.port}</es.url>
+
+    <es.protocol>http</es.protocol>
+
+    <ssl.certificate>/etc/pki/tls/certs/server.crt</ssl.certificate>
+    <ssl.key>/etc/pki/tls/private/server.key</ssl.key>
+
+    <es.url>${es.protocol}://${es.host}:${es.port}</es.url>
     <es.index.records>records</es.index.records>
     <es.index.indicators>indicators</es.index.indicators>
     <es.index.dashboards>.dashboards</es.index.dashboards>
@@ -543,8 +549,13 @@
     <es.password></es.password>
 
     <kb.version.md5>e44777c3fb7ccfa4300884ce72869180</kb.version.md5>
+    <kb.protocol>${es.protocol}</kb.protocol>
     <kb.port>5601</kb.port>
-    <kb.url>http://localhost:${kb.port}</kb.url>
+    <kb.host>localhost</kb.host>
+    <kb.url>${kb.protocol}://${kb.host}:${kb.port}</kb.url>
+    <kb.server.ssl.enabled>false</kb.server.ssl.enabled>
+    <kb.elasticsearch.ssl.certificateAuthorities>"/path/to/your/ca/cacert.pem"</kb.elasticsearch.ssl.certificateAuthorities>
+
 
     <etf.installation.path>${project.basedir}/../tasks/etf-validation-checker/ETF/ETF</etf.installation.path>
     <!-- web folder where to store the validation reports -->
@@ -604,6 +615,7 @@
         <config.properties.path>file:${data.dir}/config.properties</config.properties.path>
       </properties>
     </profile>
+
     <!-- Use cli profile to run camel applications from command line -->
     <profile>
       <id>cli</id>
@@ -611,6 +623,21 @@
         <config.properties.path>/config.properties</config.properties.path>
       </properties>
     </profile>
+
+    <!-- Use docker to build docker images. In this mode,
+    elasticsearch host is not an IP.
+    -->
+    <profile>
+      <id>docker</id>
+      <properties>
+        <webapp.context>/daobs</webapp.context>
+        <webapp.rootUrl>/daobs/</webapp.rootUrl>
+        <es.host>elasticsearch</es.host>
+        <kb.host>kibana</kb.host>
+      </properties>
+    </profile>
+
+
     <!-- Use -Drelax property to avoid:
     * findbug
     * checkstyle

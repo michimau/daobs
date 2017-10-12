@@ -8,6 +8,29 @@ This project orchestrates four containers, in order to serve the DAOBS dasboard 
 
 In order to optimize image size, whenever possible [alpine](https://alpinelinux.org/) based images are used as base images. The only image we build is the `dashboard`; all other images are pulled from the relevant repositories, and configured using configuration files on mounted volumes; the `elasticsearch` and `kibana` images are pulled from the official elastic repositories, while `nginx` is pulled from the docker official repositories.
 
+TODO
+
+```bash
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin remove x-pack
+```
+s
+[14:48:46] Mauro Michielon: for ssl, in every production host you have the ssl files in:
+[14:49:05] Mauro Michielon: /etc/pki/tls/certs/server.crt    
+/etc/pki/tls/private/server.key
+/etc/pki/tls/certs/server-chain.crt
+[14:49:41] Mauro Michielon: as kibana reads only 2 files
+[14:50:12] Mauro Michielon: you will make server.crt  + server-chain.crt > cert.crt
+[14:50:36] Mauro Michielon: sever.key > cert.key
+[14:50:53] Mauro Michielon: you can mount the files from the host
+[14:51:18] Mauro Michielon: so in this way, the sysadmins will be able to update the certificates in one place for all applications of the host
+[14:51:44] Mauro Michielon: this is an example from a rando docker-compose.yml:
+[14:51:47] Mauro Michielon: - /etc/pki/tls/certs/server.crt:/usr/local/apache2/conf/server.crt:ro
+    - /etc/pki/tls/private/server.key:/usr/local/apache2/conf/server.key:ro
+    - /etc/pki/tls/certs/server-chain.crt:/usr/local/apache2/conf/server-chain.crt:ro
+
+https://github.com/eea/eea.docker.elk-elasticsearch/blob/master/elasticsearch/config/elasticsearch.yml
+
+
 INSTALL & RUN
 -------------
 The composition can be run, by typing at the root of this project:
@@ -39,18 +62,16 @@ The dashboard Dockerfile contains two environmental variables: `INSTALL_ETF_PATH
 ```java
 RUN mvn install \
  -DskipTests -Drelax -gs /usr/share/maven/ref/settings-docker.xml \
- -Dwebapp.context=/daobs  \
- -Dwebapp.rootUrl=/daobs/ \
- -Des.host=elasticsearch \
- -Des.url=http://elasticsearch:9200 \
- -Dkb.url=http://kibana:5601 \
+ -Pdocker \
  -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
  -Detf.installation.path=${INSTALL_ETF_PATH}
 ```
 
 Elasticsearch reads its configuration from `./elasticsearch/elasticsearch.yml`.
 
-Kibana reads its configuration from `./kibana/kibana.yml`. XPack is disabled in both services. Additionally, these settings are relevant on `kibana.yml`:
+Kibana reads its configuration from `./kibana/config/kibana.yml`. 
+XPack is disabled in both services. 
+Additionally, these settings are relevant on `kibana.yml`:
 ```json
 server.basePath: "/daobs/dashboard"
 kibana.index: ".dashboards"

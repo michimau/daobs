@@ -1,8 +1,8 @@
-version: '3'
+version: '2'
 services:
 
   dashboard:
-    image: inspiremif/daobs
+    image: inspiremif/daobs:2.0.x
     volumes:
        - daobsdir:/daobs-data-dir/
     expose:
@@ -15,19 +15,19 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.6.1
     volumes:
       - esdata:/usr/share/elasticsearch/data
-      - ${PWD}/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     expose:
       - "9200"
       - "9300"
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.6.1
     expose:
       - "5601"
     volumes:
-      - ${PWD}/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
       - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
       - ${PWD}/kibana/docker-entry.sh:/docker-entry.sh
     depends_on:
