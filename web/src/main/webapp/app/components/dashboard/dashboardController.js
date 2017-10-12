@@ -40,7 +40,18 @@
           $location.protocol() + '://' + $location.host() + ':'+$location.port() +
           cfg.SERVICES.dashboardBaseURL + cfg.defaultDashboard;
       }
-      $('#ifrm').css('height', ($(window).height()-143) +'px');
+
+      function setIframeSize() {
+        const navbars = $('.navbar');
+        $('#ifrm').css('height', (
+          $(window).height() - $(navbars[0]).height() - $(navbars[1]).height()
+        ) +'px');
+        $('#ifrm').css('width', ($(window).width()) +'px');
+      };
+
+      $(window).resize(setIframeSize);
+
+      setIframeSize();
     }]);
 
 }());

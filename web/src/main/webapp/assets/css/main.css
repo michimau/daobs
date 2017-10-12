@@ -70,6 +70,15 @@ samp {
     background-color: #357ebd;
     color: #FFF !important;
 }
+
+.navbar-bottom {
+  margin-bottom: 0px;
+  min-height: 25px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
 .glyphicon-fw {
     width: 1.28571429em;
     text-align: center;
