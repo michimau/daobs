@@ -110,7 +110,7 @@ WORKDIR ${CATALINA_HOME}/daobs
 RUN mvn install \
  -DskipTests -Drelax \
  -gs /usr/share/maven/ref/settings-docker.xml \
- -Pdocker
+ -Pdocker \
  -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
  -Detf.installation.path=${INSTALL_ETF_PATH}
 
