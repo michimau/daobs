@@ -32,9 +32,9 @@
     'defaultDashboard': '${dashboard.default}',
     'SERVICES': {
       root: context,
-      esdashboardCore: context + 'es/.dashboards',
-      esdataCore: context + 'es/records',
-      esindicatorCore: context + 'es/indicators',
+      esdashboardCore: context + 'es/${es.index.dashboards}',
+      esdataCore: context + 'es/${es.index.records}',
+      esindicatorCore: context + 'es/${es.index.indicators}',
       proxy: context + 'proxy?url=',
       harvester: api + 'harvester',
       harvesters: api + 'harvesters',
