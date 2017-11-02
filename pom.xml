@@ -547,6 +547,9 @@
     <es.index.dashboards>.dashboards</es.index.dashboards>
     <es.username></es.username>
     <es.password></es.password>
+    <es.discovery.zen.minimum_master_nodes>1</es.discovery.zen.minimum_master_nodes>
+    <es.single-node.discovery>discovery.type: single-node</es.single-node.discovery>
+    <es.network.host>127.0.0.1</es.network.host>
 
     <kb.version.md5>e44777c3fb7ccfa4300884ce72869180</kb.version.md5>
     <kb.protocol>${es.protocol}</kb.protocol>
@@ -555,7 +558,6 @@
     <kb.url>${kb.protocol}://${kb.host}:${kb.port}</kb.url>
     <kb.server.ssl.enabled>false</kb.server.ssl.enabled>
     <kb.elasticsearch.ssl.certificateAuthorities>"/path/to/your/ca/cacert.pem"</kb.elasticsearch.ssl.certificateAuthorities>
-
 
     <etf.installation.path>${project.basedir}/../tasks/etf-validation-checker/ETF/ETF</etf.installation.path>
     <!-- web folder where to store the validation reports -->
@@ -633,6 +635,9 @@
         <webapp.context>/daobs</webapp.context>
         <webapp.rootUrl>/daobs/</webapp.rootUrl>
         <es.host>elasticsearch</es.host>
+        <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
+        <es.single-node.discovery></es.single-node.discovery>
+        <es.network.host>192.168.1.10</es.network.host>
         <kb.host>kibana</kb.host>
       </properties>
     </profile>
@@ -714,4 +719,3 @@
     </profile>
   </profiles>
 </project>
-

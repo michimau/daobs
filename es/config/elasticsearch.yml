@@ -7,18 +7,19 @@ transport.host: 0.0.0.0
 
 http.host: 0.0.0.0
 
-network.host: 127.0.0.1
+network.host: ${es.network.host}
+
 #network.bind_host: 0
 
 # minimum_master_nodes need to be explicitly set when bound on a public IP
 # set to 1 to allow single node clusters
 # Details: https://github.com/elastic/elasticsearch/pull/17288
-discovery.zen.minimum_master_nodes: 1
+discovery.zen.minimum_master_nodes: ${es.discovery.zen.minimum_master_nodes}
 
 ## Use single node discovery in order to disable production mode and avoid bootstrap checks
 ## see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
 #
-discovery.type: single-node
+${es.single-node.discovery}
 
 ## Disable X-Pack
 ## see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
