@@ -527,8 +527,8 @@
 
     <lucene.version>6.6.1</lucene.version>
 
-    <es.version>5.6.1</es.version>
-    <es.version.md5>9b426819d29ef8dd499c593629feede8</es.version.md5>
+    <es.version>5.6.4</es.version>
+    <es.version.md5>b0ccb491bdc54b7120a5ab39b234f29b</es.version.md5>
     <es.port>9200</es.port>
     <es.host>localhost</es.host>
     <!-- For docker, es.host is container
@@ -551,7 +551,7 @@
     <es.single-node.discovery>discovery.type: single-node</es.single-node.discovery>
     <es.network.host>127.0.0.1</es.network.host>
 
-    <kb.version.md5>e44777c3fb7ccfa4300884ce72869180</kb.version.md5>
+    <kb.version.md5>e3eb5e5af0941475ee937a813df6e2d0</kb.version.md5>
     <kb.protocol>${es.protocol}</kb.protocol>
     <kb.port>5601</kb.port>
     <kb.host>localhost</kb.host>
