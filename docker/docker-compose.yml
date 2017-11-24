@@ -13,7 +13,7 @@ services:
     container_name: dashboard
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
     volumes:
       - esdata:/usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
@@ -35,7 +35,7 @@ services:
     container_name: elasticsearch
 
   elasticsearch-node1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
     depends_on:
       - "elasticsearch"
     volumes:
@@ -55,7 +55,7 @@ services:
     container_name: elasticsearch-node1
 
   elasticsearch-node2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
     depends_on:
       - "elasticsearch"
     volumes:
@@ -83,7 +83,7 @@ services:
     container_name: cerebro
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:5.6.1
+    image: docker.elastic.co/kibana/kibana:5.6.4
     expose:
       - "5601"
     volumes:

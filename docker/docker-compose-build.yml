@@ -1,22 +1,70 @@
-version: '3'
+version: '2'
 services:
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
     volumes:
       - esdata:/usr/share/elasticsearch/data
       - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    #ports:
-     # - "9200:9200"
-     # - "9300:9300"
-    expose:
-      - "9200"
-      - "9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
     environment:
-      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+      - cluster.name=docker-cluster
+      - node.name=elasticsearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    container_name: elasticsearch
+
+  elasticsearch-node1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
+    depends_on:
+      - "elasticsearch"
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    environment:
+      - cluster.name=docker-cluster
+      - node.name=elasticsearch-node1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch,elasticsearch-node2"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    container_name: elasticsearch-node1
+
+  elasticsearch-node2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
+    depends_on:
+      - "elasticsearch"
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
+      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    environment:
+      - cluster.name=docker-cluster
+      - node.name=elasticsearch-node2
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    container_name: elasticsearch-node2
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:5.6.1
+    image: docker.elastic.co/kibana/kibana:5.6.4
     #ports:
     #  - "5601:5601"
     expose:
@@ -60,6 +108,10 @@ services:
 
 volumes:
     esdata:
+       driver: local
+    esdata1:
+       driver: local
+    esdata2:
        driver: local
     daobsdir:
        driver: local

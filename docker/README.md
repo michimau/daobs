@@ -38,7 +38,9 @@ Configuration & Running
 -----------------------
 This docker composition reads a dashboard image from docker hub, which is automatically updated. If you want to build this image with the sources on this repository, please use the provided alternate compose configuration:
 ```bash
-docker-compose -f docker-compose-build.yml
+sudo sysctl -w vm.max_map_count=262144
+
+docker-compose -f docker-compose-build.yml up
 ```
 
 The dashboard Dockerfile contains two environmental variables: `INSTALL_ETF_PATH` and `INSTALL_DASHBOARD_PATH`. The war is built with these parameters:
