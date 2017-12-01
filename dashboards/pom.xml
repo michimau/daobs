@@ -76,7 +76,7 @@
           <plugin>
             <groupId>com.googlecode.maven-download-plugin</groupId>
             <artifactId>download-maven-plugin</artifactId>
-            <version>1.2.1</version>
+            <version>1.4.0</version>
             <executions>
               <execution>
                 <id>download-kibana</id>
@@ -90,7 +90,7 @@
                   </url>
                   <unpack>true</unpack>
                   <outputDirectory>${project.basedir}</outputDirectory>
-                  <md5>${kb.version.md5}</md5>
+                  <sha512>${kb.version.sha512}</sha512>
                 </configuration>
               </execution>
             </executions>
@@ -155,7 +155,7 @@
         <kb.executable>kibana.bat</kb.executable>
         <kb.platform>windows-x86</kb.platform>
         <kb.installer.extension>zip</kb.installer.extension>
-        <kb.version.md5>bb1dbfe5b4eef2c17370fb09eb41f3c9</kb.version.md5>
+        <kb.version.sha512>6578372e97046783bc4f2e68a8bb234d0f5c60adcae7df10bb5b0fc7a1af5c84f287f3752c1540a468e20d30d6e38a806e6022223f705367167c1e788335037a</kb.version.sha512>
       </properties>
     </profile>
   </profiles>
@@ -166,5 +166,6 @@
     <kb.platform>linux-x86_64</kb.platform>
     <kb.installer.extension>tar.gz</kb.installer.extension>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <kb.version.sha512>9cf1633405bd3513ca1533786aa46d0b17d28a0dfe7762018c744a693efbcfec9e24e0e222d1192d2cb12a664a391bc8fd072b82236c2bbfadb786ddcadecfef</kb.version.sha512>
   </properties>
 </project>
