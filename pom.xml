@@ -551,7 +551,7 @@
     <es.single-node.discovery>discovery.type: single-node</es.single-node.discovery>
     <es.network.host>127.0.0.1</es.network.host>
 
-    <kb.version.md5>e3eb5e5af0941475ee937a813df6e2d0</kb.version.md5>
+    <kb.version.sha512>9cf1633405bd3513ca1533786aa46d0b17d28a0dfe7762018c744a693efbcfec9e24e0e222d1192d2cb12a664a391bc8fd072b82236c2bbfadb786ddcadecfef</kb.version.sha512>
     <kb.protocol>${es.protocol}</kb.protocol>
     <kb.port>5601</kb.port>
     <kb.host>localhost</kb.host>
