@@ -668,7 +668,7 @@
       <properties>
         <war.name>official</war.name>
         <webapp.context>/dashboard</webapp.context>
-        <webapp.rootUrl>/dashboardl/</webapp.rootUrl>
+        <webapp.rootUrl>/dashboard/</webapp.rootUrl>
         <webapp.url>https://inspire-dashboard.eea.europa.eu/dashboard</webapp.url>
         <authentication.mode>ldap</authentication.mode>
         <etf.installation.path>/var/local/etf</etf.installation.path>
