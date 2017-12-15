@@ -516,6 +516,8 @@
     the Solr instance. eg. Harvesters. -->
     <webapp.username>admin</webapp.username>
     <webapp.password>admin</webapp.password>
+    <webapp.visitor.username>visitor</webapp.visitor.username>
+    <webapp.visitor.password>visitor</webapp.visitor.password>
 
     <!-- For LDAP based authentication -->
     <ldap.base.provider.url>ldap://ldap.eionet.europa.eu</ldap.base.provider.url>
@@ -558,6 +560,12 @@
     <kb.url>${kb.protocol}://${kb.host}:${kb.port}</kb.url>
     <kb.server.ssl.enabled>false</kb.server.ssl.enabled>
     <kb.elasticsearch.ssl.certificateAuthorities>"/path/to/your/ca/cacert.pem"</kb.elasticsearch.ssl.certificateAuthorities>
+    <kb.es.serverusername>kibana_server</kb.es.serverusername>
+    <kb.es.serverpassword>password</kb.es.serverpassword>
+    <kb.es.rw.username>${webapp.username}</kb.es.rw.username>
+    <kb.es.rw.password>${webapp.password}</kb.es.rw.password>
+    <kb.es.ro.username>${webapp.visitor.username}</kb.es.ro.username>
+    <kb.es.ro.password>${webapp.visitor.password}</kb.es.ro.password>
 
     <etf.installation.path>${project.basedir}/../tasks/etf-validation-checker/ETF/ETF</etf.installation.path>
     <!-- web folder where to store the validation reports -->

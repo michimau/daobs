@@ -17,16 +17,24 @@ curl -X PUT http://localhost:9200/records -d @config/records.json
 Maven could take care of the installation steps:
 * download
 * initialize collection
+* Install Readonlyrest plugin
 * start
 
 Use the following commands:
 
-```
+```bash
 cd es
 mvn install -Pes-download
 mvn exec:exec -Des-start
 curl -X PUT http://localhost:9200/records -d @config/records.json
 curl -X PUT http://localhost:9200/indicators -d @config/indicators.json
+```
+
+Stop Elascticsearch, install Readonlyrest plugin, call `mvn install` to set up the config file and start ES again:
+```bash
+mvn antrun:run -Des-readonlyrest-install
+mvn install
+mvn exec:exec -Des-start
 ```
 
 ### Production use

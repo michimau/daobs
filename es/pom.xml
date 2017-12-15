@@ -35,6 +35,26 @@
               </resources>
             </configuration>
           </execution>
+          <execution>
+            <id>copy-es-config-to-es-folder</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>elasticsearch-${es.version}/config</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/config_local</directory>
+                  <includes>
+                    <include>elasticsearch.yml</include>
+                  </includes>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+
+          </execution>
         </executions>
       </plugin>
     </plugins>
@@ -54,7 +74,7 @@
           <plugin>
             <groupId>com.googlecode.maven-download-plugin</groupId>
             <artifactId>download-maven-plugin</artifactId>
-            <version>1.2.1</version>
+            <version>1.4.0</version>
             <executions>
               <execution>
                 <id>download-elastic-search</id>
@@ -77,6 +97,33 @@
       </build>
     </profile>
     <profile>
+      <id>es-readonlyrest-install</id>
+      <activation>
+        <property>
+          <name>es-readonlyrest-install</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.8</version>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <ant antfile="build.xml">
+                  <target name="installReadOnlyRest"/>
+                </ant>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>es-start</id>
       <activation>
         <property>
@@ -88,7 +135,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.0</version>
             <configuration>
               <executable>elasticsearch-${es.version}/bin/${es.executable}</executable>
             </configuration>
@@ -105,11 +152,16 @@
       </activation>
       <properties>
         <es.executable>elasticsearch.bat</es.executable>
+        <es.plugin.executable>elasticsearch-plugin.bat</es.plugin.executable>
+        <file.protocol>file:///</file.protocol>
       </properties>
     </profile>
   </profiles>
 
   <properties>
     <es.executable>elasticsearch</es.executable>
+    <es.plugin.executable>elasticsearch-plugin</es.plugin.executable>
+    <file.protocol>file://</file.protocol>
+    <readonlyrest.filename>readonlyrest-1.16.14_es5.6.4.zip</readonlyrest.filename>
   </properties>
 </project>

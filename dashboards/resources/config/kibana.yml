@@ -30,3 +30,6 @@ server.ssl.enabled: ${kb.server.ssl.enabled}
 server.ssl.certificate: ${ssl.certificate}
 server.ssl.key: ${ssl.key}
 #elasticsearch.ssl.certificateAuthorities: [ ${kb.elasticsearch.ssl.certificateAuthorities} ]
+
+elasticsearch.username: ${kb.es.serverusername}
+elasticsearch.password: ${kb.es.serverpassword}

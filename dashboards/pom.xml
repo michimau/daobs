@@ -58,6 +58,22 @@
               </resources>
             </configuration>
           </execution>
+          <execution>
+            <id>copy-kb-config-to-kb-folder</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/kibana-${es.version}-${kb.platform}/config</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/config_local</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>
