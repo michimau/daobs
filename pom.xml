@@ -516,6 +516,8 @@
     the Solr instance. eg. Harvesters. -->
     <webapp.username>admin</webapp.username>
     <webapp.password>admin</webapp.password>
+    <webapp.visitor.username>visitor</webapp.visitor.username>
+    <webapp.visitor.password>visitor</webapp.visitor.password>
 
     <!-- For LDAP based authentication -->
     <ldap.base.provider.url>ldap://ldap.eionet.europa.eu</ldap.base.provider.url>
@@ -550,6 +552,7 @@
     <es.discovery.zen.minimum_master_nodes>1</es.discovery.zen.minimum_master_nodes>
     <es.single-node.discovery>discovery.type: single-node</es.single-node.discovery>
     <es.network.host>127.0.0.1</es.network.host>
+    <es.xpack.config></es.xpack.config>
 
     <kb.version.sha512>9cf1633405bd3513ca1533786aa46d0b17d28a0dfe7762018c744a693efbcfec9e24e0e222d1192d2cb12a664a391bc8fd072b82236c2bbfadb786ddcadecfef</kb.version.sha512>
     <kb.protocol>${es.protocol}</kb.protocol>
@@ -558,6 +561,12 @@
     <kb.url>${kb.protocol}://${kb.host}:${kb.port}</kb.url>
     <kb.server.ssl.enabled>false</kb.server.ssl.enabled>
     <kb.elasticsearch.ssl.certificateAuthorities>"/path/to/your/ca/cacert.pem"</kb.elasticsearch.ssl.certificateAuthorities>
+    <kb.es.serverusername>kibana_server</kb.es.serverusername>
+    <kb.es.serverpassword>password</kb.es.serverpassword>
+    <kb.es.rw.username>${webapp.username}</kb.es.rw.username>
+    <kb.es.rw.password>${webapp.password}</kb.es.rw.password>
+    <kb.es.ro.username>${webapp.visitor.username}</kb.es.ro.username>
+    <kb.es.ro.password>${webapp.visitor.password}</kb.es.ro.password>
 
     <etf.installation.path>${project.basedir}/../tasks/etf-validation-checker/ETF/ETF</etf.installation.path>
     <!-- web folder where to store the validation reports -->
@@ -639,6 +648,18 @@
         <es.single-node.discovery></es.single-node.discovery>
         <es.network.host>192.168.1.10</es.network.host>
         <kb.host>kibana</kb.host>
+        <es.xpack.config><![CDATA[
+## Disable X-Pack
+## see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
+##     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
+
+xpack.security.enabled: false
+xpack.monitoring.enabled: false
+xpack.ml.enabled: false
+xpack.graph.enabled: false
+xpack.watcher.enabled: false
+          ]]>
+        </es.xpack.config>
       </properties>
     </profile>
 

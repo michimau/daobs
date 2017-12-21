@@ -21,12 +21,77 @@ discovery.zen.minimum_master_nodes: ${es.discovery.zen.minimum_master_nodes}
 #
 ${es.single-node.discovery}
 
-## Disable X-Pack
-## see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
-##     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
-#
-xpack.security.enabled: false
-xpack.monitoring.enabled: false
-xpack.ml.enabled: false
-xpack.graph.enabled: false
-xpack.watcher.enabled: false
+${es.xpack.config}
+
+# Readonlytest config
+#http.type: ssl_netty4
+readonlyrest:
+  enable: true
+
+  #ssl:
+    #enable: true
+    # keystore_file: "/tmp/ssl/self.jks"
+    # keystore_pass: KEYSTORE_PASSWORD
+    # key_pass: KEY_PASS
+
+  response_if_req_forbidden: Dashboard access is forbidden. Invalid credentials.
+  #rest.action.multi.allow_explicit_index: false
+
+  access_control_rules:
+  #- name: Accept all request from localhost
+  #  type: allow
+  #  hosts: [127.0.0.1, localhost]
+  #  verbosity: info
+
+  - name: Check_mk
+    type: allow
+    #hosts: [CHECKHEALTH]
+    actions: ["cluster:monitor/health"]
+    verbosity: error
+
+  - name: public_access
+    type: allow
+    indices: ["${es.index.records}", "${es.index.indicators}"]
+    verbosity: error
+
+  # We trust Kibana's server side process, full access granted via HTTP authentication
+  - name: "::KIBANA-SRV::"
+    groups: ["kibana_srv"]
+    verbosity: error # don't log successful request
+
+  - name: Kibana RW
+    groups: ["kibana_rw"]
+    kibana_access: rw
+    kibana_index: ${es.index.dashboards}
+    verbosity: error
+
+  - name: Kibana_RO
+#    groups: ["kibana_ro"]
+    type: allow
+    kibana_access: ro
+    kibana_index: ${es.index.dashboards}
+    verbosity: error
+
+#  - name: Kibana_RO_strict
+#    groups: ["kibana_ro_strict"]
+#    type: allow
+#    kibana_access: ro_strict
+#    kibana_index: .dashboards
+#    #indices: [".kibana"]
+#    verbosity: error
+
+
+  users:
+
+  - username: kibana_rw
+    auth_key: ${kb.es.rw.username}:${kb.es.rw.password}
+    groups: ["kibana_rw"]
+
+#  - username: kibana_ro
+#    auth_key: ${kb.es.ro.username}:${kb.es.ro.password}
+#    groups: ["kibana_ro"]
+
+  - username: kibana_server
+    # auth_key is good for testing, but replace it with `auth_key_sha256`!
+    auth_key: ${kb.es.serverusername}:${kb.es.serverpassword}
+    groups: ["kibana_srv"]
