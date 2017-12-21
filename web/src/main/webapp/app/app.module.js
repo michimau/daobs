@@ -108,15 +108,44 @@
       };
     }]);
 
-  app.controller('LogoutCtrl', ['$http', '$log', 'cfg',
-    function ($http, $log, cfg) {
-      $http.post(cfg.SERVICES.root + "logout", {
-        cache:false
-      }).then(function() {
-        window.location = cfg.SERVICES.root;
-      },
-      function () {
-        $log.warn("Error exiting from Solr or the app");
-      });
+  app.controller('LogoutCtrl', ['$http', '$log', '$window', 'cfg',
+    function ($http, $log, $window, cfg) {
+      var outcome;
+
+      var logout = function () {
+        return $http.post(cfg.SERVICES.root + "logout", {
+          cache: false
+        }).then(function () {
+          window.location = cfg.SERVICES.root;
+        }, function () {
+          $log.warn("Error exiting from Solr or the app");
+        });
+      };
+
+      try {
+        // Logout from kibana
+        // IE has a simple solution for it - API:
+        outcome = document.execCommand('ClearAuthenticationCache');
+      } catch(e){}
+      if (!outcome) {
+        var randomPassword = Math.floor(Math.random() * (1000000000 - 100000000));
+        var nonExistentAuth = $window.btoa('logoutUser:' + randomPassword);
+        jQuery.ajax({
+          type: "GET",
+          url: cfg.SERVICES.dashboardApiBulkGet,
+          async: false,
+          username: "logoutUser",
+          password: "" + randomPassword,
+          headers: { "Authorization": "Basic " + nonExistentAuth }
+        })
+          .done(function(){
+            // If we don't get an error, we actually got an error as we expect an 401!
+          })
+          .fail(function(){
+            // We expect to get an 401 Unauthorized error! In this case we are successfully
+            // logged out and we redirect the user.
+            logout();
+          });
+      }
     }]);
 }());

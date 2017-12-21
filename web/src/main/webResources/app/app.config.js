@@ -44,6 +44,7 @@
       reports: api + 'reports',
       samples: api + 'samples',
       dashboardBaseURL: context + 'dashboard/app/kibana?',
+      dashboardApiBulkGet: context + 'dashboard/api/saved_objects/bulk_get',
       eftValidation: api + 'validate/etf',
       inspireValidation: api + 'validate/inspire'
     }
