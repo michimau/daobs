@@ -21,6 +21,7 @@
         </configuration>
         <executions>
           <execution>
+            <id>copy-es-config-to-docker-folder</id>
             <phase>compile</phase>
             <goals>
               <goal>copy-resources</goal>
@@ -45,7 +46,7 @@
               <outputDirectory>elasticsearch-${es.version}/config</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${project.basedir}/config_local</directory>
+                  <directory>${project.basedir}/config</directory>
                   <includes>
                     <include>elasticsearch.yml</include>
                   </includes>

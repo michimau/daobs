@@ -25,11 +25,11 @@ ${es.single-node.discovery}
 ## see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
 ##     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
 #
-xpack.security.enabled: false
-xpack.monitoring.enabled: false
-xpack.ml.enabled: false
-xpack.graph.enabled: false
-xpack.watcher.enabled: false
+#xpack.security.enabled: false
+#xpack.monitoring.enabled: false
+#xpack.ml.enabled: false
+#xpack.graph.enabled: false
+#xpack.watcher.enabled: false
 
 # Readonlytest config
 #http.type: ssl_netty4
@@ -42,7 +42,7 @@ readonlyrest:
     # keystore_pass: KEYSTORE_PASSWORD
     # key_pass: KEY_PASS
 
-  response_if_req_forbidden: Forbidden by ReadonlyREST ES plugin
+  response_if_req_forbidden: Dashboard access is forbidden. Invalid credentials.
   #rest.action.multi.allow_explicit_index: false
 
   access_control_rules:
@@ -59,7 +59,7 @@ readonlyrest:
 
   - name: public_access
     type: allow
-    indices: ["records", "indicators"]
+    indices: ["${es.index.records}", "${es.index.indicators}"]
     verbosity: error
 
   # We trust Kibana's server side process, full access granted via HTTP authentication
@@ -70,25 +70,23 @@ readonlyrest:
   - name: Kibana RW
     groups: ["kibana_rw"]
     kibana_access: rw
-    kibana_index: .dashboards
-    #indices: [".dashboards"]
+    kibana_index: ${es.index.dashboards}
     verbosity: error
 
   - name: Kibana_RO
-    groups: ["kibana_ro"]
+#    groups: ["kibana_ro"]
     type: allow
     kibana_access: ro
-    kibana_index: .dashboards
-    #indices: [".kibana"]
+    kibana_index: ${es.index.dashboards}
     verbosity: error
 
-  - name: Kibana_RO_strict
-    groups: ["kibana_ro_strict"]
-    type: allow
-    kibana_access: ro_strict
-    kibana_index: .dashboards
-    #indices: [".kibana"]
-    verbosity: error
+#  - name: Kibana_RO_strict
+#    groups: ["kibana_ro_strict"]
+#    type: allow
+#    kibana_access: ro_strict
+#    kibana_index: .dashboards
+#    #indices: [".kibana"]
+#    verbosity: error
 
 
   users:
@@ -97,9 +95,9 @@ readonlyrest:
     auth_key: ${kb.es.rw.username}:${kb.es.rw.password}
     groups: ["kibana_rw"]
 
-  - username: kibana_ro
-    auth_key: ${kb.es.ro.username}:${kb.es.ro.password}
-    groups: ["kibana_ro"]
+#  - username: kibana_ro
+#    auth_key: ${kb.es.ro.username}:${kb.es.ro.password}
+#    groups: ["kibana_ro"]
 
   - username: kibana_server
     # auth_key is good for testing, but replace it with `auth_key_sha256`!
