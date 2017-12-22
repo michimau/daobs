@@ -13,20 +13,20 @@ services:
     container_name: dashboard
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
+    build:
+      context: ./elasticsearch/
     volumes:
       - esdata:/usr/share/elasticsearch/data
-      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      #- ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ulimits:
       memlock:
         soft: -1
         hard: -1
     mem_limit: 1g
     environment:
-      - cluster.name=docker-cluster
-      - node.name=elasticsearch
-      - bootstrap.memory_lock=true
+      - NODE_NAME=elasticsearch
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTICSEARCH_MASTER=YES
     ulimits:
       memlock:
         soft: -1
@@ -35,18 +35,18 @@ services:
     container_name: elasticsearch
 
   elasticsearch-node1:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
+    build:
+      context: ./elasticsearch/
     depends_on:
       - "elasticsearch"
     volumes:
       - esdata1:/usr/share/elasticsearch/data
-      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      #- ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     environment:
-      - cluster.name=docker-cluster
-      - node.name=elasticsearch-node1
-      - bootstrap.memory_lock=true
+      - NODE_NAME=elasticsearch-node1
+      - DISCOVERY_ZEN="elasticsearch,elasticsearch-node2"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch,elasticsearch-node2"
+      - ELASTICSEARCH_MASTER=NO
     ulimits:
       memlock:
         soft: -1
@@ -55,18 +55,18 @@ services:
     container_name: elasticsearch-node1
 
   elasticsearch-node2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.4
+    build:
+      context: ./elasticsearch/
     depends_on:
       - "elasticsearch"
     volumes:
       - esdata2:/usr/share/elasticsearch/data
-      - ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      #- ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     environment:
-      - cluster.name=docker-cluster
-      - node.name=elasticsearch-node2
-      - bootstrap.memory_lock=true
+      - NODE_NAME=elasticsearch-node2
+      - DISCOVERY_ZEN="elasticsearch"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+      - ELASTICSEARCH_MASTER=YES
     ulimits:
       memlock:
         soft: -1
@@ -83,11 +83,11 @@ services:
     container_name: cerebro
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:5.6.4
+    image: docker.elastic.co/kibana/kibana:5.6.5
     expose:
       - "5601"
     volumes:
-      - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ${PWD}/kibana/config/kibana.1.yml:/usr/share/kibana/config/kibana.yml
       - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
       - ${PWD}/kibana/docker-entry.sh:/docker-entry.sh
     depends_on:

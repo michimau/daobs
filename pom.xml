@@ -77,6 +77,12 @@
       <organizationUrl>https://www.geocat.net/</organizationUrl>
       <email>juanluisrp@geocat.net</email>
     </developer>
+    <developer>
+      <name>Joana Simoes</name>
+      <organization>GeoCat BV</organization>
+      <organizationUrl>https://www.geocat.net/</organizationUrl>
+      <email>joana.simoes@geocat.net</email>
+    </developer>
   </developers>
   <contributors>
     <contributor>

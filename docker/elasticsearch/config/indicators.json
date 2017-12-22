@@ -1,0 +1,44 @@
+{
+  "mappings": {
+    "_default_": {
+      "dynamic_templates": [
+        {
+          "indicatorValues": {
+            "match": "iv*",
+            "mapping": {
+              "type": "double"
+            }
+          }
+        }]
+    },
+    "indicators": {
+      "properties": {
+        "reportingDateSubmission": {
+          "type": "date"
+        },
+        "reportingDate": {
+          "type": "date",
+          "format": "date_hour_minute_second"
+        },
+        "indicatorType": {
+          "type": "keyword"
+        },
+        "indicatorName": {
+          "type": "keyword"
+        },
+        "indicatorValue": {
+          "type": "double"
+        },
+        "reportingYear": {
+          "type": "keyword"
+        },
+        "isOfficial": {
+          "type": "boolean"
+        },
+        "scope": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
