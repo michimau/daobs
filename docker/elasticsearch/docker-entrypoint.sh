@@ -4,7 +4,7 @@ set -e
 
 # Add elasticsearch as command if needed
 if [ "${1:0:1}" = '-' ]; then
-	set -- elasticsearch "$@"
+  set -- elasticsearch "$@"
 fi
 
 cp /elasticsearch.yml /usr/share/elasticsearch/config/elasticsearch.yml
@@ -22,19 +22,19 @@ fi
 if [ $ELASTICSEARCH_MASTER = "YES" ]
 then
 
-	# The virtual file /proc/self/cgroup should list the current cgroup
-	# membership. For each hierarchy, you can follow the cgroup path from
-	# this file to the cgroup filesystem (usually /sys/fs/cgroup/) and
-	# introspect the statistics for the cgroup for the given
-	# hierarchy. Alas, Docker breaks this by mounting the container
-	# statistics at the root while leaving the cgroup paths as the actual
-	# paths. Therefore, Elasticsearch provides a mechanism to override
-	# reading the cgroup path from /proc/self/cgroup and instead uses the
-	# cgroup path defined the JVM system property
-	# es.cgroups.hierarchy.override. Therefore, we set this value here so
-	# that cgroup statistics are available for the container this process
-	# will run in.
-	export ES_JAVA_OPTS="-Des.cgroups.hierarchy.override=/ $ES_JAVA_OPTS"
+  # The virtual file /proc/self/cgroup should list the current cgroup
+  # membership. For each hierarchy, you can follow the cgroup path from
+  # this file to the cgroup filesystem (usually /sys/fs/cgroup/) and
+  # introspect the statistics for the cgroup for the given
+  # hierarchy. Alas, Docker breaks this by mounting the container
+  # statistics at the root while leaving the cgroup paths as the actual
+  # paths. Therefore, Elasticsearch provides a mechanism to override
+  # reading the cgroup path from /proc/self/cgroup and instead uses the
+  # cgroup path defined the JVM system property
+  # es.cgroups.hierarchy.override. Therefore, we set this value here so
+  # that cgroup statistics are available for the container this process
+  # will run in.
+  export ES_JAVA_OPTS="-Des.cgroups.hierarchy.override=/ $ES_JAVA_OPTS"
 
   cat /readonlyrest.yml >> /usr/share/elasticsearch/config/elasticsearch.yml
 
@@ -45,7 +45,7 @@ then
   fi
   export TESTREADONLYREST=''
 
-	export SERVERNAME=localhost
+  export SERVERNAME=localhost
 
   rm -rf /tmp/ssl
   mkdir -p /tmp/ssl
@@ -59,16 +59,16 @@ fi
 # Drop root privileges if we are running elasticsearch
 # allow the container to be started with `--user`
 if [ "$1" = 'elasticsearch' -a "$(id -u)" = '0' ]; then
-	# Change the ownership of user-mutable directories to elasticsearch
-	for path in \
-		/usr/share/elasticsearch/data \
-		/usr/share/elasticsearch/logs \
-	; do
-		chown -R elasticsearch:elasticsearch "$path"
-	done
+  # Change the ownership of user-mutable directories to elasticsearch
+  for path in \
+    /usr/share/elasticsearch/data \
+    /usr/share/elasticsearch/logs \
+  ; do
+    chown -R elasticsearch:elasticsearch "$path"
+  done
 
-	set -- gosu elasticsearch "$@"
-	#exec gosu elasticsearch "$BASH_SOURCE" "$@"
+  set -- gosu elasticsearch "$@"
+  #exec gosu elasticsearch "$BASH_SOURCE" "$@"
 fi
 
 

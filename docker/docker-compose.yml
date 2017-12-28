@@ -87,7 +87,7 @@ services:
     expose:
       - "5601"
     volumes:
-      - ${PWD}/kibana/config/kibana.1.yml:/usr/share/kibana/config/kibana.yml
+      - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
       - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
       - ${PWD}/kibana/docker-entry.sh:/docker-entry.sh
     depends_on:
