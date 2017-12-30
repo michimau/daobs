@@ -22,3 +22,5 @@ es/elasticsearch-*
 dashboards/kibana-*
 docker/elasticsearch/config/elasticsearch.yml
 docker/kibana/config/kibana.yml
+docker/*.war
+docker/ETF

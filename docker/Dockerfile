@@ -2,6 +2,9 @@ from maven:3.5.0-jdk-8-alpine
 
 MAINTAINER doublebyte <joana.simoes@geocat.net>
 
+ARG WEBAPP_NAME=daobs
+ARG BUILD_PROFILE=docker
+
 #ARG INSTALL_ETF_PATH
 #ARG INSTALL_DASHBOARD_PATH
 
@@ -103,31 +106,37 @@ RUN echo ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard && mkdir -p ${INSTALL_DA
 RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 
 # Adding the DAOS src
-ADD ./ ${CATALINA_HOME}/daobs
+#ADD ./ ${CATALINA_HOME}/daobs
 
-WORKDIR ${CATALINA_HOME}/daobs
+#WORKDIR ${CATALINA_HOME}/daobs
 
-RUN mvn install \
- -DskipTests -Drelax \
- -gs /usr/share/maven/ref/settings-docker.xml \
- -Pdocker \
- -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
- -Detf.installation.path=${INSTALL_ETF_PATH}
+#RUN mvn install \
+# -DskipTests -Drelax \
+# -gs /usr/share/maven/ref/settings-docker.xml \
+# -P${BUILD_PROFILE} \
+# -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
+# -Detf.installation.path=${INSTALL_ETF_PATH}
+
+COPY ./${WEBAPP_NAME}.war ${CATALINA_HOME}/webapps/${WEBAPP_NAME}.war
+COPY ./ETF ${INSTALL_ETF_PATH}/
+RUN chmod +x ${INSTALL_ETF_PATH}/ant
+RUN chmod +x ${INSTALL_ETF_PATH}/bin/apache-ant-1.8.2/bin/ant
+
 
 # Build and install ETF
-WORKDIR ${CATALINA_HOME}/daobs/tasks/etf-validation-checker
-RUN mvn install -Drelax -DskipTests -gs /usr/share/maven/ref/settings-docker.xml -Petf-download
-RUN mv ./ETF/ETF/* ${INSTALL_ETF_PATH}/.
-
-RUN cp ${CATALINA_HOME}/daobs/web/target/daobs.war ${CATALINA_HOME}/webapps
+#WORKDIR ${CATALINA_HOME}/daobs/tasks/etf-validation-checker
+#RUN mvn install -Drelax -DskipTests -gs /usr/share/maven/ref/settings-docker.xml -Petf-download
+#RUN mv ./ETF/ETF/* ${INSTALL_ETF_PATH}/.
+#
+#RUN cp ${CATALINA_HOME}/daobs/web/target/${WEBAPP_NAME}.war ${CATALINA_HOME}/webapps/${WEBAPP_NAME}.war
 #RUN cp -r /usr/local/tomcat/daobs/web/target/daobs/WEB-INF/datadir/ ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
 
 # Load kibana dashboards
 RUN npm install elasticdump -g
 
 # Cleanup
-RUN rm -rf ${CATALINA_HOME}/tomcat/daobs/
-RUN rm -rf /root/.m2/repos
+#RUN rm -rf ${CATALINA_HOME}/tomcat/daobs/
+#RUN rm -rf /root/.m2/repos
 
 COPY ./wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh

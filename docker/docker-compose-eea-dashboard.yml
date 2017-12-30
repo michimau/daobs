@@ -2,7 +2,8 @@ version: '2'
 services:
 
   dashboard:
-    image: inspiremif/daobs:2.0.x
+#    image: inspiremif/daobs:2.0.x
+    image: inspiremif/daobs-eea-dashboard-sandbox:latest
     volumes:
        - daobsdir:/daobs-data-dir/
     expose:
