@@ -70,7 +70,7 @@
     </daobs:pointOfTruthURLPattern>
   </daobs:harvester>
   <daobs:harvester>
-    <daobs:uuid>0a8b54e3-a216-43aa-a132-096eb72197cc</daobs:uuid>
+    <daobs:uuid>0b8b54e3-a216-43aa-a132-096eb72197cc</daobs:uuid>
     <daobs:scope>MT</daobs:scope>
     <daobs:folder>MT</daobs:folder>
     <daobs:name>Malta</daobs:name>
