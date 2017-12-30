@@ -37,11 +37,29 @@ readonlyrest:
   response_if_req_forbidden: Dashboard access is forbidden. Invalid credentials.
   #rest.action.multi.allow_explicit_index: false
 
+  ldaps:
+    - name: ldap
+      host: "${ldap.host}"
+      port: ${ldap.port}
+      ssl_enabled: false
+      ssl_trust_all_certs: true
+#        bind_dn: "cn=admin,dc=example,dc=com"
+#        bind_password: "password"
+      search_user_base_DN: "${ldap.base.search.base},${ldap.base.dn}"
+      user_id_attribute: "uid"
+      search_groups_base_DN: "ou=Groups,${ldap.base.dn}"
+      unique_member_attribute: "uniqueMember"
+      connection_pool_size: 10
+      connection_timeout_in_sec: 10
+      request_timeout_in_sec: 10
+      cache_ttl_in_sec: 60
+
   access_control_rules:
   #- name: Accept all request from localhost
   #  type: allow
   #  hosts: [127.0.0.1, localhost]
   #  verbosity: info
+
 
   - name: Check_mk
     type: allow
@@ -57,13 +75,23 @@ readonlyrest:
   # We trust Kibana's server side process, full access granted via HTTP authentication
   - name: "::KIBANA-SRV::"
     groups: ["kibana_srv"]
-    verbosity: error # don't log successful request
+    verbosity: error
 
   - name: Kibana RW
     groups: ["kibana_rw"]
     kibana_access: rw
     kibana_index: ${es.index.dashboards}
     verbosity: error
+
+  - name: Kibana LDAP RW
+    ldap_authentication:
+      name: "ldap"
+    ldap_authorization:
+      name: "ldap"
+      groups: [${ldap.groups.allowed}]
+    kibana_access: rw
+    kibana_index: ${es.index.dashboards}
+    verbosity: info
 
   - name: Kibana_RO
 #    groups: ["kibana_ro"]

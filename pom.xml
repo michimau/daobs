@@ -526,12 +526,16 @@
     <webapp.visitor.password>visitor</webapp.visitor.password>
 
     <!-- For LDAP based authentication -->
-    <ldap.base.provider.url>ldap://ldap.eionet.europa.eu</ldap.base.provider.url>
+    <ldap.host>ldap.eionet.europa.eu</ldap.host>
+    <ldap.port>389</ldap.port>
+    <ldap.base.provider.url>ldap://${ldap.host}</ldap.base.provider.url>
     <ldap.base.dn>o=EIONET,l=Europe</ldap.base.dn>
     <ldap.security.principal />
     <ldap.security.credentials />
     <ldap.base.search.base>ou=Users</ldap.base.search.base>
     <ldap.base.dn.pattern>uid={0}</ldap.base.dn.pattern>
+    <!-- Define one or more groups allowed for ES authorization -->
+    <ldap.groups.allowed>"extranet"</ldap.groups.allowed>
 
     <lucene.version>6.6.1</lucene.version>
 
@@ -681,7 +685,7 @@
     <profile>
       <id>eea-inspire-dashboard</id>
       <properties>
-        <war.name>official</war.name>
+        <war.name>dashboard</war.name>
         <webapp.context>/dashboard</webapp.context>
         <webapp.rootUrl>/dashboard/</webapp.rootUrl>
         <webapp.url>https://inspire-dashboard.eea.europa.eu/dashboard</webapp.url>
