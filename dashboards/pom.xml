@@ -44,6 +44,7 @@
         </configuration>
         <executions>
           <execution>
+            <id>copy-kb-config-to-docker-folder</id>
             <phase>compile</phase>
             <goals>
               <goal>copy-resources</goal>
@@ -53,6 +54,25 @@
               <resources>
                 <resource>
                   <directory>${project.basedir}/resources</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>config</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-kb-default-data-to-docker-folder</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/../docker/datadir</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/resources/data</directory>
                   <filtering>true</filtering>
                 </resource>
               </resources>

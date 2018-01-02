@@ -55,7 +55,7 @@ Import dashboard configuration:
 ```
 npm install elasticdump -g
 
-cd data
+cd resources/data
 elasticdump \
   --input=index-dashboards-mapping.json \
   --output=http://localhost:9200/.dashboards \
