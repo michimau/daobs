@@ -24,3 +24,4 @@ docker/elasticsearch/config/elasticsearch.yml
 docker/kibana/config/kibana.yml
 docker/*.war
 docker/ETF
+docker/datadir

@@ -27,11 +27,6 @@ services:
       - NODE_NAME=elasticsearch
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - ELASTICSEARCH_MASTER=YES
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    mem_limit: 1g
     container_name: elasticsearch
 #    container_name: ${CONTAINER_PREFIX}elasticsearch
 

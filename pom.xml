@@ -653,6 +653,7 @@
       <properties>
         <webapp.context>/daobs</webapp.context>
         <webapp.rootUrl>/daobs/</webapp.rootUrl>
+        <data.dir>/daobs-data-dir/datadir</data.dir>
         <es.host>elasticsearch</es.host>
         <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
         <es.single-node.discovery></es.single-node.discovery>
@@ -672,11 +673,14 @@
         <webapp.username>changeme</webapp.username>
         <webapp.password>changeme</webapp.password>
         <etf.installation.path>/var/local/etf</etf.installation.path>
-        <data.dir>/daobs-data-dir/daobs-data-official</data.dir>
+        <data.dir>/daobs-data-dir/datadir</data.dir>
         <es.host>elasticsearch</es.host>
         <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
         <es.single-node.discovery></es.single-node.discovery>
         <es.network.host>192.168.1.10</es.network.host>
+        <es.index.records>dashboard-official-records</es.index.records>
+        <es.index.indicators>dashboard-official-indicators</es.index.indicators>
+        <es.index.dashboards>.dashboard-official</es.index.dashboards>
         <kb.host>kibana</kb.host>
       </properties>
     </profile>
@@ -691,11 +695,14 @@
         <webapp.url>https://inspire-dashboard.eea.europa.eu/dashboard</webapp.url>
         <authentication.mode>ldap</authentication.mode>
         <etf.installation.path>/var/local/etf</etf.installation.path>
-        <data.dir>/daobs-data-dir/daobs-data-dashboard</data.dir>
+        <data.dir>/daobs-data-dir/datadir</data.dir>
         <es.host>elasticsearch</es.host>
         <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
         <es.single-node.discovery></es.single-node.discovery>
         <es.network.host>192.168.1.10</es.network.host>
+        <es.index.records>dashboard-sandbox-records</es.index.records>
+        <es.index.indicators>dashboard-sandbox-indicators</es.index.indicators>
+        <es.index.dashboards>.dashboard-sandbox</es.index.dashboards>
         <kb.host>kibana</kb.host>
       </properties>
     </profile>

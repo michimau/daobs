@@ -8,6 +8,7 @@ if [ "${1:0:1}" = '-' ]; then
 fi
 
 cp /elasticsearch.yml /usr/share/elasticsearch/config/elasticsearch.yml
+cp /readonlyrest.yml /usr/share/elasticsearch/config/readonlyrest.yml
 
 # Replace node name and discovery hosts
 sed "s#NODE_NAME#$NODE_NAME#g" -i /usr/share/elasticsearch/config/elasticsearch.yml

@@ -102,7 +102,7 @@ RUN set -e \
   fi
 
 # Create dirs if they don't exist yet
-RUN echo ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard && mkdir -p ${INSTALL_DASHBOARD_PATH} && mkdir -p ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
+RUN echo ${INSTALL_DASHBOARD_PATH} && mkdir -p ${INSTALL_DASHBOARD_PATH}
 RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 
 # Adding the DAOS src
@@ -119,6 +119,7 @@ RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 
 COPY ./${WEBAPP_NAME}.war ${CATALINA_HOME}/webapps/${WEBAPP_NAME}.war
 COPY ./ETF ${INSTALL_ETF_PATH}/
+COPY ./datadir ${INSTALL_DASHBOARD_PATH}/datadir/
 RUN chmod +x ${INSTALL_ETF_PATH}/ant
 RUN chmod +x ${INSTALL_ETF_PATH}/bin/apache-ant-1.8.2/bin/ant
 
@@ -129,7 +130,7 @@ RUN chmod +x ${INSTALL_ETF_PATH}/bin/apache-ant-1.8.2/bin/ant
 #RUN mv ./ETF/ETF/* ${INSTALL_ETF_PATH}/.
 #
 #RUN cp ${CATALINA_HOME}/daobs/web/target/${WEBAPP_NAME}.war ${CATALINA_HOME}/webapps/${WEBAPP_NAME}.war
-#RUN cp -r /usr/local/tomcat/daobs/web/target/daobs/WEB-INF/datadir/ ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
+#RUN cp -r ./datadir/ ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
 
 # Load kibana dashboards
 RUN npm install elasticdump -g

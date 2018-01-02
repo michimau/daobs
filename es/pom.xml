@@ -49,6 +49,7 @@
                   <directory>${project.basedir}/config</directory>
                   <includes>
                     <include>elasticsearch.yml</include>
+                    <include>readonlyrest.yml</include>
                   </includes>
                   <filtering>true</filtering>
                 </resource>

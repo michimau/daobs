@@ -19,8 +19,8 @@ elasticdump \
 
 #rm index-dashboards-mapping.json && rm index-dashboards.json;
 
-cp -r $CATALINA_HOME/daobs/web/target/daobs/WEB-INF/datadir/* \
-    ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
+#cp -r $CATALINA_HOME/daobs/web/target/daobs/WEB-INF/datadir/* \
+#    ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
 
 echo -e "\e[96mStart tomcat\e[0m"
 
