@@ -21,13 +21,7 @@ Use the following commands:
 ```bash
 cd es
 mvn install -Pes-download
-mvn exec:exec -Des-start
-```
-
-Stop Elascticsearch, install Readonlyrest plugin, call `mvn install` to set up the config file and start ES again:
-```bash
 mvn antrun:run -Des-readonlyrest-install
-mvn install
 mvn exec:exec -Des-start
 ```
 

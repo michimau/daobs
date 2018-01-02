@@ -539,8 +539,8 @@
 
     <lucene.version>6.6.1</lucene.version>
 
-    <es.version>5.6.4</es.version>
-    <es.version.md5>b0ccb491bdc54b7120a5ab39b234f29b</es.version.md5>
+    <es.version>5.6.5</es.version>
+    <es.version.md5>dce1527919573d82f02c1d3f091b0398</es.version.md5>
     <es.port>9200</es.port>
     <es.host>localhost</es.host>
     <!-- For docker, es.host is container
@@ -564,7 +564,7 @@
     <es.network.host>127.0.0.1</es.network.host>
     <es.xpack.config></es.xpack.config>
 
-    <kb.version.sha512>9cf1633405bd3513ca1533786aa46d0b17d28a0dfe7762018c744a693efbcfec9e24e0e222d1192d2cb12a664a391bc8fd072b82236c2bbfadb786ddcadecfef</kb.version.sha512>
+    <kb.version.sha512>96ff8c183877365cc444631d0dd29d231f8d732e835f1657ccca23ce461e94455915d4785ace79ef01e2b2277dcbba28869b18f4c29a5319ab8b59ce4a581d43</kb.version.sha512>
     <kb.protocol>${es.protocol}</kb.protocol>
     <kb.port>5601</kb.port>
     <kb.host>localhost</kb.host>
@@ -678,9 +678,6 @@
         <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
         <es.single-node.discovery></es.single-node.discovery>
         <es.network.host>192.168.1.10</es.network.host>
-        <es.index.records>dashboard-official-records</es.index.records>
-        <es.index.indicators>dashboard-official-indicators</es.index.indicators>
-        <es.index.dashboards>.dashboard-official</es.index.dashboards>
         <kb.host>kibana</kb.host>
       </properties>
     </profile>
@@ -700,9 +697,6 @@
         <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
         <es.single-node.discovery></es.single-node.discovery>
         <es.network.host>192.168.1.10</es.network.host>
-        <es.index.records>dashboard-sandbox-records</es.index.records>
-        <es.index.indicators>dashboard-sandbox-indicators</es.index.indicators>
-        <es.index.dashboards>.dashboard-sandbox</es.index.dashboards>
         <kb.host>kibana</kb.host>
       </properties>
     </profile>

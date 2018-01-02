@@ -164,6 +164,6 @@
     <es.executable>elasticsearch</es.executable>
     <es.plugin.executable>elasticsearch-plugin</es.plugin.executable>
     <file.protocol>file://</file.protocol>
-    <readonlyrest.filename>readonlyrest-1.16.14_es5.6.4.zip</readonlyrest.filename>
+    <readonlyrest.filename>readonlyrest-1.16.14_es${es.version}.zip</readonlyrest.filename>
   </properties>
 </project>
