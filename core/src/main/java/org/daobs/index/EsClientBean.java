@@ -28,6 +28,7 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.net.InetAddress;
+import java.util.Map;
 
 /**
  * Create a bean providing a connection to ES
@@ -39,9 +40,12 @@ public class EsClientBean implements InitializingBean {
 
   private TransportClient client;
   private String serverUrl;
-  private String collection;
+  private String defaultIndex;
+  private Map<String, String> indexList;
   private String username;
   private String password;
+
+  private boolean initialized = false;
 
   public String getServerHost() {
     return esHost;
@@ -50,6 +54,8 @@ public class EsClientBean implements InitializingBean {
   public void setServerHost(String serverHost) {
     this.esHost = serverHost;
   }
+
+  public static final String INDEX_CONFIG_FOLDER = "/WEB-INF/index/";
 
   private String esHost;
 
@@ -71,6 +77,24 @@ public class EsClientBean implements InitializingBean {
     return client;
   }
 
+  /**
+   * Check if indices exist and create them if not.
+   *
+   *
+   * @param basePath Base location from where loading the index configuration.
+   * @return true if all indices built properly.
+   */
+  public boolean checkIndices(String basePath) {
+    if (client != null && !initialized) {
+
+      for (Map.Entry<String, String> e : getIndexList().entrySet()) {
+        EsRequestBean.createIndexIfNotExist(e.getKey(),
+          basePath + INDEX_CONFIG_FOLDER + e.getValue() + ".json");
+      }
+      initialized = true;
+    }
+    return initialized;
+  }
 
   /**
    * Connect to the index, ping the client
@@ -143,11 +167,19 @@ public class EsClientBean implements InitializingBean {
     return this;
   }
 
-  public String getCollection() {
-    return collection;
+  public Map<String, String> getIndexList() {
+    return indexList;
   }
 
-  public void setCollection(String collection) {
-    this.collection = collection;
+  public void setIndexList(Map<String, String> indexList) {
+    this.indexList = indexList;
+  }
+
+  public String getDefaultIndex() {
+    return defaultIndex;
+  }
+
+  public void setDefaultIndex(String defaultIndex) {
+    this.defaultIndex = defaultIndex;
   }
 }

@@ -25,7 +25,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
-                xmlns:solr="java:org.daobs.index.EsRequestBean"
+                xmlns:index="java:org.daobs.index.EsRequestBean"
                 xmlns:saxon="http://saxon.sf.net/"
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all"
@@ -76,7 +76,7 @@
 
           <field name="extra_medsea_syn_{$fieldName}">
             <xsl:value-of
-              select="solr:analyzeField('extra_medsea_syn', text())"/>
+              select="index:analyzeField('extra_medsea_syn', text())"/>
           </field>
         </xsl:for-each>
       </xsl:for-each>
@@ -89,7 +89,7 @@
         </xsl:element>
         <xsl:element name="extra_medsea_syn_dataPolicy">
           <xsl:value-of
-            select="solr:analyzeField('extra_medsea_syn', text())"/>
+            select="index:analyzeField('extra_medsea_syn', text())"/>
         </xsl:element>
       </xsl:for-each>
 
@@ -101,7 +101,7 @@
         </xsl:element>
         <xsl:element name="extra_medsea_syn_costBasis_syn">
           <xsl:value-of
-            select="solr:analyzeField('extra_medsea_syn', text())"/>
+            select="index:analyzeField('extra_medsea_syn', text())"/>
         </xsl:element>
       </xsl:for-each>
 
@@ -113,7 +113,7 @@
         </xsl:element>
         <xsl:element name="extra_medsea_syn_responsiveness">
           <xsl:value-of
-            select="solr:analyzeField('extra_medsea_syn', text())"/>
+            select="index:analyzeField('extra_medsea_syn', text())"/>
         </xsl:element>
       </xsl:for-each>
     </xsl:if>

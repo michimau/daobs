@@ -39,6 +39,9 @@
       $scope.dashboardParams = '?_g=(time:(from:now-5y,mode:quick,to:now))';
 
       var init = function () {
+
+        $http.put('api/index');
+
         $scope.dashboardBaseURL = cfg.SERVICES.dashboardBaseURL;
         $http.post(cfg.SERVICES.esdashboardCore +
           '/dashboard/_search?size=1000', {

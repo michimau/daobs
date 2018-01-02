@@ -131,6 +131,8 @@ public class ReportingController {
   @Value("${es.url}")
   private String esUrl;
 
+  @Value("${es.index.records}")
+  private String index;
 
   /**
    * Get list of available reports.
@@ -1061,7 +1063,7 @@ public class ReportingController {
     if (withRowData) {
       Node spatialDataSets = null;
       try {
-        spatialDataSets = EsRequestBean.query(
+        spatialDataSets = EsRequestBean.query(index,
           SPATIALDATASETS_QUERY_URL,
           fq, rows);
         model.addObject("spatialDataSets", spatialDataSets);
@@ -1072,7 +1074,7 @@ public class ReportingController {
 
       Node spatialDataServices = null;
       try {
-        spatialDataServices = EsRequestBean.query(
+        spatialDataServices = EsRequestBean.query(index,
           SPATIALDATASERVICE_QUERY_URL,
           fq, rows);
         model.addObject("spatialDataServices", spatialDataServices);

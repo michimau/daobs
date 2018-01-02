@@ -29,7 +29,7 @@
                 xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
                 xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0"
                 xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
-                xmlns:solr="java:org.daobs.index.EsRequestBean"
+                xmlns:index="java:org.daobs.index.EsRequestBean"
                 xmlns:saxon="http://saxon.sf.net/"
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all"
@@ -74,7 +74,7 @@
 
           <field name="extra_medsea_syn_{$fieldName}">
             <xsl:value-of
-              select="solr:analyzeField('extra_medsea_syn', text())"/>
+              select="index:analyzeField('extra_medsea_syn', text())"/>
           </field>
         </xsl:for-each>
       </xsl:for-each>

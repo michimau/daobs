@@ -21,11 +21,11 @@
   -->
 <beans xmlns:ctx="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd
           http://www.springframework.org/schema/context
-          http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
   <ctx:annotation-config/>
   <ctx:component-scan base-package="org.daobs.authentication" />
@@ -48,12 +48,18 @@
   <bean id="jmsMessager"
         class="org.daobs.messaging.JmsMessager"/>
 
+  <util:map id="indexList">
+    <entry key="records" value="${es.index.records}"/>
+    <entry key="indicators" value="${es.index.indicators}"/>
+  </util:map>
+
   <bean id="esClient"
         name="esClient"
         class="org.daobs.index.EsClientBean">
     <property name="serverUrl" value="${es.url}"/>
     <property name="serverHost" value="${es.host}"/>
-    <property name="collection" value="records"/><!-- TODO ES from config -->
+    <property name="indexList" ref="indexList"/>
+    <property name="defaultIndex" value="${es.index.records}"/>
   </bean>
 
   <bean id="DashboardLoader"

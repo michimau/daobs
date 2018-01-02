@@ -38,7 +38,7 @@
                 xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:daobs="http://daobs.org"
-                xmlns:solr="java:org.daobs.index.EsRequestBean"
+                xmlns:index="java:org.daobs.index.EsRequestBean"
                 xmlns:saxon="http://saxon.sf.net/"
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all"
@@ -326,7 +326,7 @@
           select="$inspireKeywords">
 
           <xsl:variable name="inspireTheme" as="xs:string"
-                        select="solr:analyzeField('synInspireThemes', text())"/>
+                        select="index:analyzeField('synInspireThemes', text())"/>
 
           <inspireTheme_syn>
             <xsl:value-of select="text()"/>
@@ -348,12 +348,12 @@
             </inspireThemeFirst>
             <inspireAnnexForFirstTheme>
               <xsl:value-of
-                select="solr:analyzeField('synInspireAnnexes', $inspireTheme)"/>
+                select="index:analyzeField('synInspireAnnexes', $inspireTheme)"/>
             </inspireAnnexForFirstTheme>
           </xsl:if>
           <inspireAnnex>
             <xsl:value-of
-              select="solr:analyzeField('synInspireAnnexes', $inspireTheme)"/>
+              select="index:analyzeField('synInspireAnnexes', $inspireTheme)"/>
           </inspireAnnex>
         </xsl:for-each>
 
@@ -595,7 +595,7 @@
             <xsl:value-of select="text()"/>
           </serviceType>
           <xsl:variable name="inspireServiceType" as="xs:string"
-                        select="solr:analyzeField(
+                        select="index:analyzeField(
                         'keepInspireServiceTypes', text())"/>
           <xsl:if test="$inspireServiceType != ''">
             <inspireServiceType>

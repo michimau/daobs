@@ -33,6 +33,7 @@ import org.daobs.indicator.config.Parameter;
 import org.daobs.indicator.config.Query;
 import org.daobs.indicator.config.Reporting;
 import org.daobs.indicator.config.Variable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 
@@ -70,6 +71,9 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
   private Reporting reporting;
   private Map<String, Double> indicatorResults;
   private Logger logger = Logger.getLogger("org.daobs.indicator");
+
+  @Value("${es.index.records}")
+  private String index;
 
   public IndicatorCalculatorImpl(File configurationFile) throws FileNotFoundException {
     this.configurationFile = configurationFile;
@@ -236,13 +240,13 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
 
         String statsField = query.getStatsField();
         if (statsField != null) {
-          statValue = EsRequestBean.getStats(
+          statValue = EsRequestBean.getStats(index,
               variable.getQuery().getValue(),
               filterQuery,
               statsField,
               query.getStats());
         } else {
-          statValue = EsRequestBean.getNumFound(
+          statValue = EsRequestBean.getNumFound(index,
               variable.getQuery().getValue(),
               filterQuery);
         }

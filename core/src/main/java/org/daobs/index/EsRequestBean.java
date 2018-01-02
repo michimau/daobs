@@ -22,6 +22,7 @@
 package org.daobs.index;
 
 import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
+import org.apache.commons.codec.Charsets;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequest;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -31,25 +32,74 @@ import org.elasticsearch.action.fieldstats.FieldStatsResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.common.xcontent.NamedXContentRegistry;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.common.xcontent.XContentParser;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * Utility class to run Solr requests like field analysis.
  * Created by francois on 30/09/14.
  */
 public class EsRequestBean {
-  private static String PHASE_INDEX = "index";
-  private static String PHASE_QUERY = "query";
-  private static String DEFAULT_FILTER_CLASS = "org.apache.lucene.analysis.synonym.SynonymFilter";
+  @Value("${es.index.records}")
+  private String index;
+
+  public String getIndex() {
+    return index;
+  }
+
+  public void setIndex(String index) {
+    this.index = index;
+  }
+
+  private Logger logger = Logger.getLogger("org.daobs.index");
+
+  public static boolean createIndexIfNotExist(String indexName, String mappingFile) {
+    EsClientBean client = EsClientBean.get();
+    try {
+      boolean exists = client.getClient().admin().indices()
+        .prepareExists(indexName)
+        .execute().actionGet().isExists();
+
+      if (!exists) {
+        Logger.getLogger("org.daobs.index").info(
+            String.format("Creating index %s", indexName));
+        String json = com.google.common.io.Files.toString(new File(mappingFile), Charsets.UTF_8);
+        XContentBuilder b = XContentFactory.jsonBuilder().prettyPrint();
+        try (XContentParser p = XContentFactory
+          .xContent(XContentType.JSON)
+          .createParser(NamedXContentRegistry.EMPTY, json)) {
+          b.copyCurrentStructure(p);
+        }
+        client.getClient().admin().indices().prepareCreate(indexName)
+          .setSource(b).get();
+        return true;
+      }
+      return exists;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 
   /**
    * Delete by query.
@@ -114,12 +164,6 @@ public class EsRequestBean {
     return searchResponseToNode(searchResponse.getHits());
   }
 
-
-  public static Node query(String[] fields, String query, int rows) throws Exception {
-    EsClientBean client = EsClientBean.get();
-    return query(client.getCollection(), fields, query, rows);
-  }
-
   /**
    * Convert search response to node.
    *
@@ -154,6 +198,11 @@ public class EsRequestBean {
     return response;
   }
 
+  @Deprecated
+  public static Node query(String[] fields, String query, int rows) throws Exception {
+    EsClientBean client = EsClientBean.get();
+    return query(client.getDefaultIndex(), fields, query, rows);
+  }
 
   /**
    * Return the number of rows matching the query.
@@ -187,9 +236,10 @@ public class EsRequestBean {
     return null;
   }
 
+  @Deprecated
   public static Double getNumFound(String query, String... filterQuery) {
     EsClientBean client = EsClientBean.get();
-    return getNumFound(client.getCollection(), query, filterQuery);
+    return getNumFound(client.getDefaultIndex(), query, filterQuery);
   }
 
   /**
@@ -237,10 +287,11 @@ public class EsRequestBean {
     return null;
   }
 
+  @Deprecated
   public static Double getStats(String query, String[] filterQuery,
-                         String statsField, String stats) {
+                                String statsField, String stats) {
     EsClientBean client = EsClientBean.get();
-    return getStats(client.getCollection(), query, filterQuery, statsField, stats);
+    return getStats(client.getDefaultIndex(), query, filterQuery, statsField, stats);
   }
 
   /**
@@ -285,10 +336,13 @@ public class EsRequestBean {
     return null;
   }
 
+  /**
+   * Still used in some XSLT.
+   */
+  @Deprecated
   public static String analyzeField(String fieldName,
-                             String fieldValue) {
+                                    String fieldValue) {
     EsClientBean client = EsClientBean.get();
-    return analyzeField(client.getCollection(), fieldName, fieldValue);
+    return analyzeField(client.getDefaultIndex(), fieldName, fieldValue);
   }
-
 }

@@ -7,10 +7,6 @@ and copy it to the ES module. eg. es/elasticsearch-5.2.1
 
 Start ES.
 
-Configure index
-```
-curl -X PUT http://localhost:9200/records -d @config/records.json
-```
 
 ### Maven installation
 
@@ -26,8 +22,6 @@ Use the following commands:
 cd es
 mvn install -Pes-download
 mvn exec:exec -Des-start
-curl -X PUT http://localhost:9200/records -d @config/records.json
-curl -X PUT http://localhost:9200/indicators -d @config/indicators.json
 ```
 
 Stop Elascticsearch, install Readonlyrest plugin, call `mvn install` to set up the config file and start ES again:
@@ -40,9 +34,3 @@ mvn exec:exec -Des-start
 ### Production use
 
 Configure ES to start on server startup.
-
-
-### Updating a collection
-
-
-TODO
