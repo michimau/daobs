@@ -53,7 +53,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * Utility class to run Solr requests like field analysis.
@@ -73,30 +72,34 @@ public class EsRequestBean {
 
   private Logger logger = Logger.getLogger("org.daobs.index");
 
+  /**
+   * Create an index if not exisiting.
+   *
+   */
   public static boolean createIndexIfNotExist(String indexName, String mappingFile) {
     EsClientBean client = EsClientBean.get();
     try {
       boolean exists = client.getClient().admin().indices()
-        .prepareExists(indexName)
-        .execute().actionGet().isExists();
+          .prepareExists(indexName)
+          .execute().actionGet().isExists();
 
       if (!exists) {
         Logger.getLogger("org.daobs.index").info(
             String.format("Creating index %s", indexName));
         String json = com.google.common.io.Files.toString(new File(mappingFile), Charsets.UTF_8);
-        XContentBuilder b = XContentFactory.jsonBuilder().prettyPrint();
+        XContentBuilder builder = XContentFactory.jsonBuilder().prettyPrint();
         try (XContentParser p = XContentFactory
-          .xContent(XContentType.JSON)
-          .createParser(NamedXContentRegistry.EMPTY, json)) {
-          b.copyCurrentStructure(p);
+            .xContent(XContentType.JSON)
+            .createParser(NamedXContentRegistry.EMPTY, json)) {
+          builder.copyCurrentStructure(p);
         }
         client.getClient().admin().indices().prepareCreate(indexName)
-          .setSource(b).get();
+            .setSource(builder).get();
         return true;
       }
       return exists;
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception ex) {
+      ex.printStackTrace();
       return false;
     }
   }
@@ -164,6 +167,12 @@ public class EsRequestBean {
     return searchResponseToNode(searchResponse.getHits());
   }
 
+  @Deprecated
+  public static Node query(String[] fields, String query, int rows) throws Exception {
+    EsClientBean client = EsClientBean.get();
+    return query(client.getDefaultIndex(), fields, query, rows);
+  }
+
   /**
    * Convert search response to node.
    *
@@ -196,12 +205,6 @@ public class EsRequestBean {
       response.appendChild(doc);
     }
     return response;
-  }
-
-  @Deprecated
-  public static Node query(String[] fields, String query, int rows) throws Exception {
-    EsClientBean client = EsClientBean.get();
-    return query(client.getDefaultIndex(), fields, query, rows);
   }
 
   /**
@@ -300,8 +303,6 @@ public class EsRequestBean {
    * by the specified filterClass.
    * <p>
    * If an exception occured, the field value is returned.
-   *
-   * Equivalent to: {@linkplain http://localhost:8983/index/analysis/field?analysis.fieldname=inspireTheme_syn&q=hoogte}
    *
    * TODO: Logger.
    * </p>

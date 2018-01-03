@@ -21,11 +21,11 @@
 
 package org.daobs.controller;
 
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
 import org.daobs.index.EsClientBean;
-import org.daobs.index.EsRequestBean;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -33,11 +33,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+
+
 /**
- * Created by francois on 21/10/14.
+ * API for index operations.
  */
 @Api(value = "index",
     tags = "index",
@@ -49,7 +51,7 @@ public class IndexController {
   EsClientBean esClientBean;
 
   /**
-   * Create index if not existing
+   * Create index if not existing.
    *
    */
   @ApiOperation(value = "Create index if not existing",
@@ -62,9 +64,9 @@ public class IndexController {
       method = RequestMethod.PUT)
   @ResponseBody
   public boolean createIndex(HttpServletRequest request)
-    throws IOException {
+      throws IOException {
     return esClientBean.checkIndices(request.getSession()
-      .getServletContext()
-      .getRealPath(""));
+        .getServletContext()
+        .getRealPath(""));
   }
 }

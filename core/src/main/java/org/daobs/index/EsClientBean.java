@@ -88,8 +88,9 @@ public class EsClientBean implements InitializingBean {
     if (client != null && !initialized) {
 
       for (Map.Entry<String, String> e : getIndexList().entrySet()) {
-        EsRequestBean.createIndexIfNotExist(e.getKey(),
-          basePath + INDEX_CONFIG_FOLDER + e.getValue() + ".json");
+        EsRequestBean.createIndexIfNotExist(
+            e.getKey(),
+            basePath + INDEX_CONFIG_FOLDER + e.getValue() + ".json");
       }
       initialized = true;
     }
