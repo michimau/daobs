@@ -569,6 +569,7 @@
     <kb.port>5601</kb.port>
     <kb.host>localhost</kb.host>
     <kb.url>${kb.protocol}://${kb.host}:${kb.port}</kb.url>
+    <kb.rootUrl>${webapp.rootUrl}</kb.rootUrl>
     <kb.server.ssl.enabled>false</kb.server.ssl.enabled>
     <kb.elasticsearch.ssl.certificateAuthorities>"/path/to/your/ca/cacert.pem"</kb.elasticsearch.ssl.certificateAuthorities>
     <kb.es.serverusername>kibana_server</kb.es.serverusername>
@@ -655,7 +656,7 @@
         <webapp.rootUrl>/daobs/</webapp.rootUrl>
         <data.dir>/daobs-data-dir/datadir</data.dir>
         <es.host>elasticsearch</es.host>
-        <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
+        <es.discovery.zen.minimum_master_nodes>1</es.discovery.zen.minimum_master_nodes>
         <es.single-node.discovery></es.single-node.discovery>
         <es.network.host>192.168.1.10</es.network.host>
         <kb.host>kibana</kb.host>
@@ -675,7 +676,7 @@
         <etf.installation.path>/var/local/etf</etf.installation.path>
         <data.dir>/daobs-data-dir/datadir</data.dir>
         <es.host>elasticsearch</es.host>
-        <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
+        <es.discovery.zen.minimum_master_nodes>1</es.discovery.zen.minimum_master_nodes>
         <es.single-node.discovery></es.single-node.discovery>
         <es.network.host>192.168.1.10</es.network.host>
         <kb.host>kibana</kb.host>
@@ -694,7 +695,7 @@
         <etf.installation.path>/var/local/etf</etf.installation.path>
         <data.dir>/daobs-data-dir/datadir</data.dir>
         <es.host>elasticsearch</es.host>
-        <es.discovery.zen.minimum_master_nodes>2</es.discovery.zen.minimum_master_nodes>
+        <es.discovery.zen.minimum_master_nodes>1</es.discovery.zen.minimum_master_nodes>
         <es.single-node.discovery></es.single-node.discovery>
         <es.network.host>192.168.1.10</es.network.host>
         <kb.host>kibana</kb.host>

@@ -1,19 +1,8 @@
 version: '2'
 services:
 
-  dashboard-official:
+  dashboard:
     image: inspiremif/daobs-eea-dashboard-official:latest
-    volumes:
-       - dashboard-sandbox-dir:/daobs-data-dir/
-    expose:
-      - "8080"
-    depends_on:
-      - "kibana"
-    command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
-    container_name: dashboard-official
-
-  dashboard-sandbox:
-    image: inspiremif/daobs-eea-dashboard-sandbox:latest
     volumes:
        - dashboard-official-dir:/daobs-data-dir/
     expose:
@@ -21,14 +10,14 @@ services:
     depends_on:
       - "kibana"
     command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
-    container_name: dashboard-sandbox
+    networks:
+      - network-dashboard-official
+    container_name: official-dashboard
 
   elasticsearch:
     image: inspiremif/elasticsearch:latest
-#    build:
-#      context: ./elasticsearch/
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - esdata-official:/usr/share/elasticsearch/data
     ulimits:
       memlock:
         soft: -1
@@ -36,21 +25,23 @@ services:
     mem_limit: 1g
     environment:
       - NODE_NAME=elasticsearch
+      - MINIMUM_MASTER_NODE=0
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - ELASTICSEARCH_MASTER=YES
-    container_name: elasticsearch
-#    container_name: ${CONTAINER_PREFIX}elasticsearch
+    networks:
+      - network-dashboard-official
+    container_name: official-es0
 
   elasticsearch-node1:
     image: inspiremif/elasticsearch:latest
     depends_on:
       - "elasticsearch"
     volumes:
-      - esdata1:/usr/share/elasticsearch/data
-      #- ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - esdata1-official:/usr/share/elasticsearch/data
     environment:
       - NODE_NAME=elasticsearch-node1
-      - DISCOVERY_ZEN="elasticsearch,elasticsearch-node2"
+      - MINIMUM_MASTER_NODE=0
+      - DISCOVERY_ZEN="elasticsearch"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - ELASTICSEARCH_MASTER=NO
     ulimits:
@@ -58,26 +49,30 @@ services:
         soft: -1
         hard: -1
     mem_limit: 1g
-    container_name: elasticsearch-node1
+    networks:
+      - network-dashboard-official
+    container_name: official-es1
 
   elasticsearch-node2:
     image: inspiremif/elasticsearch:latest
     depends_on:
       - "elasticsearch"
     volumes:
-      - esdata2:/usr/share/elasticsearch/data
-      #- ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - esdata2-official:/usr/share/elasticsearch/data
     environment:
       - NODE_NAME=elasticsearch-node2
+      - MINIMUM_MASTER_NODE=0
       - DISCOVERY_ZEN="elasticsearch"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - ELASTICSEARCH_MASTER=YES
+      - ELASTICSEARCH_MASTER=NO
     ulimits:
       memlock:
         soft: -1
         hard: -1
     mem_limit: 1g
-    container_name: elasticsearch-node2
+    networks:
+      - network-dashboard-official
+    container_name: official-es2
 
   cerebro:
     image: snuids/cerebro:v0.7.1
@@ -85,20 +80,24 @@ services:
       - "elasticsearch"
     volumes:
       - ./cerebro/config/application.conf:/opt/cerebro/conf/application.conf
-    container_name: cerebro
+    networks:
+      - network-dashboard-official
+    container_name: official-cerebro
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.6.5
     expose:
       - "5601"
     volumes:
-      - ${PWD}/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ${PWD}/kibana/config/kibana-official.yml:/usr/share/kibana/config/kibana.yml
       - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
       - ${PWD}/kibana/docker-entry.sh:/docker-entry.sh
     depends_on:
       - "elasticsearch"
     command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
-    container_name: kibana
+    networks:
+      - network-dashboard-official
+    container_name: official-kibana
 
   nginx:
     hostname: nginx
@@ -109,22 +108,25 @@ services:
     volumes:
       - ${SSL_CERTS_DIR}/${SSL_PUB}:/etc/nginx/certs/cert.crt
       - ${SSL_KEY_DIR}/${SSL_PRIV}:/etc/nginx/private/priv.key
-      - ./nginx/nginx-eea.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       #- ./nginx/nginx-ssl.conf:/etc/nginx/nginx.conf
       - ./nginx/wait-for-it.sh:/wait-for-it.sh
     depends_on:
-      - "dashboard-official"
-      - "dashboard-sandbox"
-    container_name: nginx
+      - "dashboard"
+    networks:
+      - network-dashboard-official
+    container_name: official-nginx
 
 volumes:
-    esdata:
+    esdata-official:
        driver: local
-    esdata1:
+    esdata1-official:
        driver: local
-    esdata2:
-       driver: local
-    dashboard-sandbox-dir:
+    esdata2-official:
        driver: local
     dashboard-official-dir:
        driver: local
+
+networks:
+  network-dashboard-official:
+    driver: bridge

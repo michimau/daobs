@@ -105,39 +105,14 @@ RUN set -e \
 RUN echo ${INSTALL_DASHBOARD_PATH} && mkdir -p ${INSTALL_DASHBOARD_PATH}
 RUN echo ${INSTALL_ETF_PATH} && mkdir -p ${INSTALL_ETF_PATH}
 
-# Adding the DAOS src
-#ADD ./ ${CATALINA_HOME}/daobs
-
-#WORKDIR ${CATALINA_HOME}/daobs
-
-#RUN mvn install \
-# -DskipTests -Drelax \
-# -gs /usr/share/maven/ref/settings-docker.xml \
-# -P${BUILD_PROFILE} \
-# -Ddata.dir=${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard \
-# -Detf.installation.path=${INSTALL_ETF_PATH}
-
 COPY ./${WEBAPP_NAME}.war ${CATALINA_HOME}/webapps/${WEBAPP_NAME}.war
 COPY ./ETF ${INSTALL_ETF_PATH}/
 COPY ./datadir ${INSTALL_DASHBOARD_PATH}/datadir/
 RUN chmod +x ${INSTALL_ETF_PATH}/ant
 RUN chmod +x ${INSTALL_ETF_PATH}/bin/apache-ant-1.8.2/bin/ant
 
-
-# Build and install ETF
-#WORKDIR ${CATALINA_HOME}/daobs/tasks/etf-validation-checker
-#RUN mvn install -Drelax -DskipTests -gs /usr/share/maven/ref/settings-docker.xml -Petf-download
-#RUN mv ./ETF/ETF/* ${INSTALL_ETF_PATH}/.
-#
-#RUN cp ${CATALINA_HOME}/daobs/web/target/${WEBAPP_NAME}.war ${CATALINA_HOME}/webapps/${WEBAPP_NAME}.war
-#RUN cp -r ./datadir/ ${INSTALL_DASHBOARD_PATH}/daobs-data-dashboard
-
-# Load kibana dashboards
+# Use elasticdump to load default dashboards
 RUN npm install elasticdump -g
-
-# Cleanup
-#RUN rm -rf ${CATALINA_HOME}/tomcat/daobs/
-#RUN rm -rf /root/.m2/repos
 
 COPY ./wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
@@ -147,4 +122,3 @@ RUN chmod +x /docker-entry.sh
 
 EXPOSE 8080
 WORKDIR $CATALINA_HOME
-#CMD ["catalina.sh", "run"]

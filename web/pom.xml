@@ -415,13 +415,13 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <tasks>
+              <target>
                 <echo>Copy default data directory to docker build context.</echo>
                 <copy todir="${project.basedir}/../docker/datadir">
                   <fileset dir="${project.build.directory}/${war.name}/WEB-INF/datadir"
                            includes="**"/>
                 </copy>
-              </tasks>
+              </target>
             </configuration>
           </execution>
         </executions>

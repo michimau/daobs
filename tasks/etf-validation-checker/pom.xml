@@ -128,9 +128,9 @@
                   <goal>run</goal>
                 </goals>
                 <configuration>
-                  <tasks>
+                  <target>
                     <move file="${project.basedir}/ETF1.5" tofile="${project.basedir}/ETF" />
-                  </tasks>
+                  </target>
                 </configuration>
               </execution>
             </executions>
@@ -236,6 +236,9 @@
                 <resource>
                   <directory>${project.basedir}/ETF</directory>
                   <filtering>false</filtering>
+                  <includes>
+                    <include>ETF</include>
+                  </includes>
                   <targetPath>${project.basedir}/../../docker/.</targetPath>
                 </resource>
               </resources>

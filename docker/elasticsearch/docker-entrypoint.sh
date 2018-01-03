@@ -12,10 +12,12 @@ cp /readonlyrest.yml /usr/share/elasticsearch/config/readonlyrest.yml
 
 # Replace node name and discovery hosts
 sed "s#NODE_NAME#$NODE_NAME#g" -i /usr/share/elasticsearch/config/elasticsearch.yml
+sed "s#MINIMUM_MASTER_NODE#$MINIMUM_MASTER_NODE#g" -i /usr/share/elasticsearch/config/elasticsearch.yml
+#sed "s#debug#info#g" -i /usr/share/elasticsearch/config/log4j2.properties
 
 if [ -z "$DISCOVERY_ZEN" ]
 then
-   echo "DISCOVERY_ZEN is unset"
+   echo "DISCOVERY_ZEN is unset. This is master node."
 else
     sed "s%#discovery.zen.ping.unicast.hosts: DISCOVERY_ZEN%discovery.zen.ping.unicast.hosts: $DISCOVERY_ZEN%g" -i /usr/share/elasticsearch/config/elasticsearch.yml
 fi

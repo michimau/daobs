@@ -190,7 +190,8 @@ cd ..
 
 # Start composition
 sudo sysctl -w vm.max_map_count=262144
-docker-compose -f docker-compose-eea-dashboard.yml up
+docker-compose -p dashboard-sandbox -f docker-compose-eea-dashboard-sandbox.yml up
+docker-compose -p dashboard-official -f docker-compose-eea-dashboard-official.yml up
 
 # publish images
 docker push inspiremif/daobs-eea-dashboard-sandbox:latest
@@ -202,5 +203,7 @@ docker push inspiremif/daobs-eea-dashboard-official:latest
 
 Then open the applications with:
 
-* http://localhost/dashboard
+* http://localhost:81/dashboard
 * http://localhost/official
+
+Then for the official node, change the default account in user.properties in the dashboard-official volume and change it also for the kibana_rw user in readonlyrest.yml.
