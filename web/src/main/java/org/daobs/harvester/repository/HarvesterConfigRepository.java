@@ -24,7 +24,7 @@ package org.daobs.harvester.repository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.daobs.controller.exception.InvalidHarvesterException;
-import org.daobs.harvester.config.Harvester;
+import org.daobs.harvester.config.HarvesterType;
 import org.daobs.harvester.config.Harvesters;
 import org.daobs.utility.UuidFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -102,11 +102,11 @@ public class HarvesterConfigRepository implements InitializingBean {
   /**
    * Add or update an harvester configuration.
    */
-  public synchronized Harvester addOrUpdate(Harvester harvester) throws Exception {
+  public synchronized HarvesterType addOrUpdate(HarvesterType harvester) throws Exception {
     if (harvester != null) {
       String uuid = harvester.getUuid();
       boolean harvesterExist = false;
-      Harvester harvesterCheck = null;
+      HarvesterType harvesterCheck = null;
       if (StringUtils.isNotBlank(uuid)) {
         harvesterCheck = findByUuid(uuid);
         harvesterExist = harvesterCheck != null;
@@ -134,7 +134,7 @@ public class HarvesterConfigRepository implements InitializingBean {
    *
    * @return Return list of errors
    */
-  private List<String> isValid(Harvester harvester) {
+  private List<String> isValid(HarvesterType harvester) {
     List<String> listOfErrors = new ArrayList<>();
     if (harvester.getUuid() == null) {
       listOfErrors.add("Harvester has no UUID.");
@@ -176,7 +176,7 @@ public class HarvesterConfigRepository implements InitializingBean {
    * <li>folder is set to scope</li>
    * </ul>
    */
-  private void accomodate(Harvester harvester) {
+  private void accomodate(HarvesterType harvester) {
     if (harvester.getScope() == null) {
       harvester.setScope(harvester.getUuid());
     }
@@ -190,7 +190,7 @@ public class HarvesterConfigRepository implements InitializingBean {
    * Remove harvester.
    */
   public synchronized boolean remove(String harvesterUuid) throws Exception {
-    Harvester harvester = findByUuid(harvesterUuid);
+    HarvesterType harvester = findByUuid(harvesterUuid);
     if (harvester == null) {
       throw new Exception(
         String.format(
@@ -238,7 +238,7 @@ public class HarvesterConfigRepository implements InitializingBean {
    * Start a harvester.
    */
   public synchronized boolean start(String harvesterUuid) throws Exception {
-    Harvester harvester = findByUuid(harvesterUuid);
+    HarvesterType harvester = findByUuid(harvesterUuid);
     if (harvester == null) {
       throw new Exception(
         String.format(
@@ -287,8 +287,8 @@ public class HarvesterConfigRepository implements InitializingBean {
   /**
    * Find harvester by UUID.
    */
-  public Harvester findByUuid(String harvesterUuid) {
-    for (Harvester harvester : harvesters.getHarvester()) {
+  public HarvesterType findByUuid(String harvesterUuid) {
+    for (HarvesterType harvester : harvesters.getHarvester()) {
       if (harvesterUuid.equals(harvester.getUuid())) {
         return harvester;
       }

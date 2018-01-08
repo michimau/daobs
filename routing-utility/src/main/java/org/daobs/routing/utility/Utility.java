@@ -41,6 +41,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import scala.actors.threadpool.Arrays;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -122,6 +123,9 @@ public class Utility {
   }
 
 
+  private static final List<String> listOfArrayFields =
+      Arrays.asList(new String[]{"harvestedDate", "scope"});
+
   /**
    * Convert document to JSON.
    */
@@ -156,7 +160,8 @@ public class Utility {
                   elementNames.add(name);
 
                   NodeList nodeElements = element.getElementsByTagName(name);
-                  boolean isArray = nodeElements.getLength() > 1;
+                  boolean isArray = nodeElements.getLength() > 1
+                      || listOfArrayFields.contains(name);
 
                   if (isArray) {
                     xcb.startArray(name);
@@ -215,10 +220,28 @@ public class Utility {
     Iterator<String> iterator = xcb.keySet().iterator();
     while (iterator.hasNext()) {
       String key = iterator.next();
-      stringBuffer.append(String.format(
-        "{\"index\": {\"_index\": \"%s\", \"_type\": \"records\", \"_id\": \"%s\"}}",
-        "records", key)).append("\n");
-      stringBuffer.append(xcb.get(key)).append("\n");
+      stringBuffer
+          .append(String.format(
+              "{\"update\": {\"_index\": \"%s\", \"_type\": \"records\", \"_id\": \"%s\"}}",
+              "records", key))
+          .append("\n")
+          .append(String.format(
+            "{"
+            + "\"script\": {"
+              + "\"source\": "
+                  + "\"ctx._source.harvestedDate.add(params.harvestedDate)\", "
+                 + "\"lang\": \"painless\", "
+                +  "\"params\": %s"
+               + "}, "
+               + "\"upsert\": %s"
+             + "}",
+              xcb.get(key), xcb.get(key)))
+          // Update the full document
+          //          .append(String.format("{\"doc\": %s}",
+          //              xcb.get(key)))
+          //         Insert (to use with index)
+          //          .append(xcb.get(key))
+          .append("\n");
     }
     exchange.getOut().setBody(stringBuffer.toString());
     return stringBuffer.toString();

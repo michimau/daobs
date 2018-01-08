@@ -79,6 +79,15 @@
                 select="starts-with(normalize-space(/harvestedContent/daobs:harvester/daobs:url), 'file://')"
                 as="xs:boolean?"/>
 
+  <!-- Store date stamp in identifier.
+       One record could have multiple versions and can originate from more than one scope (ie. harvester)
+      A record with same UUID and same dateStamp are considered identical.
+  -->
+  <xsl:variable name="withHistory"
+                select="true()"
+                as="xs:boolean"/>
+
+
   <xsl:variable name="scope"
                 select="/harvestedContent/daobs:harvester/daobs:scope"
                 as="xs:string?"/>
@@ -92,7 +101,7 @@
                 mode="extract-uuid"/>
 
   <xsl:template match="/">
-    <!-- Add a Solr document -->
+    <!-- Add a document -->
     <add>
       <!-- For any ISO19139 records in the input XML document
       Some records from IS do not have record identifier. Ignore them.

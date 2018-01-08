@@ -1,24 +1,3 @@
-/**
- * Copyright 2014-2016 European Environment Agency
- *
- * Licensed under the EUPL, Version 1.1 or – as soon
- * they will be approved by the European Commission -
- * subsequent versions of the EUPL (the "Licence");
- * You may not use this work except in compliance
- * with the Licence.
- * You may obtain a copy of the Licence at:
- *
- * https://joinup.ec.europa.eu/community/eupl/og_page/eupl
- *
- * Unless required by applicable law or agreed to in
- * writing, software distributed under the Licence is
- * distributed on an "AS IS" basis,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- * See the Licence for the specific language governing
- * permissions and limitations under the Licence.
- */
-
 package org.daobs.harvester.config;
 
 import javax.xml.bind.JAXBElement;
@@ -41,47 +20,109 @@ import javax.xml.namespace.QName;
  * type definitions, element declarations and model
  * groups.  Factory methods for each of these are
  * provided in this class.
- *
  */
 @XmlRegistry
 public class ObjectFactory {
 
-  private final static QName _Scope_QNAME = new QName("http://daobs.org", "scope");
-  private final static QName _Folder_QNAME = new QName("http://daobs.org", "folder");
   private final static QName _Name_QNAME = new QName("http://daobs.org", "name");
   private final static QName _NbOfRecordsPerPage_QNAME = new QName("http://daobs.org", "nbOfRecordsPerPage");
-  private final static QName _PointOfTruthURLPattern_QNAME = new QName("http://daobs.org", "pointOfTruthURLPattern");
-  private final static QName _Uuid_QNAME = new QName("http://daobs.org", "uuid");
-  private final static QName _ServiceMetadata_QNAME = new QName("http://daobs.org", "serviceMetadata");
+  private final static QName _Tag_QNAME = new QName("http://daobs.org", "tag");
+  private final static QName _Harvester_QNAME = new QName("http://daobs.org", "harvester");
   private final static QName _Filter_QNAME = new QName("http://daobs.org", "filter");
+  private final static QName _PointOfTruthURLPattern_QNAME = new QName("http://daobs.org", "pointOfTruthURLPattern");
+  private final static QName _Folder_QNAME = new QName("http://daobs.org", "folder");
+  private final static QName _Scope_QNAME = new QName("http://daobs.org", "scope");
+  private final static QName _ServiceMetadata_QNAME = new QName("http://daobs.org", "serviceMetadata");
+  private final static QName _Uuid_QNAME = new QName("http://daobs.org", "uuid");
   private final static QName _Url_QNAME = new QName("http://daobs.org", "url");
+  private final static QName _HarvesterTask_QNAME = new QName("http://daobs.org", "harvesterTask");
+  private final static QName _HarvestedDate_QNAME = new QName("http://daobs.org", "harvestedDate");
 
   /**
    * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.daobs.harvester.config
-   *
    */
   public ObjectFactory() {
   }
 
   /**
+   * Create an instance of {@link HarvesterTaskType }
+   */
+  public HarvesterTaskType createHarvesterTaskType() {
+    return new HarvesterTaskType();
+  }
+
+  /**
    * Create an instance of {@link Harvesters }
-   *
    */
   public Harvesters createHarvesters() {
     return new Harvesters();
   }
 
   /**
-   * Create an instance of {@link Harvester }
-   *
+   * Create an instance of {@link HarvesterType }
    */
-  public Harvester createHarvester() {
-    return new Harvester();
+  public HarvesterType createHarvesterType() {
+    return new HarvesterType();
   }
 
   /**
    * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-   *
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "name")
+  public JAXBElement<String> createName(String value) {
+    return new JAXBElement<String>(_Name_QNAME, String.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link Integer }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "nbOfRecordsPerPage")
+  public JAXBElement<Integer> createNbOfRecordsPerPage(Integer value) {
+    return new JAXBElement<Integer>(_NbOfRecordsPerPage_QNAME, Integer.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "tag")
+  public JAXBElement<String> createTag(String value) {
+    return new JAXBElement<String>(_Tag_QNAME, String.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link HarvesterType }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "harvester")
+  public JAXBElement<HarvesterType> createHarvester(HarvesterType value) {
+    return new JAXBElement<HarvesterType>(_Harvester_QNAME, HarvesterType.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "filter")
+  public JAXBElement<Object> createFilter(Object value) {
+    return new JAXBElement<Object>(_Filter_QNAME, Object.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "pointOfTruthURLPattern")
+  public JAXBElement<String> createPointOfTruthURLPattern(String value) {
+    return new JAXBElement<String>(_PointOfTruthURLPattern_QNAME, String.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "folder")
+  public JAXBElement<String> createFolder(String value) {
+    return new JAXBElement<String>(_Folder_QNAME, String.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
    */
   @XmlElementDecl(namespace = "http://daobs.org", name = "scope")
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -91,43 +132,14 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-   *
    */
-  @XmlElementDecl(namespace = "http://daobs.org", name = "folder")
-  public JAXBElement<String> createFolder(String value) {
-    return new JAXBElement<String>(_Folder_QNAME, String.class, null, value);
+  @XmlElementDecl(namespace = "http://daobs.org", name = "serviceMetadata")
+  public JAXBElement<String> createServiceMetadata(String value) {
+    return new JAXBElement<String>(_ServiceMetadata_QNAME, String.class, null, value);
   }
 
   /**
    * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-   *
-   */
-  @XmlElementDecl(namespace = "http://daobs.org", name = "name")
-  public JAXBElement<String> createName(String value) {
-    return new JAXBElement<String>(_Name_QNAME, String.class, null, value);
-  }
-
-  /**
-   * Create an instance of {@link JAXBElement }{@code <}{@link Integer }{@code >}}
-   *
-   */
-  @XmlElementDecl(namespace = "http://daobs.org", name = "nbOfRecordsPerPage")
-  public JAXBElement<Integer> createNbOfRecordsPerPage(Integer value) {
-    return new JAXBElement<Integer>(_NbOfRecordsPerPage_QNAME, Integer.class, null, value);
-  }
-
-  /**
-   * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-   *
-   */
-  @XmlElementDecl(namespace = "http://daobs.org", name = "pointOfTruthURLPattern")
-  public JAXBElement<String> createPointOfTruthURLPattern(String value) {
-    return new JAXBElement<String>(_PointOfTruthURLPattern_QNAME, String.class, null, value);
-  }
-
-  /**
-   * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-   *
    */
   @XmlElementDecl(namespace = "http://daobs.org", name = "uuid")
   public JAXBElement<String> createUuid(String value) {
@@ -136,29 +148,26 @@ public class ObjectFactory {
 
   /**
    * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-   *
-   */
-  @XmlElementDecl(namespace = "http://daobs.org", name = "serviceMetadata")
-  public JAXBElement<String> createServiceMetadata(String value) {
-    return new JAXBElement<String>(_ServiceMetadata_QNAME, String.class, null, value);
-  }
-
-  /**
-   * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-   *
-   */
-  @XmlElementDecl(namespace = "http://daobs.org", name = "filter")
-  public JAXBElement<Object> createFilter(Object value) {
-    return new JAXBElement<Object>(_Filter_QNAME, Object.class, null, value);
-  }
-
-  /**
-   * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-   *
    */
   @XmlElementDecl(namespace = "http://daobs.org", name = "url")
   public JAXBElement<String> createUrl(String value) {
     return new JAXBElement<String>(_Url_QNAME, String.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link HarvesterTaskType }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "harvesterTask")
+  public JAXBElement<HarvesterTaskType> createHarvesterTask(HarvesterTaskType value) {
+    return new JAXBElement<HarvesterTaskType>(_HarvesterTask_QNAME, HarvesterTaskType.class, null, value);
+  }
+
+  /**
+   * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+   */
+  @XmlElementDecl(namespace = "http://daobs.org", name = "harvestedDate")
+  public JAXBElement<String> createHarvestedDate(String value) {
+    return new JAXBElement<String>(_HarvestedDate_QNAME, String.class, null, value);
   }
 
 }

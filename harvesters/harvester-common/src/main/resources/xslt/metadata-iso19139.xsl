@@ -51,6 +51,13 @@
                   select="gmd:fileIdentifier/gco:CharacterString[. != '']"/>
 
 
+    <!-- In ISO19139 consider datestamp element the last update date
+    even if the standard says creation date. Most of the catalog implementations
+    update the datestamp on change. -->
+    <xsl:variable name="lastRevisionDate" as="xs:string?"
+                  select="gmd:dateStamp[1]/gco:DateTime[. != '']"/>
+
+
     <xsl:variable name="mainLanguageCode" as="xs:string?"
                   select="gmd:language[1]/gmd:LanguageCode/
                         @codeListValue[normalize-space(.) != '']"/>
@@ -87,8 +94,11 @@
         <xsl:value-of select="saxon:serialize($document, 'default-serialize-mode')"/>
       </document>
       <id>
-        <xsl:value-of select="if ($isFile) then concat($scope, '-', $identifier) else $identifier"/>
-        <!--<xsl:value-of select="$identifier"/>-->
+        <xsl:value-of select="if ($isFile)
+                              then concat($scope, '-', $identifier)
+                              else if ($withHistory)
+                              then concat($identifier, '-', $lastRevisionDate)
+                              else $identifier"/>
       </id>
       <metadataIdentifier>
         <xsl:value-of select="$identifier"/>
@@ -118,8 +128,8 @@
         <xsl:value-of select="normalize-space($harvester/daobs:uuid)"/>
       </harvesterUuid>
       <harvestedDate>
-        <xsl:value-of select="if ($harvester/daobs:date)
-                              then $harvester/daobs:date
+        <xsl:value-of select="if ($harvester/daobs:harvestedDate)
+                              then $harvester/daobs:harvestedDate
                               else format-dateTime(current-dateTime(), $dateFormat)"/>
       </harvestedDate>
 

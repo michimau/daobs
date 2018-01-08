@@ -23,6 +23,7 @@
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:daobs="http://daobs.org"
+           xmlns:ogc="http://www.opengis.net/ogc"
            elementFormDefault="qualified"
            targetNamespace="http://daobs.org">
   <xs:element name="harvesters">
@@ -41,27 +42,41 @@
       <xs:field xpath="daobs:url"/>
     </xs:key>
   </xs:element>
-  <xs:element name="harvester">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="daobs:uuid"/>
-        <xs:element ref="daobs:scope"/>
-        <xs:element ref="daobs:folder"/>
-        <xs:element ref="daobs:name"/>
-        <xs:element ref="daobs:url"/>
-        <xs:element minOccurs="0" ref="daobs:filter"/>
-        <xs:element minOccurs="0" ref="daobs:nbOfRecordsPerPage">
-          <xs:annotation>
-            <xs:documentation>
-              If not provided, the harvester config parameter is used.
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="daobs:pointOfTruthURLPattern"/>
-        <xs:element ref="daobs:serviceMetadata"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:element name="harvester" type="daobs:harvesterType"/>
+
+  <xs:complexType name="harvesterType">
+    <xs:sequence>
+      <xs:element ref="daobs:uuid"/>
+      <xs:element ref="daobs:scope"/>
+      <xs:element ref="daobs:folder"/>
+      <xs:element ref="daobs:tag" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="daobs:name"/>
+      <xs:element ref="daobs:url"/>
+      <xs:element ref="daobs:filter" minOccurs="0"/>
+      <xs:element ref="daobs:nbOfRecordsPerPage" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            If not provided, the harvester config parameter is used.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="daobs:pointOfTruthURLPattern"/>
+      <xs:element ref="daobs:serviceMetadata"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="harvesterTask" type="daobs:harvesterTaskType"/>
+
+  <xs:complexType name="harvesterTaskType">
+    <xs:complexContent>
+      <xs:extension base="daobs:harvesterType">
+        <xs:sequence>
+          <xs:element ref="daobs:harvestedDate"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:element name="uuid" type="xs:string">
     <xs:annotation>
       <xs:documentation>
@@ -71,6 +86,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
   <xs:element name="scope" type="xs:NCName">
     <xs:annotation>
       <xs:documentation>
@@ -81,6 +97,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
   <xs:element name="folder" type="xs:string">
     <xs:annotation>
       <xs:documentation>
@@ -95,6 +112,15 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
+  <xs:element name="tag" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        A keyword.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
   <xs:element name="name" type="xs:string">
     <xs:annotation>
       <xs:documentation>
@@ -102,6 +128,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
   <xs:element name="url" type="xs:anyURI">
     <xs:annotation>
       <xs:documentation>
@@ -110,6 +137,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
   <xs:element name="filter" type="xs:anyType">
     <xs:annotation>
       <xs:documentation>
@@ -118,6 +146,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
   <xs:element name="nbOfRecordsPerPage" type="xs:int">
     <xs:annotation>
       <xs:documentation>
@@ -125,6 +154,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
   <xs:element name="pointOfTruthURLPattern" type="xs:anyURI">
     <xs:annotation>
       <xs:documentation>
@@ -135,6 +165,7 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
   <xs:element name="serviceMetadata" type="xs:anyURI">
     <xs:annotation>
       <xs:documentation>
@@ -143,4 +174,13 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+
+  <xs:element name="harvestedDate" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+        Harvesting date in ISO format.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
 </xs:schema>

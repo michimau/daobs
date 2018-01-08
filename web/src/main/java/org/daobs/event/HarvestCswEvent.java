@@ -21,26 +21,26 @@
 
 package org.daobs.event;
 
-import org.daobs.harvester.config.Harvester;
+import org.daobs.harvester.config.HarvesterTaskType;
 
 /**
  * JMS event.
  *
  */
 public class HarvestCswEvent extends org.springframework.context.ApplicationEvent {
-  private Harvester harvester;
+  private HarvesterTaskType harvester;
 
 
-  public HarvestCswEvent(Object source, Harvester harvester) {
+  public HarvestCswEvent(Object source, HarvesterTaskType harvester) {
     super(source);
     this.harvester = harvester;
   }
 
-  public Harvester getHarvester() {
+  public HarvesterTaskType getHarvester() {
     return harvester;
   }
 
-  public void setHarvester(Harvester harvester) {
+  public void setHarvester(HarvesterTaskType harvester) {
     this.harvester = harvester;
   }
 }

@@ -176,6 +176,10 @@ public class CswHarvester {
     return config.getPages().size();
   }
 
+  public int getCurrentIndex(@ExchangeProperty("CamelSplitIndex") int currentIndex) {
+    return currentIndex + 1;
+  }
+
   private String buildGetRecordsQuery(Node filter,
                                       boolean forHits,
                                       int startPosition,

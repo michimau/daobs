@@ -255,7 +255,7 @@
       </cm:setHeader>
       <cm:to
         uri="http4://index?throwExceptionOnFailure=false"/>
-      <cm:log message="Solr response: ${body}."
+      <cm:log message="Response: ${body}."
               loggingLevel="DEBUG"
               logName="org.daobs.task.DataIndexer"/>
     </cm:route>

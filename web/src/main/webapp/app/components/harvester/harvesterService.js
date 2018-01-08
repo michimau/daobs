@@ -58,10 +58,11 @@
             });
             return deferred.promise;
           },
-          removeRecords: function (h) {
+          removeRecords: function (h, date) {
             var deferred = $q.defer();
 
-            $http.delete(cfg.SERVICES.harvesters + '/' + h.uuid + '/records').then(
+            $http.delete(cfg.SERVICES.harvesters + '/' + h.uuid + '/records' +
+              (date ? '?date=' + date : '')).then(
               function (data) {
                 deferred.resolve('Records deleted.');
               }, function (response) {

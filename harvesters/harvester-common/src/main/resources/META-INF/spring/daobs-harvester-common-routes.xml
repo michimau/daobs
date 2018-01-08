@@ -61,6 +61,104 @@
       <cm:to uri="http4://index"/>
     </cm:route>
 
+
+    <cm:route id="index-progress-report">
+      <cm:description>
+        Index progress log in a harvesterTaskReport documentType.
+        Harvester task report contains:
+        * 1..1 timestamp
+        * 1..1 harvesterUuid
+        * 1..1 harvestedDate
+        * 0..1 step (eg. starting, running, ending)
+        * 0..1 level (eg. debug, info, warning, error)
+        * 1..1 message
+        * 0..1 current
+        * 0..1 total
+
+        Do not input stream body which may not be restored properly.
+      </cm:description>
+      <cm:from uri="direct-vm:indexProgressReport"/>
+
+      <cm:setProperty propertyName="oldBody">
+        <cm:simple>${body}</cm:simple>
+      </cm:setProperty>
+
+      <cm:log message="Before: ${body}."
+              loggingLevel="DEBUG"
+              logName="org.daobs.harvester.CswHarvester"/>
+
+      <cm:log
+        message="$simple{property.reportMessage}"
+        loggingLevel="INFO"
+        logName="org.daobs.harvester.CswHarvester"/>
+
+
+      <cm:setProperty propertyName="timestamp">
+        <cm:simple>${date:now:yyyy-MM-dd'T'HH':'mm':'ss}</cm:simple>
+      </cm:setProperty>
+      <cm:setProperty propertyName="reportId">
+        <cm:simple>${property.harvesterUuid}-${property.timestamp}</cm:simple>
+      </cm:setProperty>
+
+      <cm:setBody>
+        <cm:simple>{
+          "documentType": "harvesterTaskReport",
+          "timestamp": "$simple{property.timestamp}",
+          "harvesterUuid": "$simple{property.harvesterUuid}",
+          "harvestedDate": "$simple{property.harvestedDate}",
+          "reportStep": "$simple{property.reportStep}",
+          "reportLevel": "$simple{property.reportLevel}",
+          "reportMessage": "$simple{property.reportMessage}",
+          "reportCurrent": "$simple{property.reportCurrent}",
+          "reportTotal": "$simple{property.reportTotal}"
+          }</cm:simple>
+      </cm:setBody>
+
+      <cm:removeHeaders pattern="*"/>
+
+      <cm:setHeader headerName="Exchange.HTTP_QUERY"><cm:simple></cm:simple></cm:setHeader>
+      <cm:setHeader headerName="Exchange.HTTP_URI">
+        <cm:simple>{{es.url}}/{{es.index.records}}/{{es.index.records}}/$simple{property.reportId}</cm:simple>
+      </cm:setHeader>
+      <cm:setHeader headerName="Content-Type">
+        <cm:simple>application/json; charset=utf-8</cm:simple>
+      </cm:setHeader>
+      <cm:setHeader headerName="Exchange.HTTP_METHOD">
+        <cm:simple>PUT</cm:simple>
+      </cm:setHeader>
+      <cm:to uri="http4://index"/>
+
+
+      <cm:setProperty propertyName="reportMessage">
+        <cm:simple/>
+      </cm:setProperty>
+      <cm:setProperty propertyName="reportStep">
+        <cm:simple/>
+      </cm:setProperty>
+      <cm:setProperty propertyName="reportLevel">
+        <cm:simple/>
+      </cm:setProperty>
+      <cm:setProperty propertyName="reportCurrent">
+        <cm:simple/>
+      </cm:setProperty>
+      <cm:setProperty propertyName="reportTotal">
+        <cm:simple/>
+      </cm:setProperty>
+
+      <!-- Restore input body. -->
+      <cm:setBody>
+        <cm:simple>${property.oldBody}</cm:simple>
+      </cm:setBody>
+      <cm:setProperty propertyName="oldBody">
+        <cm:simple/>
+      </cm:setProperty>
+
+      <cm:log message="After: ${body}."
+              loggingLevel="DEBUG"
+              logName="org.daobs.harvester.CswHarvester"/>
+    </cm:route>
+
+
     <!--<cm:route id="route-delete">
       <cm:description>
         Delete all records from the index.

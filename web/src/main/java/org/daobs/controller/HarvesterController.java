@@ -21,11 +21,14 @@
 
 package org.daobs.controller;
 
+import static org.daobs.harvester.config.HarvesterConfigUtil.harvesterAsTask;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.daobs.event.HarvestCswEvent;
-import org.daobs.harvester.config.Harvester;
+import org.daobs.harvester.config.HarvesterType;
 import org.daobs.harvester.config.Harvesters;
 import org.daobs.harvester.repository.HarvesterConfigRepository;
 import org.daobs.index.EsRequestBean;
@@ -45,7 +48,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 
 /**
@@ -88,7 +93,7 @@ public class HarvesterController {
       },
       method = RequestMethod.PUT)
   @ResponseBody
-  public RequestResponse addOrUpdate(@RequestBody Harvester harvester)
+  public RequestResponse addOrUpdate(@RequestBody HarvesterType harvester)
       throws Exception {
     harvesterConfigRepository.addOrUpdate(harvester);
     return new RequestResponse("Harvester added", "success");
@@ -108,7 +113,7 @@ public class HarvesterController {
   @ResponseBody
   public RequestResponse addOrUpdateAll(@RequestBody Harvesters harvesters)
       throws Exception {
-    for (Harvester harvester : harvesters.getHarvester()) {
+    for (HarvesterType harvester : harvesters.getHarvester()) {
       harvesterConfigRepository.addOrUpdate(harvester);
     }
     return new RequestResponse(String.format(
@@ -132,7 +137,7 @@ public class HarvesterController {
       @PathVariable(value = "uuid") String harvesterUuid
   ) throws Exception {
 
-    removeRecords(harvesterUuid);
+    removeRecords(harvesterUuid, null);
 
     harvesterConfigRepository.remove(harvesterUuid);
 
@@ -151,19 +156,32 @@ public class HarvesterController {
       method = RequestMethod.DELETE)
   @ResponseBody
   public RequestResponse delete(
-      @PathVariable final String uuid) throws Exception {
+      @PathVariable final String uuid,
+      @RequestParam(required = false) final String date) throws Exception {
 
-    removeRecords(uuid);
+    removeRecords(uuid, date);
 
     return new RequestResponse("Harvester records removed", "success");
   }
 
-  private void removeRecords(@PathVariable String uuid) throws Exception {
+  private void removeRecords(@PathVariable String uuid,
+                             @RequestParam String date) throws Exception {
     String message = null;
+    final boolean hasDate = StringUtils.isNotEmpty(date);
     try {
-      String query = String.format(
-          "+harvesterUuid:\"%s\" +(documentType:metadata documentType:association)",
-          uuid.trim()
+      String query = hasDate
+          ? String.format(
+              "+harvesterUuid:\"%s\" +harvestedDate:\"%s\" "
+                + "+(documentType:metadata "
+                + "documentType:association "
+                + "documentType:harvesterTaskReport)",
+              uuid.trim(), date
+          ) :
+          String.format(
+              "+harvesterUuid:\"%s\" "
+                + "+(documentType:metadata "
+                + "documentType:association)",
+              uuid.trim()
       );
       message = EsRequestBean.deleteByQuery("records", query, 1000);
     } catch (Exception ex) {
@@ -171,10 +189,12 @@ public class HarvesterController {
     }
 
     // Delete the ETF reports
-    String harvesterReportsPath = Paths.get(this.reportsPath,
-        uuid).toString();
+    if (!hasDate) {
+      String harvesterReportsPath = Paths.get(this.reportsPath,
+          uuid).toString();
 
-    FileUtils.deleteQuietly(new File(harvesterReportsPath));
+      FileUtils.deleteQuietly(new File(harvesterReportsPath));
+    }
   }
 
   @ApiOperation(value = "Run harvester (deprecated)",
@@ -217,11 +237,16 @@ public class HarvesterController {
   @ResponseBody
   public RequestResponse runJms(@PathVariable(value = "uuid") String harvesterUuid)
       throws Exception {
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    String dateTime = format.format(new Date());
+
+    final HarvesterType harvester = harvesterConfigRepository.findByUuid(harvesterUuid);
+
     jmsMessager.sendMessage(
         "harvest-csw",
         new HarvestCswEvent(
             appContext,
-            harvesterConfigRepository.findByUuid(harvesterUuid)
+          harvesterAsTask(harvester, dateTime)
         )
     );
     return new RequestResponse("Harvester started", "success");

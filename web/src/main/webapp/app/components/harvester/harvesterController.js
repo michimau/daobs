@@ -78,6 +78,11 @@
         uuid: null
       };
       $scope.newHarvester = $scope.harvesterTpl;
+      $scope.selected = null;
+      $scope.select = function (h) {
+        $scope.selected = h;
+        $scope.logForScope[h.uuid] = {};
+      };
 
       $scope.translations = null;
       $translate(['errorRemovingHarvester',
@@ -95,6 +100,7 @@
       });
 
       $scope.statsForScope = {};
+      $scope.logForScope = {};
       $scope.statsForRemote = {};
 
       function loadStatsForScope() {
@@ -125,6 +131,13 @@
                         "field": "etfIsValid"
                       }
                     },
+                    "harvestedDate": {
+                      "terms": {
+                        "field": "harvestedDate",
+                        "order" : { "_term" : "desc" },
+                        "size": 1000
+                      }
+                    },
                     "isValidMissing": {
                       "missing" : { "field" : "isValid" }
                     },
@@ -146,7 +159,8 @@
               for (var i = 0; i < facets.length; i++) {
                 $scope.statsForScope[facets[i].key] = {
                   count: facets[i].doc_count,
-                  isValid: facets[i].isAboveThreshold
+                  isValid: facets[i].isAboveThreshold,
+                  aggregations: facets[i]
                 };
               }
             }
@@ -156,6 +170,7 @@
           loadStatsForScope()
         }, 10000);
       };
+
 
       $scope.loading = false;
       function init() {
@@ -221,7 +236,28 @@
           };
         });
       };
+      $scope.loadDetails = function(h, date) {
 
+        $http.post(cfg.SERVICES.esdataCore +
+          '/records/_search?size=1000', {
+          "query" : {
+            "query_string": {
+              "query": "+documentType:\"harvesterTaskReport\" " +
+              "+harvesterUuid:\"" + h + "\" " +
+              "+harvestedDate:\"" + date + "\""
+            }}, "sort": [
+              {
+                "timestamp": {
+                  "order": "desc"
+                }
+              }
+            ]
+          }).then(function (response) {
+          $scope.logForScope[h][date] = response.data.hits.hits;
+        }, function (response) {
+          // Error
+        });
+      };
       $scope.startAdding = function() {
         $scope.adding = true;
       }
@@ -300,8 +336,8 @@
         init();
       };
 
-      $scope.removeRecords = function (h) {
-        harvesterService.removeRecords(h).then(function (response) {
+      $scope.removeRecords = function (h, date) {
+        harvesterService.removeRecords(h, date).then(function (response) {
           Notification.success($scope.translations.harvesterRecordsDeleted);
           init();
         }, function (response) {

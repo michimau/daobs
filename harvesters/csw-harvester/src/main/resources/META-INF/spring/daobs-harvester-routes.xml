@@ -121,6 +121,7 @@
               autoStartup="{{harvester.csw.startup.jms}}">
       <cm:from uri="activemq:harvest-csw"/>
       <cm:removeHeaders pattern="*"/>
+
       <cm:log message="Received JMS message. Starting harvester '$simple{body.harvester.name}'"
               loggingLevel="INFO"
               logName="org.daobs.harvester.CswHarvester"/>
@@ -167,6 +168,15 @@
         <cm:setProperty propertyName="harvesterName">
           <cm:xpath resultType="java.lang.String">normalize-space(daobs:harvester/daobs:name)</cm:xpath>
         </cm:setProperty>
+        <cm:setProperty propertyName="harvestedDate">
+          <cm:xpath resultType="java.lang.String">normalize-space(daobs:harvester/daobs:harvestedDate)</cm:xpath>
+        </cm:setProperty>
+
+
+        <cm:setProperty propertyName="reportMessage">
+          <cm:simple>Harvester started for '${property.harvesterUrl}' (${property.harvesterUuid}) at ${property.harvestedDate}</cm:simple>
+        </cm:setProperty>
+        <cm:to uri="direct-vm:indexProgressReport"/>
 
         <!-- <cm:choice>
            <cm:when>
@@ -214,10 +224,12 @@
       </cm:setProperty>
 
 
-      <cm:log
-        message="Harvesting node '$simple{property.harvesterName}' ($simple{property.harvesterScope}) at '$simple{property.harvesterURL}' [Number of records requested per page in config: $simple{property.harvesterNbRecordsPerPage}]"
-        loggingLevel="INFO"
-        logName="org.daobs.harvester.CswHarvester"/>
+
+      <cm:setProperty propertyName="reportMessage">
+        <cm:simple>Harvesting node '${property.harvesterName}' (${property.harvesterScope}) from URL '${property.harvesterUrl}' [Number of records requested per page in config: ${property.harvesterNbRecordsPerPage}]. Starting requesting at $simple{property.harvesterBeginTime}.</cm:simple>
+      </cm:setProperty>
+      <cm:to uri="direct-vm:indexProgressReport"/>
+
       <cm:log message="CSW filter is $simple{property.harvesterFilter}"
               loggingLevel="INFO"
               logName="org.daobs.harvester.CswHarvester"/>
@@ -227,6 +239,9 @@
 
       <cm:to uri="direct:harvestNode"/>
     </cm:route>
+
+
+
 
     <cm:route id="route-csw-hits">
       <cm:description>
@@ -270,10 +285,12 @@
           <cm:to uri="direct:sendValidationTrigger"/>
         </cm:when>
         <cm:otherwise>
-          <cm:log
-            message="Query $simple{property.harvesterUrl} to get numberOfRecordsMatched ..."
-            loggingLevel="INFO"
-            logName="org.daobs.harvester.CswHarvester"/>
+
+          <cm:setProperty propertyName="reportMessage">
+            <cm:simple>Making GetRecords query to return hits number (ie. numberOfRecordsMatched).</cm:simple>
+          </cm:setProperty>
+          <cm:to uri="direct-vm:indexProgressReport"/>
+
 
           <!-- Add logger for time http://camel.apache.org/eventnotifier-to-log-details-about-all-sent-exchanges.html -->
           <cm:setHeader headerName="camelHttpMethod">
@@ -310,10 +327,13 @@
               <cm:setProperty propertyName="numberOfRecordsMatched">
                 <cm:xpath resultType="java.lang.String">/csw:GetRecordsResponse/csw:SearchResults/@numberOfRecordsMatched</cm:xpath>
               </cm:setProperty>
-              <cm:log
-                message="$simple{property.numberOfRecordsMatched} record(s) to harvest."
-                loggingLevel="INFO"
-                logName="org.daobs.harvester.CswHarvester"/>
+
+
+              <cm:setProperty propertyName="reportMessage">
+                <cm:simple>Found ${property.numberOfRecordsMatched} record(s) to harvest.</cm:simple>
+              </cm:setProperty>
+              <cm:to uri="direct-vm:indexProgressReport"/>
+
               <cm:to
                 uri="bean:cswHarvester?method=setNumberOfRecords(${property.harvesterUrl}, ${property.numberOfRecordsMatched})"/>
               <cm:to uri="direct:cswGetRecords"/>
@@ -321,15 +341,17 @@
             <cm:when>
               <cm:xpath>/csw:GetRecordsResponse/csw:SearchResults[@numberOfRecordsMatched =
                 0]</cm:xpath>
-              <cm:log message="No record found."
-                      loggingLevel="INFO"
-                      logName="org.daobs.harvester.CswHarvester"/>
+
+              <cm:setProperty propertyName="reportMessage">
+                <cm:simple>No record found.</cm:simple>
+              </cm:setProperty>
+              <cm:to uri="direct-vm:indexProgressReport"/>
             </cm:when>
             <cm:otherwise>
-              <cm:log
-                message="Probably an exception occurred. Check CSW response: ${body}"
-                loggingLevel="INFO"
-                logName="org.daobs.harvester.CswHarvester"/>
+              <cm:setProperty propertyName="reportMessage">
+                <cm:simple>Probably an exception occurred. Check CSW response: ${body}.</cm:simple>
+              </cm:setProperty>
+              <cm:to uri="direct-vm:indexProgressReport"/>
             </cm:otherwise>
           </cm:choice>
         </cm:otherwise>
@@ -347,23 +369,25 @@
         TODO: Improve update strategy.
       </cm:description>
       <cm:from uri="direct:cswGetRecords"/>
-      <cm:log message="Harvesting records ..."
-              loggingLevel="INFO"
-              logName="org.daobs.harvester.CswHarvester"/>
+
+      <cm:setProperty propertyName="reportMessage">
+        <cm:simple>Starting harvesting records with GetRecords queries:</cm:simple>
+      </cm:setProperty>
+      <cm:to uri="direct-vm:indexProgressReport"/>
+
       <!--<cm:to uri="direct:indexDeleteDocuments"/>-->
       <cm:split>
         <cm:method bean="cswHarvester" method="getPages"/>
-        <cm:log
-          message="Processing page $simple{property.CamelSplitIndex} / $simple{bean:cswHarvester?method=getNumberOfPages}"
-          loggingLevel="INFO"
-          logName="org.daobs.harvester.CswHarvester"/>
-        <cm:log message="GetRecords request ..."
-                loggingLevel="INFO"
-                logName="org.daobs.harvester.CswHarvester"/>
+
+        <cm:setProperty propertyName="reportMessage">
+          <cm:simple> * Page ${bean:cswHarvester?method=getCurrentIndex} / ${bean:cswHarvester?method=getNumberOfPages}: Retrieving records ...</cm:simple>
+        </cm:setProperty>
+        <cm:to uri="direct-vm:indexProgressReport"/>
+
         <cm:setProperty propertyName="indexingIndex">
           <cm:simple>${property.CamelSplitIndex}</cm:simple>
         </cm:setProperty>
-        <cm:setHeader headerName="cmHttpMethod">
+        <cm:setHeader headerName="Exchange.HTTP_METHOD">
           <cm:constant>POST</cm:constant>
         </cm:setHeader>
         <cm:setHeader headerName="Content-Type">
@@ -384,19 +408,21 @@
         </cm:setHeader>
         <cm:to uri="http4://csw.server.url"/>
         <!--<cm:to uri="xslt:metadata-iso19139.xsl?saxon=true&amp;output=DOM"/>-->
-        <cm:log message="GetRecords response received. Indexing records ..."
-                loggingLevel="INFO"
-                logName="org.daobs.harvester.CswHarvester"/>
-        <cm:setHeader headerName="camelHttpMethod">
-          <cm:constant>POST</cm:constant>
-        </cm:setHeader>
-        <cm:setHeader headerName="Content-Type">
-          <cm:constant>application/xml</cm:constant>
-        </cm:setHeader>
+
+
         <cm:setBody>
           <cm:simple>${body}</cm:simple>
         </cm:setBody>
         <cm:convertBodyTo type="org.w3c.dom.Document"/>
+
+
+        <cm:setProperty propertyName="reportMessage">
+          <cm:simple> * Page ${bean:cswHarvester?method=getCurrentIndex} / ${bean:cswHarvester?method=getNumberOfPages}: Indexing records ...</cm:simple>
+        </cm:setProperty>
+        <cm:to uri="direct-vm:indexProgressReport"/>
+
+
+
         <!-- TODO: Add CSW request to the document -->
         <cm:bean ref="harvesterDetailsAgg"
                  method="doTransform($simple{body}, $simple{property.harvesterConfig})"/>
@@ -417,17 +443,10 @@
       </cm:setProperty>
 
 
-      <cm:log
-        message="End harvesting for node '$simple{property.harvesterName}' ($simple{property.harvesterScope})"
-        loggingLevel="INFO"
-        logName="org.daobs.harvester.CswHarvester"/>
-      <cm:log message="Ending at $simple{property.harvesterEndTime}"
-              loggingLevel="INFO"
-              logName="org.daobs.harvester.CswHarvester"/>
-      <cm:log
-        message="Ellapsed time $simple{property.harvesterEndTime} - $simple{property.harvesterBeginTime}"
-        loggingLevel="INFO"
-        logName="org.daobs.harvester.CswHarvester"/>
+      <cm:setProperty propertyName="reportMessage">
+        <cm:simple>Harvesting done '${property.harvesterName}' (${property.harvesterScope}). Time ${property.harvesterBeginTime} > ${property.harvesterEndTime}.</cm:simple>
+      </cm:setProperty>
+      <cm:to uri="direct-vm:indexProgressReport"/>
 
       <cm:to uri="direct:sendValidationTrigger"/>
     </cm:route>

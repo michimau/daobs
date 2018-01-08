@@ -95,4 +95,34 @@ public class WorkersManager {
     }
     return result;
   }
+
+  /**
+   * Reload camel.
+   */
+  @RequestMapping(value = "/reload",
+      produces = {
+        MediaType.APPLICATION_XML_VALUE,
+        MediaType.APPLICATION_JSON_VALUE,
+        MediaType.APPLICATION_XHTML_XML_VALUE
+      },
+      method = RequestMethod.GET)
+  @ResponseBody
+  public boolean reload() {
+    boolean reloaded = true;
+    for (CamelContext context : camelContextStore.getCamelContexts()) {
+      try {
+        context.stop();
+      } catch (Exception e1) {
+        e1.printStackTrace();
+        reloaded = false;
+      }
+      try {
+        context.start();
+      } catch (Exception e2) {
+        e2.printStackTrace();
+        reloaded = false;
+      }
+    }
+    return reloaded;
+  }
 }

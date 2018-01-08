@@ -58,6 +58,10 @@
     <xsl:variable name="identifier" as="xs:string"
                   select="mdb:metadataIdentifier/mcc:MD_Identifier/mcc:code/gco:CharacterString[. != '']"/>
 
+    <xsl:variable name="lastRevisionDate" as="xs:string?"
+                  select="mdb:dateInfo/*[
+                            cit:dateType/*/@codeListValue = 'revision'
+                            ]/cit:date/gco:DateTime[. != '']"/>
 
     <xsl:variable name="mainLanguage" as="xs:string?"
                   select="mdb:defaultLocale/lan:PT_Locale/
@@ -93,7 +97,11 @@
         <xsl:value-of select="saxon:serialize(., 'default-serialize-mode')"/>
       </document>
       <id>
-        <xsl:value-of select="$identifier"/>
+        <xsl:value-of select="if ($isFile)
+                              then concat($scope, '-', $identifier)
+                              else if ($withHistory)
+                              then concat($identifier, '-', $lastRevisionDate)
+                              else $identifier"/>
       </id>
       <metadataIdentifier>
         <xsl:value-of select="$identifier"/>
@@ -125,8 +133,8 @@
         <xsl:value-of select="normalize-space($harvester/daobs:uuid)"/>
       </harvesterUuid>
       <harvestedDate>
-        <xsl:value-of select="if ($harvester/daobs:date)
-                              then $harvester/daobs:date
+        <xsl:value-of select="if ($harvester/daobs:harvestedDate)
+                              then $harvester/daobs:harvestedDate
                               else format-dateTime(current-dateTime(), $dateFormat)"/>
       </harvestedDate>
 

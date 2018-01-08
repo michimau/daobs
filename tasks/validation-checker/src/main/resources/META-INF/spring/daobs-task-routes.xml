@@ -224,9 +224,6 @@
         Query document having no validation status
         +documentType:metadata -isValid:[* TO *]
 
-        Do HTTP query using
-        http://localhost:8983/solr/data/select?q=%2BdocumentType%3Ametadata+-isValid%3A%5B*+TO+*%5D&amp;fl=document%2Cid&amp;wt=xml&amp;indent=true
-
         Loop on all records.
 
         Check against the XSD.

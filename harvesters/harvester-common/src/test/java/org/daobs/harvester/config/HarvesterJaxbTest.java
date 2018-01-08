@@ -18,7 +18,7 @@ public class HarvesterJaxbTest {
   public void testHarvesterSerialization() throws JAXBException {
     String filterString = "<test>test-filter</test>";
     Harvesters harvesters = new Harvesters();
-    Harvester harvester = new Harvester();
+    HarvesterType harvester = new HarvesterType();
     harvester.setFilter(filterString);
     harvester.setFolder("folder");
     harvester.setName("harvester name");
