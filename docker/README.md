@@ -65,7 +65,7 @@ docker push inspiremif/daobs-eea-dashboard-official:latest
 
 
 ```
-If you just want to build the images locally, you can use the provided convenience script:
+If you just want to build the images locally, you can use the [provided convenience script](https://github.com/INSPIRE-MIF/daobs/blob/2.0.x/docker/build_images.sh):
 
 ```bash
 ./build_images.sh
@@ -83,7 +83,7 @@ To run the `official dashboard` orchestration:
 docker-compose -p dashboard-official -f docker-compose-canonical.yml -f docker-compose-eea-dashboard-official.yml up -d
 ```
 
-Or just use the provided convenience scripts run_dashboard_sandbox.sh and run_dashboard_official.sh.
+Or just use the provided convenience scripts [run_dashboard_sandbox.sh](https://github.com/INSPIRE-MIF/daobs/blob/2.0.x/docker/run_dashboard_sandbox.sh) and [run_dashboard_official.sh](https://github.com/INSPIRE-MIF/daobs/blob/2.0.x/docker/run_dashboard_official.sh).
 
 Then open the applications with:
 
