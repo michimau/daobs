@@ -36,6 +36,8 @@ services:
     container_name: official-cerebro
 
   kibana:
+    volumes:
+      - ${PWD}/kibana/config/kibana-official.yml:/usr/share/kibana/config/kibana.yml
     networks:
       - network-dashboard-official
     container_name: official-kibana

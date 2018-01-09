@@ -62,7 +62,6 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:5.6.5
     volumes:
-      - ${PWD}/kibana/config/kibana-dashboard.yml:/usr/share/kibana/config/kibana.yml
       - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
       - ${PWD}/kibana/docker-entry.sh:/docker-entry.sh
     depends_on:

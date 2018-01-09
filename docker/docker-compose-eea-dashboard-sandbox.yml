@@ -36,6 +36,8 @@ services:
     container_name: sandbox-cerebro
 
   kibana:
+    volumes:
+      - ${PWD}/kibana/config/kibana-dashboard.yml:/usr/share/kibana/config/kibana.yml
     networks:
       - network-dashboard-sandbox
     container_name: sandbox-kibana
