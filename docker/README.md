@@ -155,12 +155,6 @@ nginx:
     - "dashboard"
 ```
 
-License
-========
-View [license information](https://github.com/INSPIRE-MIF/daobs/blob/2.0.x/LICENCE.md) for the software contained in this image.
-
-
-
 Custom build
 ============
 
@@ -184,7 +178,7 @@ mvn clean install -Peea-inspire-official -Drelax -DskipTests
 cd docker
 docker build --build-arg WEBAPP_NAME=official -t inspiremif/daobs-eea-dashboard-official:latest .
 
-cd elasticsearch 
+cd elasticsearch
 docker build -t inspiremif/elasticsearch:latest .
 cd ..
 
@@ -195,7 +189,7 @@ docker-compose -p dashboard-official -f docker-compose-eea-dashboard-official.ym
 
 # publish images
 docker push inspiremif/daobs-eea-dashboard-sandbox:latest
-docker push inspiremif/daobs-eea-dashboard-official:latest 
+docker push inspiremif/daobs-eea-dashboard-official:latest
 
 
 ```
@@ -207,3 +201,7 @@ Then open the applications with:
 * http://localhost/official
 
 Then for the official node, change the default account in user.properties in the dashboard-official volume and change it also for the kibana_rw user in readonlyrest.yml.
+
+License
+========
+View [license information](https://github.com/INSPIRE-MIF/daobs/blob/2.0.x/LICENCE.md) for the software contained in this image.
