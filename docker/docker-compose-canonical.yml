@@ -2,21 +2,14 @@ version: '2'
 services:
 
   dashboard:
-    image: inspiremif/daobs:2.0.x
-    volumes:
-       - daobsdir:/daobs-data-dir/
     expose:
       - "8080"
     depends_on:
       - "kibana"
     command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
-    container_name: dashboard
 
   elasticsearch:
     image: inspiremif/elasticsearch:latest
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
-      #- ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ulimits:
       memlock:
         soft: -1
@@ -24,23 +17,18 @@ services:
     mem_limit: 1g
     environment:
       - NODE_NAME=elasticsearch
-      - MINIMUM_MASTER_NODE=2
+      - MINIMUM_MASTER_NODE=0
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - ELASTICSEARCH_MASTER=YES
-    container_name: elasticsearch
-#    container_name: ${CONTAINER_PREFIX}elasticsearch
 
   elasticsearch-node1:
     image: inspiremif/elasticsearch:latest
     depends_on:
       - "elasticsearch"
-    volumes:
-      - esdata1:/usr/share/elasticsearch/data
-      #- ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     environment:
       - NODE_NAME=elasticsearch-node1
-      - MINIMUM_MASTER_NODE=2
-      - DISCOVERY_ZEN="elasticsearch,elasticsearch-node2"
+      - MINIMUM_MASTER_NODE=0
+      - DISCOVERY_ZEN="elasticsearch"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - ELASTICSEARCH_MASTER=NO
     ulimits:
@@ -48,27 +36,22 @@ services:
         soft: -1
         hard: -1
     mem_limit: 1g
-    container_name: elasticsearch-node1
 
   elasticsearch-node2:
     image: inspiremif/elasticsearch:latest
     depends_on:
       - "elasticsearch"
-    volumes:
-      - esdata2:/usr/share/elasticsearch/data
-      #- ${PWD}/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     environment:
       - NODE_NAME=elasticsearch-node2
-      - MINIMUM_MASTER_NODE=2
+      - MINIMUM_MASTER_NODE=0
       - DISCOVERY_ZEN="elasticsearch"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - ELASTICSEARCH_MASTER=YES
+      - ELASTICSEARCH_MASTER=NO
     ulimits:
       memlock:
         soft: -1
         hard: -1
     mem_limit: 1g
-    container_name: elasticsearch-node2
 
   cerebro:
     image: snuids/cerebro:v0.7.1
@@ -76,27 +59,23 @@ services:
       - "elasticsearch"
     volumes:
       - ./cerebro/config/application.conf:/opt/cerebro/conf/application.conf
-    container_name: cerebro
+    container_name: sandbox-cerebro
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.6.5
     expose:
       - "5601"
     volumes:
-      - ${PWD}/kibana/config/kibana-daobs.yml:/usr/share/kibana/config/kibana.yml
+      - ${PWD}/kibana/config/kibana-dashboard.yml:/usr/share/kibana/config/kibana.yml
       - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
       - ${PWD}/kibana/docker-entry.sh:/docker-entry.sh
     depends_on:
       - "elasticsearch"
     command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
-    container_name: kibana
 
   nginx:
     hostname: nginx
     image: nginx:stable-alpine
-    ports:
-      - "80:80"
-      - "443:443"
     volumes:
       - ${SSL_CERTS_DIR}/${SSL_PUB}:/etc/nginx/certs/cert.crt
       - ${SSL_KEY_DIR}/${SSL_PRIV}:/etc/nginx/private/priv.key
@@ -105,14 +84,3 @@ services:
       - ./nginx/wait-for-it.sh:/wait-for-it.sh
     depends_on:
       - "dashboard"
-    container_name: nginx
-
-volumes:
-    esdata:
-       driver: local
-    esdata1:
-       driver: local
-    esdata2:
-       driver: local
-    daobsdir:
-       driver: local
