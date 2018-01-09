@@ -215,33 +215,25 @@
         <artifactId>camel-maven-plugin</artifactId>
       </plugin>
 
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <includeEmptyDirs>true</includeEmptyDirs>
-        </configuration>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
         <executions>
           <execution>
             <id>copy-etfapp-to-docker-context</id>
             <phase>install</phase>
             <goals>
-              <goal>copy-resources</goal>
+              <goal>run</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.basedir}/../docker</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.basedir}/ETF</directory>
-                  <filtering>false</filtering>
-                  <includes>
-                    <include>ETF</include>
-                  </includes>
-                  <targetPath>${project.basedir}/../../docker/.</targetPath>
-                </resource>
-              </resources>
+              <target>
+                <echo>Copy default data directory to docker build context.</echo>
+                <copy todir="${project.basedir}/../../docker/ETF">
+                  <fileset dir="${project.basedir}/ETF/ETF/"
+                           includes="**"/>
+                </copy>
+              </target>
             </configuration>
           </execution>
         </executions>
