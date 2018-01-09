@@ -2,8 +2,6 @@ version: '2'
 services:
 
   dashboard:
-    expose:
-      - "8080"
     depends_on:
       - "kibana"
     command: ["bash", "/wait-for-it.sh", "kibana:5601", "-t", "0", "--", "/docker-entry.sh"]
@@ -63,8 +61,6 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.6.5
-    expose:
-      - "5601"
     volumes:
       - ${PWD}/kibana/config/kibana-dashboard.yml:/usr/share/kibana/config/kibana.yml
       - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
