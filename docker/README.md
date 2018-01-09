@@ -34,12 +34,13 @@ INSTALL & RUN
 This is the configuration used to build and run the INSPIRE dashboards available at EEA. The process creates 2 images for the 2 types of dashboard app (sandbox and official), the build elasticsearch image with readonlyrest plugin and then run the composition.
 
 ```bash
-
-# Build image for sandbox dashboard
-mvn clean install -Peea-inspire-dashboard -Drelax -DskipTests
+# Download ETF first
 cd tasks/etf-validation-checker
 mvn install -Drelax -DskipTests -Petf-download
 cd ../..
+
+# Build image for sandbox dashboard
+mvn clean install -Peea-inspire-dashboard -Drelax -DskipTests
 
 cd docker
 docker build --build-arg WEBAPP_NAME=dashboard -t inspiremif/daobs-eea-dashboard-sandbox:latest .
