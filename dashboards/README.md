@@ -58,12 +58,12 @@ npm install elasticdump -g
 cd resources/data
 elasticdump \
   --input=index-dashboards-mapping.json \
-  --output=http://localhost:9200/.dashboards \
+  --output=http://admin:admin@localhost:9200/.dashboards \
   --type=mapping
 
 elasticdump \
   --input=index-dashboards.json \
-  --output=http://localhost:9200/.dashboards 
+  --output=http://admin:admin@localhost:9200/.dashboards 
 
 ```
 

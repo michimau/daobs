@@ -231,7 +231,8 @@
                 <echo>Copy default data directory to docker build context.</echo>
                 <copy todir="${project.basedir}/../../docker/ETF">
                   <fileset dir="${project.basedir}/ETF/ETF/"
-                           includes="**"/>
+                           includes="**"
+                           erroronmissingdir="false"/>
                 </copy>
               </target>
             </configuration>

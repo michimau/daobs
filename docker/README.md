@@ -34,10 +34,6 @@ INSTALL & RUN
 This is the configuration used to build and run the INSPIRE dashboards available at EEA. The process creates 2 images for the 2 types of dashboard app (sandbox and official), the build elasticsearch image with readonlyrest plugin and then run the composition.
 
 ```bash
-# Download ETF first
-cd tasks/etf-validation-checker
-mvn install -Drelax -DskipTests -Petf-download
-cd ../..
 
 # Build image for sandbox dashboard
 mvn clean install -Peea-inspire-dashboard -Drelax -DskipTests
@@ -46,19 +42,31 @@ cd docker
 docker build --build-arg WEBAPP_NAME=dashboard -t inspiremif/daobs-eea-dashboard-sandbox:latest .
 cd ..
 
+
 # Build image for official dashboard
 mvn clean install -Peea-inspire-official -Drelax -DskipTests
+
 cd docker
 docker build --build-arg WEBAPP_NAME=official -t inspiremif/daobs-eea-dashboard-official:latest .
 
+
+# Download ETF
+cd tasks/etf-validation-checker
+mvn install -Drelax -DskipTests -Petf-download
+cd ../..
+
+
+# Build elasticsearch image
 cd elasticsearch
 docker build -t inspiremif/elasticsearch:latest .
 cd ..
+
 
 # Start composition
 sudo sysctl -w vm.max_map_count=262144
 docker-compose -p dashboard-sandbox -f docker-compose-canonical.yml -f docker-compose-eea-dashboard-sandbox.yml up
 docker-compose -p dashboard-official -f docker-compose-canonical.yml -f docker-compose-eea-dashboard-official.yml up
+
 
 # publish images
 docker push inspiremif/daobs-eea-dashboard-sandbox:latest
