@@ -488,7 +488,7 @@
             "isValid": "${body.status}",
             "completenessIndicator": "${body.completenessIndicator}",
             "isAboveThreshold": "${body.isAboveThreshold}",
-            "validReport": "${body.report}",
+            "validReport": "${bean:inspireValidationClient?method=getReportForJson}",
             "validInfo": "${body.info} - ${body.completenessIndicator}"
           }}</cm:simple>
       </cm:setBody>

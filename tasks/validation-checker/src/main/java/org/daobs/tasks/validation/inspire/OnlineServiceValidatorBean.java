@@ -26,6 +26,8 @@ import org.apache.camel.Exchange;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
+import static org.daobs.routing.utility.Utility.encodeForJson;
+
 /**
  * Simple bean to call the validation service.
  * Created by francois on 08/12/14.
@@ -94,5 +96,13 @@ public class OnlineServiceValidatorBean {
     }
     exchange.getOut().setBody(report);
     exchange.getOut().setHeaders(exchange.getIn().getHeaders());
+  }
+
+  /**
+   * Get report encoded for JSON.
+   */
+  public String getReportForJson(Exchange exchange){
+    final ValidationReport report = exchange.getIn().getBody(ValidationReport.class);
+    return encodeForJson(report.getReport());
   }
 }
