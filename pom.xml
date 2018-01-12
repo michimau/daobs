@@ -703,6 +703,21 @@
     </profile>
 
 
+    <profile>
+      <id>titellus</id>
+      <properties>
+        <war.name>dashboard</war.name>
+        <webapp.context>/dashboard</webapp.context>
+        <webapp.rootUrl>/dashboard/</webapp.rootUrl>
+        <webapp.url>http://apps.titellus.net/dashboard</webapp.url>
+        <webapp.username>admin</webapp.username>
+        <webapp.password>admin</webapp.password>
+        <etf.installation.path>/home/app/daobs/docker/ETF</etf.installation.path>
+        <data.dir>/home/app/daobs/docker/datadir</data.dir>
+      </properties>
+    </profile>
+
+
     <!-- Use -Drelax property to avoid:
     * findbug
     * checkstyle
