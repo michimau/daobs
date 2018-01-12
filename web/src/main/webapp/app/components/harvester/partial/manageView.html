@@ -292,6 +292,15 @@
                 </li>
                 <li>
                   <a role="button"
+                     data-ng-click="inspireValidationNotValidated(h)"
+                     data-ng-show="statsForScope[h.uuid].count > 0"
+                     title="{{'notInspireValidated' | translate}}">
+                    <i class="fa fa-fw"></i>&nbsp;
+                    <span data-translate="">notInspireValidated</span>
+                  </a>
+                </li>
+                <li>
+                  <a role="button"
                      data-ng-click="eftValidation(h, true)"
                      data-ng-show="statsForScope[h.uuid].count > 0"
                      title="{{'restartEtfAll' | translate}}">

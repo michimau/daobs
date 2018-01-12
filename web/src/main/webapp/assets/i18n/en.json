@@ -47,6 +47,7 @@
   "XML": "XML format",
   "configure": "Configure",
   "createNewReport": "Create new report",
+  "notInspireValidated": "INSPIRE validation (records not validated)",
   "viewRecords": "View records",
   "remove": "Remove",
   "computeAndSave": "Compute & save",
