@@ -27,7 +27,6 @@ import org.springframework.dao.DataAccessException;
 
 import java.sql.SQLException;
 
-import static org.daobs.routing.utility.Utility.encodeForJson;
 
 /**
  * Database validator bean.
