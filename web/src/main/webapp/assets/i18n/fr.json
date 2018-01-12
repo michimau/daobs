@@ -46,6 +46,7 @@
   "JSON": "Format JSON",
   "XML": "Format XML",
   "configure": "Configurer",
+  "createNewReport": "Create new report",
   "viewRecords": "Voir les fiches",
   "remove": "Supprimer",
   "errorGettingRemoteHits": "Échec lors de la demande du nombre de fiches.",

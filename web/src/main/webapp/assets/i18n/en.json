@@ -46,6 +46,7 @@
   "JSON": "JSON format",
   "XML": "XML format",
   "configure": "Configure",
+  "createNewReport": "Create new report",
   "viewRecords": "View records",
   "remove": "Remove",
   "computeAndSave": "Compute & save",

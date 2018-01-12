@@ -1,568 +1,560 @@
-<div class="row" data-ng-controller="MonitoringCreateCtrl">
-<div class="container">
-  <div class="col-md-12">
-    <br/>
+<div class="container" data-ng-controller="MonitoringCreateCtrl">
+  <br/>
+  <form class="form-horizontal" role="form">
+    <div class="row">
+      <div class="col-sm-9">
 
-    <form class="form-horizontal" role="form">
-      <div class="row">
-        <div class="col-sm-9">
+        <p class="alert alert-info" data-translate="">monitoringCreationPage</p>
 
-          <div class="row">
-            <div class="col-sm-12">
-
-              <p class="alert alert-info" data-translate="">monitoringCreationPage</p>
-
-              <div class="form-group" id="ds-report-choose">
-                <label for="ds-report-field"
-                       class="col-sm-2 control-label"
-                       data-translate="">chooseReportType</label>
-                <div class="col-sm-5">
-                  <div class="input-group">
-                    <select id="ds-report-field"
-                            class="form-control"
-                            data-ng-model="reporting"
-                            data-ng-options="value.id for (key, value) in reportingConfig | orderBy: 'id'">
-                    </select>
-                    <div class="input-group-btn">
-                      <button type="submit"
-                              id="ds-report-view"
-                              class="btn btn-default"
-                              data-ng-click="getReportDetails()"
-                              data-translate="">viewRules
-                      </button>
-                    </div>
-                   </div>
-                   </div>
-                   <div class="col-sm-5">
-                    <div class="input-group">
-                      <input type="text" class="form-control" ng-model="reportTypeName" placeholder="Report type name...">
-                      <span class="input-group-btn">
-                        <button class="btn btn-success" type="button" data-ng-click="createReportType(reportTypeName)" ng-disabled="!reportTypeName">Create</button>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group" id="ds-reportarea-choose">
-                <label for="ds-reportarea-field"
-                       class="col-sm-2 control-label"
-                       data-translate="">chooseScope</label>
-                <div class="col-sm-10">
-                  <select id="ds-reportarea-field"
-                          class="form-control"
-                          data-ng-model="scope"
-                          data-ng-options="value.label for (key, value) in listOfScope | orderBy:'label'">
-                  </select>
-                </div>
-              </div>
-              <div class="form-group" id="ds-query-filter">
-                <label for="ds-reportarea-field"
-                       class="col-sm-2 control-label"
-                       data-translate="">customFilter</label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input id="ds-query-filter"
-                           data-ng-model="filter"
-                           class="form-control"/>
-                    <div class="input-group-btn">
-                      <button type="submit"
-                              class="btn btn-default"
-                              data-ng-click="filter = ''">
-                        <i class="fa fa-eraser"/>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <p class="help-block" data-translate="">customFilterHelp</p>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-2 control-label"
-                       data-translate="">customDate</label>
-                <div class="col-sm-5">
-                  <input type="date"
-                         data-ng-model="date"
-                         class="form-control"/>
-                </div>
-                <div class="col-sm-5">
-                  <input type="time"
-                         data-ng-model="time"
-                         class="form-control"/>
-                </div>
-                <p class="help-block" data-translate="">customDateHelp</p>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-2 control-label"
-                       data-translate="">customScope</label>
-                <div class="col-sm-10">
-                  <input type="text"
-                         data-ng-model="scopeId"
-                         class="form-control"/>
-                </div>
-                <p class="help-block" data-translate="">customScopeHelp</p>
-              </div>
-
-              <fieldset data-ng-show="reporting.id === 'inspire'">
-                <legend>
-                  <i class="fa fa-user"></i>&nbsp;
-                  <span data-translate="">contactDetails</span>
-                </legend>
-                <div class="form-group" id="ds-language-filter">
-                  <label for="ds-language-field"
-                         class="col-sm-4 control-label"
-                         data-translate="">language</label>
-                  <div class="col-sm-8">
-                    <div class="input-group">
-                      <input id="ds-language-field"
-                             data-ng-model="monitoringLanguage"
-                             class="form-control"/>
-                      <div class="input-group-btn">
-                        <button type="button"
-                                class="btn btn-default dropdown-toggle"
-                                data-toggle="dropdown" aria-expanded="false">
-                          <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                          <li
-                            data-ng-repeat="l in listOfLanguages | orderBy:'label'">
-                            <a href="" data-ng-click="setLanguage(l)">
-                              {{l.label}}
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group" id="ds-org-filter">
-                  <label for="ds-org-field"
-                         class="col-sm-4 control-label"
-                         data-translate="">org</label>
-                  <div class="col-sm-8">
-                    <input id="ds-org-field"
-                           data-ng-model="organizationName"
-                           class="form-control"/>
-                  </div>
-                </div>
-                <div class="form-group" id="ds-email-filter">
-                  <label for="ds-email-field"
-                         class="col-sm-4 control-label"
-                         data-translate="">email</label>
-                  <div class="col-sm-8">
-                    <input id="ds-email-field"
-                           type="email"
-                           data-ng-model="email"
-                           class="form-control"/>
-                  </div>
-                </div>
-                <p class="help-block" data-translate="">
-                  inspireMonitoringInstructions</p>
-              </fieldset>
-
-
-              <p class="alert alert-info"
-                 data-ng-show="filterCount"
-                 data-translate=""
-                 data-translate-values="{
-                    scope: '{{scope.label}}',
-                    filter: '{{filter}}',
-                    count: '{{filterCount}}'}">
-                matchingRecordsForFilter
-              </p>
-
-              <p class="alert alert-danger" data-ng-show="filterError">
-                {{filterError}}
-              </p>
-
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <button id="ds-btn-report-preview"
-                          type="submit"
-                          class="btn btn-primary"
-                          data-ng-disabled="!filterCount"
-                          data-ng-click="preview()">
-                    <i class="fa fa-eye"></i>&nbsp;
-                    <span data-translate="">preview</span>
-                  </button>
-
-                  <div class="btn-group">
-                    <button id="ds-btn-report-dwn"
-                            type="button"
-                            class="btn btn-default dropdown-toggle"
-                            data-ng-disabled="!filterCount"
-                            data-toggle="dropdown">
-                      <i class="fa fa-download"></i>&nbsp;
-                      <span data-translate="">download</span> <span
-                      class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
-                        <a target="_blank"
-                           data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
-                           data-translate=""
-                           title="{{('inspireMonitoringFormat-help' | translate) !== '' ? ('inspireMonitoringFormat-help' | translate) : ''}}">
-                          inspireMonitoringFormat</a></li>
-                      <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
-                        <a target="_blank"
-                           data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
-                           data-translate=""
-                           title="{{('inspireMonitoringFormatWithRowData-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowData-help' | translate) : ''}}">
-                          inspireMonitoringFormatWithRowData</a></li>
-                      <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
-                        <a target="_blank"
-                           data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=onlyFirstInspireTheme"
-                           data-translate=""
-                           title="{{('inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme-help' | translate) : ''}}">
-                          inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme</a>
-                      </li>
-                      <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
-                        <a target="_blank"
-                           data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=asManyDatasetsAsInspireThemes"
-                           data-translate=""
-                           title="{{('inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes-help' | translate) : ''}}">
-                          inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes</a>
-                      </li>
-                      <li><a target="_blank"
-                             data-ng-href="api/reports/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}.xml{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{scopeId}}"
-                             data-translate="">XML</a></li>
-                      <li><a target="_blank"
-                             data-ng-href="api/reports/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}.json{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{scopeId}}"
-                             data-translate="">JSON</a></li>
-                    </ul>
-                  </div>
-
-                  <div class="btn-group">
-                    <button type="button"
-                            class="btn btn-default dropdown-toggle"
-                            data-ng-disabled="!filterCount"
-                            title="{{'computeAndSave-help' | translate}}"
-                            data-toggle="dropdown">
-                      <i class="fa fa-save"></i>&nbsp;
-                      <span data-translate="">computeAndSave</span> <span
-                      class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
-                        <a href=""
-                           data-ng-click="submit('inspireMonitoringFormat')"
-                           data-translate=""
-                           title="{{('inspireMonitoringFormat-help' | translate) !== '' ? ('inspireMonitoringFormat-help' | translate) : ''}}">
-                          inspireMonitoringFormat</a></li>
-                      <li>
-                        <a href=""
-                           data-ng-click="submit('xml')"
-                           data-translate="">XML</a></li>
-                    </ul>
-                  </div>
-                  <!--<button id="ds-btn-report-submit"
-                          type="submit"
-                          class="btn btn-default disabled"
-                          data-ng-click="submit()"
-                          data-toggle="tooltip"
-                          data-placement="bottom">
-                    <i class="fa fa-time"></i>&nbsp;
-                    <span data-translate="">schedule</button>-->
-                </div>
-              </div>
-
-
-              <div data-ng-show="report != null && overview"
-                   id="ds-report-results">
-                <h2><span data-translate="">
-                  monitoringTitle </span> - {{reporting.id}}
-                </h2>
-
-                <p data-ng-show="report.identification.url"
-                   data-translate=""
-                   data-translate-values="{url: '{{report.identification.url}}'}">
-                  monitoringUrlLink
-                </p>
-                <div class="alert alert-info" data-translate="">
-                  monitoringHelp
-                </div>
-
-                <div class="form-group">
-                  <div class="col-sm-offset-1 col-sm-11">
-                    <button id="ds-btn-reportType-remove"
-                        type="submit"
-                        class="btn btn-danger"
-                        data-ng-click="removeReportType()">
-                      <i class="fa fa-times"></i>&nbsp;
-                      <span data-translate="">removeReportType</span> - {{reporting.id}}
-                    </button>
-                  </div>
-                </div>
-
-                <table class="table table-striped">
-                  <tr>
-                    <th data-translate="">id</th>
-                    <th data-translate="">name</th>
-                    <th data-translate="">definition</th>
-                    <th data-translate="">type</th>
-                    <th data-translate="">action</th>
-                  </tr>
-                  <tr>
-                    <th>
-                      <input class="form-control"
-                             data-ng-model="reportConfigSearch.id"
-                             autofocus="autofocus"/>
-                    </th>
-                    <th colspan="2">
-                      <input class="form-control"
-                             data-ng-model="reportConfigSearch.$"/>
-                    </th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                  <tr
-                    data-ng-repeat="v in rules | orderBy:'id' | filter:reportConfigSearch">
-                    <td>{{v.id}}</td>
-                    <td><strong>{{v.name.content}}</strong></td>
-                    <td>
-                      <p>
-                        {{v.comment}}
-                      </p>
-
-                      <samp data-ng-show="v.query">
-                        {{v.query.value}}
-                      </samp>
-                      <ul data-ng-show="v.query.stats != null6  ">
-                        <li><label data-translate="">Statistics field</label>
-                          {{v.query.statsField}}
-                        </li>
-                        <li><label data-translate="">Type</label> {{v.query.stats}}</li>
-                      </ul>
-                      <samp>
-                        {{v.expression}}
-                      </samp>
-                    </td>
-                    <td>
-                      <h4>
-                        <span ng-if="v.query"
-                    title="{{'addVariableTitle' | translate}}"
-                    class="label label-info">V</span>
-                      </h4>
-                      <h4>
-                        <span ng-if="v.expression"
-                    title="{{'addIndicatorTitle' | translate}}"
-                    class="label label-success">I</span>
-                      </h4>
-                    </td>
-                    <td>
-                      <div class='row text-center'>
-                        <button
-                          class="btn btn-link"
-                          data-ng-click="editIndicator(v)">
-                          <i class="fa fa-pencil"></i>
-                        </button>
-                        <button
-                          class="btn btn-link"
-                          data-ng-click="deleteIndicator(v)">
-                          <i class="fa fa-times text-danger"></i>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-                <div class="row">
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-
-                      <button id="ds-btn-variable-add"
-                              type="submit"
-                              class="btn btn-default"
-                              title="{{'addVariableTitle' | translate}}"
-                              data-ng-click="showAddVariable()">
-                        <i class="fa fa-plus"></i>&nbsp;
-                        <span data-translate="">addVariable</span>
-                        <span class="label label-info">V</span>
-                      </button>
-
-                      <button id="ds-btn-indic-add"
-                              type="submit"
-                              class="btn btn-default"
-                              title="{{'addIndicatorTitle' | translate}}"
-                              data-ng-click="showAddIndicator()">
-                        <i class="fa fa-plus"></i>&nbsp;
-                        <span data-translate="">addIndicator</span>
-                        <span class="label label-success">I</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div ng-if="displayAddRule" class="col-12">
-                  <br>
-                  <form class="form-horizontal" role="form"
-                        name="ruleForm" ng-submit="submitForm(ruleForm.$valid)"
-                        novalidate>
-                    <div class="row">
-                      <div class="col-sm-10">
-                        <div class="form-group" id="ds-inputform-rule">
-                          <label for="ds-input-ruleId"
-                                 class="col-sm-3 control-label"
-                                 data-translate="">id</label>
-                          <div class="col-sm-9">
-                            <input id="ds-input-ruleId"
-                                   data-ng-model="elem.id"
-                                   class="form-control" ng-disabled="disabledId" required/>
-                          </div>
-                        </div>
-                        <div class="form-group" id="ds-inputform-rule">
-                          <label for="ds-input-ruleName"
-                                 class="col-sm-3 control-label"
-                                 data-translate="">name</label>
-                          <div class="col-sm-9">
-                            <input id="ds-input-ruleName"
-                                   data-ng-model="elem.name"
-                                   class="form-control" required/>
-                          </div>
-                        </div>
-                        <div ng-if="displayAddIndicator" class="form-group"
-                             id="ds-inputform-ruleExp">
-                          <label for="ds-input-ruleExpression"
-                                 class="col-sm-3 control-label"
-                                 data-translate="">expression</label>
-                          <div class="col-sm-9">
-                            <input id="ds-input-ruleExpression"
-                                   data-ng-model="elem.expression"
-                                   class="form-control" required/>
-                            <p class="help-block ng-binding" data-translate="">expressionLink</p>
-                          </div>
-                        </div>
-                        <div ng-if="!displayAddIndicator" class="form-group"
-                             id="ds-inputform-ruleQuery">
-                          <label for="ds-input-ruleQuery"
-                                 class="col-sm-3 control-label"
-                                 data-translate="">query</label>
-                          <div class="col-sm-9">
-                            <input id="ds-input-ruleQuery"
-                                   data-ng-model="elem.query"
-                                   class="form-control" required/>
-                            <p class="help-block ng-binding" data-translate="">queryLink</p>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="ds-input-ruleDefinition"
-                                 class="col-sm-3 control-label"
-                                 data-translate="">definition</label>
-                          <div class="col-sm-9">
-                            <input id="ds-input-ruleDefinition"
-                                   data-ng-model="elem.definition"
-                                   class="form-control"/>
-                          </div>
-                        </div>
-                        <button type="submit"
-                                class="btn btn-info pull-right"
-                                data-ng-click="addRule(elem)"
-                                ng-disabled="ruleForm.$invalid">
-                          <i class="fa fa-floppy-o"></i>&nbsp;
-                          <span data-translate="">save</span></span>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-
-
-
-              <div data-ng-show="report != null && overview == false">
-                <h2 data-translate=""
-                    data-translate-values="{
-          title: '{{report.identification.title.content}}',
-          scope: '{{scope.label}}',
-          count: '{{filterCount}}'}">
-                  monitoringDetails</h2>
-
-
-                <div class="alert alert-info"
-                     data-translate="">
-                  monitoringContentInfo
-                </div>
-
-                <table class="table table-striped">
-                  <tr>
-                    <th></th>
-                    <th data-translate="">name</th>
-                    <th data-translate="">value</th>
-                  </tr>
-                  <tr>
-                    <th>
-                      <input class="form-control"
-                             data-ng-model="reportSearch.id"
-                             autofocus="autofocus"/>
-                    </th>
-                    <th colspan="2">
-                      <form class="form-inline">
-                        <input class="form-control"
-                               data-ng-model="reportSearch.$"/>
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox"
-                                   data-ng-model="isfilterErrors"/>
-                            <span data-translate="">withErrorsIndicators</span>
-                          </label>
-                        </div>
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox"
-                                   data-ng-model="isfilterNonNull"/>
-                            <span data-translate="">nonNullIndicators</span>
-                          </label>
-                        </div>
-                      </form>
-                    </th>
-                  </tr>
-                  <tr
-                    data-ng-repeat="v in rules | orderBy:'id' | filter:reportSearch | filter:checkboxFilters">
-                    <td>{{v.id}}</td>
-                    <td
-                      title="{{v.comment}} - Expression or query is: {{v.query}}{{v.expression}}">
-                      {{v.name.content}}
-                      <div class="alert alert-danger"
-                           data-ng-show="v.status.indexOf('Error')"
-                           role="alert">
-                        <strong data-ng-show="v.comment">{{v.comment}}</strong>
-                        <p>{{v.status}}</p>
-                        <span data-ng-show="v.parameters"
-                              data-translate="">parameters</span>
-                        <ul>
-                          <li data-ng-repeat="p in v.parameters.parameter">
-                            {{p.id}}
-                            <span data-ng-show="p.status === 'set'">{{p.status}} with value {{p.value}}</span>
-                            <span
-                              data-ng-show="p.status === 'undefined'">{{p.status}}</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </td>
-                    <td>{{v.value}}</td>
-                    <td></td>
-                  </tr>
-                </table>
+        <div class="form-group" id="ds-report-choose">
+          <label for="ds-report-field"
+                 class="col-sm-2 control-label"
+                 data-translate="">chooseReportType</label>
+          <div class="col-sm-5">
+            <div class="input-group">
+              <select id="ds-report-field"
+                      class="form-control"
+                      data-ng-model="reporting"
+                      data-ng-options="value.id for (key, value) in reportingConfig | orderBy: 'id'">
+              </select>
+              <div class="input-group-btn">
+                <button type="submit"
+                        id="ds-report-view"
+                        class="btn btn-default"
+                        data-ng-click="getReportDetails()"
+                        data-translate="">viewRules
+                </button>
               </div>
             </div>
           </div>
-
+          <div class="col-sm-5">
+            <div class="input-group">
+              <input type="text" class="form-control" ng-model="reportTypeName" placeholder="Report type name...">
+              <span class="input-group-btn">
+                <button class="btn btn-success" type="button" data-ng-click="createReportType(reportTypeName)"
+                        ng-disabled="!reportTypeName">
+                  <i class="fa fa-plus"></i>&nbsp;
+                  <span data-translate="">createNewReport</span>
+                </button>
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-3">
+        <div class="form-group" id="ds-reportarea-choose">
+          <label for="ds-reportarea-field"
+                 class="col-sm-2 control-label"
+                 data-translate="">chooseScope</label>
+          <div class="col-sm-10">
+            <select id="ds-reportarea-field"
+                    class="form-control"
+                    data-ng-model="scope"
+                    data-ng-options="value.label for (key, value) in listOfScope | orderBy:'label'">
+            </select>
+          </div>
+        </div>
+        <div class="form-group" id="ds-query-filter">
+          <label for="ds-reportarea-field"
+                 class="col-sm-2 control-label"
+                 data-translate="">customFilter</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input id="ds-query-filter"
+                     data-ng-model="filter"
+                     class="form-control"/>
+              <div class="input-group-btn">
+                <button type="submit"
+                        class="btn btn-default"
+                        data-ng-click="filter = ''">
+                  <i class="fa fa-eraser"/>
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="help-block" data-translate="">customFilterHelp</p>
+        </div>
 
-          <p class="alert alert-info" data-translate="">addMoreFilter</p>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"
+                 data-translate="">customDate</label>
+          <div class="col-sm-5">
+            <input type="date"
+                   data-ng-model="date"
+                   class="form-control"/>
+          </div>
+          <div class="col-sm-5">
+            <input type="time"
+                   data-ng-model="time"
+                   class="form-control"/>
+          </div>
+          <p class="help-block" data-translate="">customDateHelp</p>
+        </div>
 
-          <ul>
-            <li data-ng-repeat="(key, value) in facetValues">
-              <h3>{{key | translate}}</h3>
-              <ul>
-                <li data-ng-repeat="v in value.buckets track by $index"
-                    data-ng-click="addFacet(key, v.key)">
-                  {{v.key}} ({{v.doc_count}})
+        <div class="form-group">
+          <label class="col-sm-2 control-label"
+                 data-translate="">customScope</label>
+          <div class="col-sm-10">
+            <input type="text"
+                   data-ng-model="scopeId"
+                   class="form-control"/>
+          </div>
+          <p class="help-block" data-translate="">customScopeHelp</p>
+        </div>
+
+        <fieldset data-ng-show="reporting.id === 'inspire'">
+          <legend>
+            <i class="fa fa-user"></i>&nbsp;
+            <span data-translate="">contactDetails</span>
+          </legend>
+          <div class="form-group" id="ds-language-filter">
+            <label for="ds-language-field"
+                   class="col-sm-4 control-label"
+                   data-translate="">language</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <input id="ds-language-field"
+                       data-ng-model="monitoringLanguage"
+                       class="form-control"/>
+                <div class="input-group-btn">
+                  <button type="button"
+                          class="btn btn-default dropdown-toggle"
+                          data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li
+                      data-ng-repeat="l in listOfLanguages | orderBy:'label'">
+                      <a href="" data-ng-click="setLanguage(l)">
+                        {{l.label}}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" id="ds-org-filter">
+            <label for="ds-org-field"
+                   class="col-sm-4 control-label"
+                   data-translate="">org</label>
+            <div class="col-sm-8">
+              <input id="ds-org-field"
+                     data-ng-model="organizationName"
+                     class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group" id="ds-email-filter">
+            <label for="ds-email-field"
+                   class="col-sm-4 control-label"
+                   data-translate="">email</label>
+            <div class="col-sm-8">
+              <input id="ds-email-field"
+                     type="email"
+                     data-ng-model="email"
+                     class="form-control"/>
+            </div>
+          </div>
+          <p class="help-block" data-translate="">
+            inspireMonitoringInstructions</p>
+        </fieldset>
+
+
+        <p class="alert alert-info"
+           data-ng-show="filterCount"
+           data-translate=""
+           data-translate-values="{
+              scope: '{{scope.label}}',
+              filter: '{{filter}}',
+              count: '{{filterCount}}'}">
+          matchingRecordsForFilter
+        </p>
+
+        <p class="alert alert-danger" data-ng-show="filterError">
+          {{filterError}}
+        </p>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="ds-btn-report-preview"
+                    type="submit"
+                    class="btn btn-primary"
+                    data-ng-disabled="!filterCount"
+                    data-ng-click="preview()">
+              <i class="fa fa-eye"></i>&nbsp;
+              <span data-translate="">preview</span>
+            </button>
+
+            <div class="btn-group">
+              <button id="ds-btn-report-dwn"
+                      type="button"
+                      class="btn btn-default dropdown-toggle"
+                      data-ng-disabled="!filterCount"
+                      data-toggle="dropdown">
+                <i class="fa fa-download"></i>&nbsp;
+                <span data-translate="">download</span> <span
+                class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
+                  <a target="_blank"
+                     data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
+                     data-translate=""
+                     title="{{('inspireMonitoringFormat-help' | translate) !== '' ? ('inspireMonitoringFormat-help' | translate) : ''}}">
+                    inspireMonitoringFormat</a></li>
+                <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
+                  <a target="_blank"
+                     data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}"
+                     data-translate=""
+                     title="{{('inspireMonitoringFormatWithRowData-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowData-help' | translate) : ''}}">
+                    inspireMonitoringFormatWithRowData</a></li>
+                <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
+                  <a target="_blank"
+                     data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=onlyFirstInspireTheme"
+                     data-translate=""
+                     title="{{('inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme-help' | translate) : ''}}">
+                    inspireMonitoringFormatWithRowDataDatasetOnlyFirstTheme</a>
                 </li>
+                <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
+                  <a target="_blank"
+                     data-ng-href="api/reports/custom/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}?{{fq ? 'fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&withRowData=true&organizationName={{organizationName}}&email={{email}}&language={{monitoringLanguage}}&datasetMode=asManyDatasetsAsInspireThemes"
+                     data-translate=""
+                     title="{{('inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes-help' | translate) !== '' ? ('inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes-help' | translate) : ''}}">
+                    inspireMonitoringFormatWithRowDataDatasetWithMultipleThemes</a>
+                </li>
+                <li><a target="_blank"
+                       data-ng-href="api/reports/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}.xml{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{scopeId}}"
+                       data-translate="">XML</a></li>
+                <li><a target="_blank"
+                       data-ng-href="api/reports/{{reporting.id}}{{scope.label ? '/' + scope.label : ''}}.json{{fq ? '?fq=' + fq : '?'}}{{dateTime ? '&date=' + dateTime : ''}}&scopeId={{scopeId}}"
+                       data-translate="">JSON</a></li>
               </ul>
-            </li>
-          </ul>
+            </div>
+
+            <div class="btn-group">
+              <button type="button"
+                      class="btn btn-default dropdown-toggle"
+                      data-ng-disabled="!filterCount"
+                      title="{{'computeAndSave-help' | translate}}"
+                      data-toggle="dropdown">
+                <i class="fa fa-save"></i>&nbsp;
+                <span data-translate="">computeAndSave</span> <span
+                class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li data-ng-show="reporting.id.indexOf('inspire') !== -1">
+                  <a href=""
+                     data-ng-click="submit('inspireMonitoringFormat')"
+                     data-translate=""
+                     title="{{('inspireMonitoringFormat-help' | translate) !== '' ? ('inspireMonitoringFormat-help' | translate) : ''}}">
+                    inspireMonitoringFormat</a></li>
+                <li>
+                  <a href=""
+                     data-ng-click="submit('xml')"
+                     data-translate="">XML</a></li>
+              </ul>
+            </div>
+            <!--<button id="ds-btn-report-submit"
+                    type="submit"
+                    class="btn btn-default disabled"
+                    data-ng-click="submit()"
+                    data-toggle="tooltip"
+                    data-placement="bottom">
+              <i class="fa fa-time"></i>&nbsp;
+              <span data-translate="">schedule</button>-->
+          </div>
         </div>
+
+
+        <div data-ng-show="report != null && overview"
+             id="ds-report-results">
+          <h2><span data-translate="">
+            monitoringTitle </span> - {{reporting.id}}
+          </h2>
+
+          <p data-ng-show="report.identification.url"
+             data-translate=""
+             data-translate-values="{url: '{{report.identification.url}}'}">
+            monitoringUrlLink
+          </p>
+          <div class="alert alert-info" data-translate="">
+            monitoringHelp
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-11">
+              <button id="ds-btn-reportType-remove"
+                      type="submit"
+                      class="btn btn-danger"
+                      data-ng-click="removeReportType()">
+                <i class="fa fa-times"></i>&nbsp;
+                <span data-translate="">removeReportType</span> - {{reporting.id}}
+              </button>
+            </div>
+          </div>
+
+          <table class="table table-striped">
+            <tr>
+              <th data-translate="">id</th>
+              <th data-translate="">name</th>
+              <th data-translate="">definition</th>
+              <th data-translate="">type</th>
+              <th data-translate="">action</th>
+            </tr>
+            <tr>
+              <th>
+                <input class="form-control"
+                       data-ng-model="reportConfigSearch.id"
+                       autofocus="autofocus"/>
+              </th>
+              <th colspan="2">
+                <input class="form-control"
+                       data-ng-model="reportConfigSearch.$"/>
+              </th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr
+              data-ng-repeat="v in rules | orderBy:'id' | filter:reportConfigSearch">
+              <td>{{v.id}}</td>
+              <td><strong>{{v.name.content}}</strong></td>
+              <td>
+                <p>
+                  {{v.comment}}
+                </p>
+
+                <samp data-ng-show="v.query">
+                  {{v.query.value}}
+                </samp>
+                <ul data-ng-show="v.query.stats != null6  ">
+                  <li><label data-translate="">Statistics field</label>
+                    {{v.query.statsField}}
+                  </li>
+                  <li><label data-translate="">Type</label> {{v.query.stats}}</li>
+                </ul>
+                <samp>
+                  {{v.expression}}
+                </samp>
+              </td>
+              <td>
+                <h4>
+                  <span ng-if="v.query"
+                        title="{{'addVariableTitle' | translate}}"
+                        class="label label-info">V</span>
+                </h4>
+                <h4>
+                  <span ng-if="v.expression"
+                        title="{{'addIndicatorTitle' | translate}}"
+                        class="label label-success">I</span>
+                </h4>
+              </td>
+              <td>
+                <div class='row text-center'>
+                  <button
+                    class="btn btn-link"
+                    data-ng-click="editIndicator(v)">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button
+                    class="btn btn-link"
+                    data-ng-click="deleteIndicator(v)">
+                    <i class="fa fa-times text-danger"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+
+                <button id="ds-btn-variable-add"
+                        type="submit"
+                        class="btn btn-default"
+                        title="{{'addVariableTitle' | translate}}"
+                        data-ng-click="showAddVariable()">
+                  <i class="fa fa-plus"></i>&nbsp;
+                  <span data-translate="">addVariable</span>
+                  <span class="label label-info">V</span>
+                </button>
+
+                <button id="ds-btn-indic-add"
+                        type="submit"
+                        class="btn btn-default"
+                        title="{{'addIndicatorTitle' | translate}}"
+                        data-ng-click="showAddIndicator()">
+                  <i class="fa fa-plus"></i>&nbsp;
+                  <span data-translate="">addIndicator</span>
+                  <span class="label label-success">I</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div ng-if="displayAddRule" class="col-12">
+            <br>
+            <form class="form-horizontal" role="form"
+                  name="ruleForm" ng-submit="submitForm(ruleForm.$valid)"
+                  novalidate>
+              <div class="row">
+                <div class="col-sm-10">
+                  <div class="form-group" id="ds-inputform-rule">
+                    <label for="ds-input-ruleId"
+                           class="col-sm-3 control-label"
+                           data-translate="">id</label>
+                    <div class="col-sm-9">
+                      <input id="ds-input-ruleId"
+                             data-ng-model="elem.id"
+                             class="form-control" ng-disabled="disabledId" required/>
+                    </div>
+                  </div>
+                  <div class="form-group" id="ds-inputform-rule">
+                    <label for="ds-input-ruleName"
+                           class="col-sm-3 control-label"
+                           data-translate="">name</label>
+                    <div class="col-sm-9">
+                      <input id="ds-input-ruleName"
+                             data-ng-model="elem.name"
+                             class="form-control" required/>
+                    </div>
+                  </div>
+                  <div ng-if="displayAddIndicator" class="form-group"
+                       id="ds-inputform-ruleExp">
+                    <label for="ds-input-ruleExpression"
+                           class="col-sm-3 control-label"
+                           data-translate="">expression</label>
+                    <div class="col-sm-9">
+                      <input id="ds-input-ruleExpression"
+                             data-ng-model="elem.expression"
+                             class="form-control" required/>
+                      <p class="help-block ng-binding" data-translate="">expressionLink</p>
+                    </div>
+                  </div>
+                  <div ng-if="!displayAddIndicator" class="form-group"
+                       id="ds-inputform-ruleQuery">
+                    <label for="ds-input-ruleQuery"
+                           class="col-sm-3 control-label"
+                           data-translate="">query</label>
+                    <div class="col-sm-9">
+                      <input id="ds-input-ruleQuery"
+                             data-ng-model="elem.query"
+                             class="form-control" required/>
+                      <p class="help-block ng-binding" data-translate="">queryLink</p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="ds-input-ruleDefinition"
+                           class="col-sm-3 control-label"
+                           data-translate="">definition</label>
+                    <div class="col-sm-9">
+                      <input id="ds-input-ruleDefinition"
+                             data-ng-model="elem.definition"
+                             class="form-control"/>
+                    </div>
+                  </div>
+                  <button type="submit"
+                          class="btn btn-info pull-right"
+                          data-ng-click="addRule(elem)"
+                          ng-disabled="ruleForm.$invalid">
+                    <i class="fa fa-floppy-o"></i>&nbsp;
+                    <span data-translate="">save</span></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+        <div data-ng-show="report != null && overview == false">
+            <h2 data-translate=""
+                data-translate-values="{
+      title: '{{report.identification.title.content}}',
+      scope: '{{scope.label}}',
+      count: '{{filterCount}}'}">
+              monitoringDetails</h2>
+
+
+            <div class="alert alert-info"
+                 data-translate="">
+              monitoringContentInfo
+            </div>
+
+            <table class="table table-striped">
+              <tr>
+                <th></th>
+                <th data-translate="">name</th>
+                <th data-translate="">value</th>
+              </tr>
+              <tr>
+                <th>
+                  <input class="form-control"
+                         data-ng-model="reportSearch.id"
+                         autofocus="autofocus"/>
+                </th>
+                <th colspan="2">
+                  <form class="form-inline">
+                    <input class="form-control"
+                           data-ng-model="reportSearch.$"/>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"
+                               data-ng-model="isfilterErrors"/>
+                        <span data-translate="">withErrorsIndicators</span>
+                      </label>
+                    </div>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"
+                               data-ng-model="isfilterNonNull"/>
+                        <span data-translate="">nonNullIndicators</span>
+                      </label>
+                    </div>
+                  </form>
+                </th>
+              </tr>
+              <tr
+                data-ng-repeat="v in rules | orderBy:'id' | filter:reportSearch | filter:checkboxFilters">
+                <td>{{v.id}}</td>
+                <td
+                  title="{{v.comment}} - Expression or query is: {{v.query}}{{v.expression}}">
+                  {{v.name.content}}
+                  <div class="alert alert-danger"
+                       data-ng-show="v.status.indexOf('Error')"
+                       role="alert">
+                    <strong data-ng-show="v.comment">{{v.comment}}</strong>
+                    <p>{{v.status}}</p>
+                    <span data-ng-show="v.parameters"
+                          data-translate="">parameters</span>
+                    <ul>
+                      <li data-ng-repeat="p in v.parameters.parameter">
+                        {{p.id}}
+                        <span data-ng-show="p.status === 'set'">{{p.status}} with value {{p.value}}</span>
+                        <span
+                          data-ng-show="p.status === 'undefined'">{{p.status}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+                <td>{{v.value}}</td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
       </div>
-    </form>
-  </div>
+      <div class="col-sm-3">
+
+        <p class="alert alert-info" data-translate="">addMoreFilter</p>
+
+        <ul>
+          <li data-ng-repeat="(key, value) in facetValues">
+            <h3>{{key | translate}}</h3>
+            <ul>
+              <li data-ng-repeat="v in value.buckets track by $index"
+                  data-ng-click="addFacet(key, v.key)">
+                {{v.key}} ({{v.doc_count}})
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </form>
 </div>

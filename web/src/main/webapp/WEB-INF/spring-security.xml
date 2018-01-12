@@ -51,7 +51,7 @@
                 authentication-failure-handler-ref="authFailureHandler"
                 default-target-url="/" />
     <logout success-handler-ref="httpLogoutSuccessHandler"/>
-    <csrf disabled="false" token-repository-ref="csrfTokenRepository"/>
+    <csrf disabled="true" token-repository-ref="csrfTokenRepository"/>
     <custom-filter ref="csrfheaderFilter" after="CSRF_FILTER"/>
     <headers>
       <frame-options
