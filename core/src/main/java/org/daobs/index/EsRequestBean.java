@@ -315,7 +315,8 @@ public class EsRequestBean {
                              String fieldValue) {
 
     EsClientBean client = EsClientBean.get();
-    AnalyzeRequest request = (new AnalyzeRequest(collection == null ? client.getDefaultIndex() : collection)
+    AnalyzeRequest request = (new AnalyzeRequest(
+        collection == null ? client.getDefaultIndex() : collection)
         .text(fieldValue.replaceAll(",", ""))).analyzer(analyzer);
     try {
       List<AnalyzeResponse.AnalyzeToken> tokens =
