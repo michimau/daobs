@@ -72,6 +72,14 @@ public class IndicatorCalculatorImpl implements IndicatorCalculator {
   private Map<String, Double> indicatorResults;
   private Logger logger = Logger.getLogger("org.daobs.indicator");
 
+  public String getIndex() {
+    return index;
+  }
+
+  public void setIndex(String index) {
+    this.index = index;
+  }
+
   @Value("${es.index.records}")
   private String index;
 

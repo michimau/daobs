@@ -216,7 +216,7 @@ public class EsRequestBean {
     try {
       EsClientBean client = EsClientBean.get();
       SearchRequestBuilder srb = client.getClient()
-          .prepareSearch(collection)
+          .prepareSearch(collection == null ? client.getDefaultIndex() : collection)
           .setQuery(QueryBuilders.queryStringQuery(query));
 
       if (filterQuery != null) {
@@ -257,7 +257,7 @@ public class EsRequestBean {
       FieldStatsResponse response = client.getClient()
           .prepareFieldStats()
           .setFields(statsField)
-          .setIndices(collection)
+          .setIndices(collection == null ? client.getDefaultIndex() : collection)
           //        .setQuery(QueryBuilders.queryStringQuery(query))
           //        .setPostFilter(QueryBuilders.simpleQueryStringQuery(filterQuery[0]))
           .execute()
@@ -315,7 +315,7 @@ public class EsRequestBean {
                              String fieldValue) {
 
     EsClientBean client = EsClientBean.get();
-    AnalyzeRequest request = (new AnalyzeRequest(collection)
+    AnalyzeRequest request = (new AnalyzeRequest(collection == null ? client.getDefaultIndex() : collection)
         .text(fieldValue.replaceAll(",", ""))).analyzer(analyzer);
     try {
       List<AnalyzeResponse.AnalyzeToken> tokens =
