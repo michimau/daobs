@@ -70,6 +70,7 @@ docker-compose -p dashboard-official -f docker-compose-canonical.yml -f docker-c
 
 
 # publish images
+docker push inspiremif/elasticsearch:latest
 docker push inspiremif/daobs-eea-dashboard-sandbox:latest
 docker push inspiremif/daobs-eea-dashboard-official:latest
 
