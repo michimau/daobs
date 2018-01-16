@@ -14,7 +14,7 @@ readonlyrest:
   ldaps:
     - name: ldap
       host: "ldap.eionet.europa.eu"
-      port: 389
+      port: 636
       ssl_enabled: false
       ssl_trust_all_certs: true
 #        bind_dn: "cn=admin,dc=example,dc=com"
