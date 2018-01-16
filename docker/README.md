@@ -165,7 +165,7 @@ In order to setup SSL with your own certificates you need to export some environ
 
 If you don't have any keys, you may leave these variables empty: a runtime script will generate **self-signed certificates**, which will enable you to use SSL on a development environment. Self-signed certificates will issue an warning in the browser and need to be trusted by the user. It is not recommended to use self-signed certificates in production environments.
 
-![Generated self-signed certificate](ssl.png)
+![Generated self-signed certificate](https://raw.githubusercontent.com/INSPIRE-MIF/daobs/2.0.x/docker/ssl.png)
 
 License
 ========
