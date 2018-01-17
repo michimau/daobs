@@ -138,9 +138,9 @@
       eg. 2017-02-08T13:18:03.138+00:02
       -->
       <xsl:for-each select="gmd:dateStamp/*[text() != '' and position() = 1]">
-        <dateStamp>
-          <xsl:choose>
-            <xsl:when test="matches(., '^\d{4}(-\d{2})?(-\d{2})?((T\d{2}(:\d{2})?(:\d{2})?)+(\+.*)?)?$')">
+        <xsl:choose>
+          <xsl:when test="matches(., '^\d{4}(-\d{2})?(-\d{2})?((T\d{2}(:\d{2})?(:\d{2})?)+(\+.*)?)?$')">
+            <dateStamp>
               <xsl:variable name="date"
                             select="if (name() = 'gco:Date' and string-length(.) = 4)
                               then concat(., '-01-01T00:00:00')
@@ -157,13 +157,13 @@
                                     xs:dateTime($date),
                                     xs:dayTimeDuration('PT0H'))
                                    ), 'Z', '')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <!-- Some invalid date in DE. -->
-              <xsl:message>WARNING: <xsl:value-of select="$identifier"/> / Wrong date time format <xsl:value-of select="."/>. Default to empty.</xsl:message>
-            </xsl:otherwise>
-          </xsl:choose>
-        </dateStamp>
+            </dateStamp>
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- Some invalid date in DE. -->
+            <xsl:message>WARNING: <xsl:value-of select="$identifier"/> / Wrong date time format <xsl:value-of select="."/>. Default to empty.</xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:for-each>
 
 
