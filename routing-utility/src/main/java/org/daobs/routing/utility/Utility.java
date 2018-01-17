@@ -84,7 +84,7 @@ public class Utility {
   }
 
   /**
-   * Encode double quote for JSON outpur.
+   * Encode double quote for JSON output.
    */
   public String encodeForJson(Exchange exchange) {
     String body = exchange.getIn().getBody(String.class);
