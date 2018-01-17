@@ -120,6 +120,11 @@
                         "field": "isValid"
                       }
                     },
+                    "etfIsValid": {
+                      "terms": {
+                        "field": "etfIsValid"
+                      }
+                    },
                     "isValidMissing": {
                       "missing" : { "field" : "isValid" }
                     },

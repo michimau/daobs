@@ -1092,11 +1092,23 @@
         "isValid": {
           "type": "boolean"
         },
+        "inspireConformResource": {
+          "type": "keyword"
+        },
         "isSchemaValid": {
           "type": "boolean"
         },
         "isAboveThreshold": {
           "type": "boolean"
+        },
+        "etfCompletenessIndicator": {
+          "type": "double"
+        },
+        "etfCompletenessIndicatorOptional": {
+          "type": "double"
+        },
+        "completenessIndicator": {
+          "type": "double"
         },
         "inspireThemeFirst_syn": {
           "type": "keyword"
