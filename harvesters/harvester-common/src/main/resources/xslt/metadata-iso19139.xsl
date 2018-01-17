@@ -139,22 +139,30 @@
       -->
       <xsl:for-each select="gmd:dateStamp/*[text() != '' and position() = 1]">
         <dateStamp>
-          <xsl:variable name="date"
-                        select="if (name() = 'gco:Date' and string-length(.) = 4)
-                                then concat(., '-01-01T00:00:00')
-                                else if (name() = 'gco:Date' and string-length(.) = 7)
-                                then concat(., '-01T00:00:00')
-                                else if (name() = 'gco:Date' or string-length(.) = 10)
-                                then concat(., 'T00:00:00')
-                                else if (contains(., '.'))
-                                then tokenize(., '\.')[1]
-                                else ."/>
+          <xsl:choose>
+            <xsl:when test="matches(., '^\d{4}(-\d{2})?(-\d{2})?((T\d{2}(:\d{2})?(:\d{2})?)+(\+.*)?)?$')">
+              <xsl:variable name="date"
+                            select="if (name() = 'gco:Date' and string-length(.) = 4)
+                              then concat(., '-01-01T00:00:00')
+                              else if (name() = 'gco:Date' and string-length(.) = 7)
+                              then concat(., '-01T00:00:00')
+                              else if (name() = 'gco:Date' or string-length(.) = 10)
+                              then concat(., 'T00:00:00')
+                              else if (contains(., '.'))
+                              then tokenize(., '\.')[1]
+                              else ."/>
 
-          <xsl:value-of select="translate(string(
-                                   adjust-dateTime-to-timezone(
-                                      xs:dateTime($date),
-                                      xs:dayTimeDuration('PT0H'))
-                                     ), 'Z', '')"/>
+              <xsl:value-of select="translate(string(
+                                 adjust-dateTime-to-timezone(
+                                    xs:dateTime($date),
+                                    xs:dayTimeDuration('PT0H'))
+                                   ), 'Z', '')"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <!-- Some invalid date in DE. -->
+              <xsl:message>WARNING: <xsl:value-of select="$identifier"/> / Wrong date time format <xsl:value-of select="."/>. Default to empty.</xsl:message>
+            </xsl:otherwise>
+          </xsl:choose>
         </dateStamp>
       </xsl:for-each>
 
