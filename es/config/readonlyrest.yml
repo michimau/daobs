@@ -15,13 +15,13 @@ readonlyrest:
     - name: ldap
       host: "${ldap.host}"
       port: ${ldap.port}
-      ssl_enabled: false
+      ssl_enabled: ${ldap.ssl}
       ssl_trust_all_certs: true
 #        bind_dn: "cn=admin,dc=example,dc=com"
 #        bind_password: "password"
       search_user_base_DN: "${ldap.base.search.base},${ldap.base.dn}"
       user_id_attribute: "uid"
-      search_groups_base_DN: "ou=Groups,${ldap.base.dn}"
+      search_groups_base_DN: "${ldap.groups.base.search.base},${ldap.base.dn}"
       unique_member_attribute: "uniqueMember"
       connection_pool_size: 10
       connection_timeout_in_sec: 10

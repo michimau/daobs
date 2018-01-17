@@ -527,15 +527,17 @@
 
     <!-- For LDAP based authentication -->
     <ldap.host>ldap.eionet.europa.eu</ldap.host>
-    <ldap.port>389</ldap.port>
+    <ldap.port>636</ldap.port>
+    <ldap.ssl>true</ldap.ssl>
     <ldap.base.provider.url>ldap://${ldap.host}</ldap.base.provider.url>
     <ldap.base.dn>o=EIONET,l=Europe</ldap.base.dn>
     <ldap.security.principal />
     <ldap.security.credentials />
     <ldap.base.search.base>ou=Users</ldap.base.search.base>
+    <ldap.groups.base.search.base>ou=Roles</ldap.groups.base.search.base>
     <ldap.base.dn.pattern>uid={0}</ldap.base.dn.pattern>
     <!-- Define one or more groups allowed for ES authorization -->
-    <ldap.groups.allowed>"extranet"</ldap.groups.allowed>
+    <ldap.groups.allowed>"extranet","extranet-inspire-reporter","extranet-inspire-dashboard"</ldap.groups.allowed>
 
     <lucene.version>6.6.1</lucene.version>
 
