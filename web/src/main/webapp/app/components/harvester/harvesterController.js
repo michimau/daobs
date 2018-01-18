@@ -29,16 +29,17 @@
         'app/components/harvester/harvesterView.html'
       }).when('/harvesting/:section', {
         templateUrl: cfg.SERVICES.root +
-        'app/components/harvester/harvesterView.html'
+        'app/components/harvester/harvesterView.html',
+        reloadOnSearch: false
       });
     }]);
 
   app.controller('HarvesterCtrl', ['$scope', '$routeParams', 'userService',
     function ($scope, $routeParams, userService) {
-      var defaultSection = 'manage';
+      var defaultSection = 'overview';
 
       var privateSections = [
-        'monitor'
+        'monitor', 'manage'
       ];
 
       if (privateSections.indexOf($routeParams.section) === -1) {
@@ -56,6 +57,7 @@
         return location.hash.indexOf("#/" + hash) === 0
           && location.hash.indexOf("#/" + hash + "/") !== 0;
       }
+
     }]);
 
   app.controller('HarvesterConfigCtrl', [
@@ -67,21 +69,49 @@
       $scope.pollingInterval = '10s';
       $scope.adding = false;
       $scope.harvesterTpl = {
-        scope: null,
+        uuid: null,
         name: null,
         url: null,
         filter: null,
+        scope: null,
         folder: null,
+        tag: [],
         pointOfTruthURLPattern: null,
         serviceMetadata: null,
-        nbOfRecordsPerPage: null,
-        uuid: null
+        nbOfRecordsPerPage: null
       };
       $scope.newHarvester = $scope.harvesterTpl;
       $scope.selected = null;
+
+      // Select harvester based on location
+      var initListenLocationChange = function () {
+        $scope.$on('$locationChangeSuccess', function(event) {
+          $scope.select();
+        });
+      };
+
+      // Init location change only after loading of harvester config
+      $scope.$watch('loading', function (n, o) {
+        if (n === false) {
+          initListenLocationChange();
+          // Select current one if any
+          $scope.select();
+        }
+      });
+
       $scope.select = function (h) {
+        if (angular.isUndefined(h)){
+          var uuid = $location.search()['uuid'];
+          angular.forEach($scope.harvesterConfig, function (harvester){
+            if (harvester.uuid === uuid) {
+              h = harvester;
+            }
+          });
+        }
+        $scope.adding = false;
         $scope.selected = h;
         $scope.logForScope[h.uuid] = {};
+        $scope.loadDetails(h);
       };
 
       $scope.translations = null;
@@ -113,6 +143,9 @@
           $http.post(
             cfg.SERVICES.esdataCore + '/_search?size=0', {
               "query" : {
+                "query_string": {
+                  "query": "+documentType:metadata"
+                }
               },
               "aggs": {
                 "top_scope": {
@@ -148,7 +181,7 @@
                     },
                     "isAboveThresholdMissing": {
                       "missing" : { "field" : "isAboveThreshold" }
-                    },
+                    }
                   }
                 }
               }
@@ -258,22 +291,29 @@
           // Error
         });
       };
+
       $scope.startAdding = function() {
+        $scope.newHarvester = $scope.harvesterTpl;
+        $scope.newHarvester.uuid = harvesterService.uuidv4();
+        $scope.select($scope.newHarvester);
         $scope.adding = true;
-      }
+      };
 
       $scope.edit = function (h) {
         $scope.adding = true;
         $scope.newHarvester = h;
         $('body').scrollTop(0);
-      }
+      };
 
-      $scope.add = function () {
-        harvesterService.add($scope.newHarvester).then(function (response) {
+      $scope.cancelEdit = function () {
+        $scope.adding = false;
+      };
+
+      $scope.add = function (h) {
+        harvesterService.add(h || $scope.newHarvester).then(function (response) {
           $scope.adding = false;
           Notification.success($scope.translations.harvesterSaved);
           init();
-          $scope.newHarvester = $scope.harvesterTpl;
         }, function (response) {
           Notification.error(
             $scope.translations.errorAddingHarvester + ' ' +

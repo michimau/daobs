@@ -26,6 +26,10 @@
 
     <!-- Action menu -->
     <li role="reporting"
+        data-ng-class="{'active':isActive('harvesting/overview')}">
+      <a href="#/harvesting/overview"
+         data-translate="">harvesterOverview</a></li>
+    <li role="reporting"
         data-ng-class="{'active':isActive('harvesting/manage')}">
       <a href="#/harvesting/manage"
          data-translate="">harvesterConfiguration</a></li>

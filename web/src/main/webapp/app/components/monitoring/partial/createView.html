@@ -548,8 +548,8 @@
             <h3>{{key | translate}}</h3>
             <ul>
               <li data-ng-repeat="v in value.buckets track by $index"
-                  data-ng-click="addFacet(key, v.key)">
-                {{v.key}} ({{v.doc_count}})
+                  data-ng-click="addFacet(key, v.key_as_string || v.key)">
+                {{v.key_as_string || v.key}} ({{v.doc_count}})
               </li>
             </ul>
           </li>

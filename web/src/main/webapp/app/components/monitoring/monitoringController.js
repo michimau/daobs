@@ -161,6 +161,12 @@
             "size": "100"
           }
         },
+        "harvestedDate": {
+          "terms":  {
+            "field": "harvestedDate",
+            "size": "1000"
+          }
+        },
         "resourceType": {
           "terms":  {
             "field": "resourceType",
@@ -337,6 +343,13 @@
       // Add selected facet to the filter
       $scope.addFacet = function (facet, value) {
         $scope.filter = '+' + facet + ':"' + value + '"';
+
+        // Set reporting date to the harvestedDate
+        if (facet === 'harvestedDate') {
+          var v = moment(value);
+          $scope.date = moment(v.utc().format('YYYY-MM-DD')).toDate();
+          $scope.time = new Date(v.utc().format('1970-01-01THH:mm:ss'));
+        }
       };
 
       // View report configuration
@@ -349,7 +362,7 @@
           $location.hash('ds-report-results');
           $anchorScroll();
         });
-        
+
       };
 
       // Create report type
@@ -363,7 +376,7 @@
             '</title>'+
             '<author>DAOBS Team</author>'+
             '<url></url></identification><variables/><indicators/></reporting>';
-        var config = { headers: 
+        var config = { headers:
           {
             'Content-Type': 'application/xml',
             'Accept': '*/*'
@@ -394,7 +407,7 @@
       }
 
 
-      
+
 
       // Preview report
       $scope.preview = function () {
