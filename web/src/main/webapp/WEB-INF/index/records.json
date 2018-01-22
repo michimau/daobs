@@ -1092,6 +1092,12 @@
         "isValid": {
           "type": "boolean"
         },
+        "etfIsValid": {
+          "type": "boolean"
+        },
+        "etfIsValidOptional": {
+          "type": "boolean"
+        },
         "inspireConformResource": {
           "type": "keyword"
         },
