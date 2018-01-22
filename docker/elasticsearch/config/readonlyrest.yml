@@ -53,7 +53,9 @@ readonlyrest:
 
   - name: Kibana RW
     groups: ["kibana_rw"]
-    kibana_access: rw
+    # This is required to drop index pattern
+    actions: ["indices:data/*", "indices:admin/*", "indices:monitor/*"]
+#    kibana_access: rw
     kibana_index: .dashboards
     verbosity: error
 
@@ -86,7 +88,7 @@ readonlyrest:
   users:
 
   - username: kibana_rw
-    auth_key: changeme:changeme
+    auth_key: admin:admin
     groups: ["kibana_rw"]
 
 #  - username: kibana_ro

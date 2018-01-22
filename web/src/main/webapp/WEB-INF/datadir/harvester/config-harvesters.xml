@@ -54,6 +54,17 @@
     <daobs:url>http://inspire-geoportal.ec.europa.eu/GeoportalProxyWebServices/resources/OGCCSW202</daobs:url>
   </daobs:harvester>
 -->
+
+  <!--
+  <daobs:harvester>
+    <daobs:uuid>AA0ab2a240-4f61-46a4-a274-97df2b7c33b1</daobs:uuid>
+    <daobs:scope>AA</daobs:scope>
+    <daobs:folder>AA</daobs:folder>
+    <daobs:name>AAtitellus</daobs:name>
+    <daobs:url>http://apps.titellus.net/geonetwork/srv/eng/csw</daobs:url>
+  </daobs:harvester>
+  -->
+
   <!--
   List of CSW endpoints from
   http://inspire-geoportal.ec.europa.eu/INSPIRERegistry/
