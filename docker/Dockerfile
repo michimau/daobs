@@ -120,5 +120,8 @@ RUN chmod +x /wait-for-it.sh
 COPY ./docker-entry.sh /docker-entry.sh
 RUN chmod +x /docker-entry.sh
 
+COPY setenv.sh $CATALINA_HOME/bin/setenv.sh
+RUN chmod +x $CATALINA_HOME/bin/setenv.sh
+
 EXPOSE 8080
 WORKDIR $CATALINA_HOME
