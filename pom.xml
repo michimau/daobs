@@ -676,6 +676,7 @@
         <webapp.url>https://inspire-dashboard.eea.europa.eu/official</webapp.url>
         <webapp.username>changeme</webapp.username>
         <webapp.password>changeme</webapp.password>
+        <authentication.mode>ba</authentication.mode>
         <etf.installation.path>/var/local/etf</etf.installation.path>
         <data.dir>/daobs-data-dir/datadir</data.dir>
         <es.host>elasticsearch</es.host>

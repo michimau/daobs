@@ -93,6 +93,7 @@ Configure Kibana to start on server startup.
 ```
 npm install elasticdump -g
 
+cd resources/data
 rm index-dashboards-mapping.json index-dashboards.json
 elasticdump \
   --input=http://localhost:9200/.dashboards \
