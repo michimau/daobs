@@ -69,7 +69,7 @@
       }, {
         id: 'harvesting',
         icon: 'fa-cloud-download',
-        url: '#/harvesting/manage',
+        url: '#/harvesting/overview',
         needsLogin: false
       }];
 

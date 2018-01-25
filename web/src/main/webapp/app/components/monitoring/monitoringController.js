@@ -164,7 +164,8 @@
         "harvestedDate": {
           "terms":  {
             "field": "harvestedDate",
-            "size": "1000"
+            "size": "1000",
+            "order" : { "_term" : "desc" }
           }
         },
         "resourceType": {

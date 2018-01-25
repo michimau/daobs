@@ -39,7 +39,7 @@
              data-ng-repeat="h in harvesterConfig | filter:harvesterSearch | orderBy:predicate:reverse"
              title="{{h.name}}"
              data-ng-href="#/harvesting/manage?uuid={{h.uuid}}">
-            {{h.name | limitTo: 30}}{{h.name.length > 30 ? '...' : ''}}
+            {{h.name | limitTo: 40}}{{h.name.length > 30 ? '...' : ''}}
             <span data-ng-if="statsForScope[h.uuid].count">
               ({{statsForScope[h.uuid].count}}
               <span data-translate="">records</span>)</span>
@@ -108,7 +108,7 @@
         <h2 data-translate="">harvesterCharacteristics</h2>
         <ul data-ng-show="!adding">
           <li data-ng-repeat="(key, value) in selected"
-              data-ng-show="value && key !== 'name'">
+              data-ng-show="value && key !== 'name' && key !== 'tag'">
             <strong class="col-sm-4">{{key | translate}}</strong>
             <strong class="col-sm-8"
                     data-ng-if="value.indexOf === undefined || value.indexOf('http') === -1">
@@ -123,7 +123,8 @@
         <!-- Edit mode -->
         <div data-ng-show="adding">
           <div class="form-group"
-               data-ng-repeat="(key, value) in selected">
+               data-ng-repeat="(key, value) in selected"
+               data-ng-if="key != 'tag'">
             <label for="field-{{key}}"
                    class="col-sm-4 control-label"
                    data-ng-class="{'required' : key === 'scope' || key === 'name' || key === 'url'}">
@@ -238,6 +239,15 @@
               </li>
               <li>
                 <a role="button"
+                   data-ng-click="inspireValidationNotValidated(selected)"
+                   data-ng-show="statsForScope[selected.uuid].count > 0"
+                   title="{{'notInspireValidated' | translate}}">
+                  <i class="fa fa-fw"></i>&nbsp;
+                  <span data-translate="">notInspireValidated</span>
+                </a>
+              </li>
+              <li>
+                <a role="button"
                    data-ng-click="eftValidation(selected, true)"
                    data-ng-show="statsForScope[selected.uuid].count > 0"
                    title="{{'restartEtfAll' | translate}}">
@@ -280,10 +290,17 @@
 
 
         <h2 data-translate="">harvesterHistory</h2>
+
+        <div class="alert alert-warning"
+             data-ng-hide="statsForScope[selected.uuid].aggregations.doc_count > 0"
+             data-translate="">neverHarvested</div>
+
         <ul class="list-group">
           <li class="list-group-item"
               data-ng-repeat="d in statsForScope[selected.uuid].aggregations.harvestedDate.buckets">
-            <strong>{{d.key_as_string}} ({{d.doc_count}} <span data-translate="">records</span>)</strong>
+            <!--<strong>{{d.key_as_string) | fromNow}}</strong> -->
+            [{{d.key_as_string}}] -
+            <strong>{{d.doc_count}} <span data-translate="">records</span></strong>
             <a class="btn btn-default"
                data-ng-click="loadDetails(selected.uuid, d.key_as_string)">
               <i class="fa fa-refresh"></i>&nbsp;

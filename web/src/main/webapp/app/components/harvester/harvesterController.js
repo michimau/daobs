@@ -111,7 +111,6 @@
         $scope.adding = false;
         $scope.selected = h;
         $scope.logForScope[h.uuid] = {};
-        $scope.loadDetails(h);
       };
 
       $scope.translations = null;
@@ -269,27 +268,28 @@
           };
         });
       };
-      $scope.loadDetails = function(h, date) {
-
-        $http.post(cfg.SERVICES.esdataCore +
-          '/records/_search?size=1000', {
-          "query" : {
-            "query_string": {
-              "query": "+documentType:\"harvesterTaskReport\" " +
-              "+harvesterUuid:\"" + h + "\" " +
-              "+harvestedDate:\"" + date + "\""
-            }}, "sort": [
-              {
-                "timestamp": {
-                  "order": "desc"
+      $scope.loadDetails = function(uuid, date) {
+        if (date) {
+          $http.post(cfg.SERVICES.esdataCore +
+            '/records/_search?size=1000', {
+            "query" : {
+              "query_string": {
+                "query": "+documentType:\"harvesterTaskReport\" " +
+                "+harvesterUuid:\"" + uuid + "\" " +
+                "+harvestedDate:\"" + date + "\""
+              }}, "sort": [
+                {
+                  "timestamp": {
+                    "order": "desc"
+                  }
                 }
-              }
-            ]
-          }).then(function (response) {
-          $scope.logForScope[h][date] = response.data.hits.hits;
-        }, function (response) {
-          // Error
-        });
+              ]
+            }).then(function (response) {
+            $scope.logForScope[uuid][date] = response.data.hits.hits;
+          }, function (response) {
+            // Error
+          });
+        }
       };
 
       $scope.startAdding = function() {
