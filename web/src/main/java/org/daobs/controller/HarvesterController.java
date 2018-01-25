@@ -183,6 +183,8 @@ public class HarvesterController {
                 + "documentType:association)",
               uuid.trim()
       );
+      // TODO: Delete records having only one harvestedDate
+      // TODO: Delete harvestedDate field from records having more than one
       message = EsRequestBean.deleteByQuery("records", query, 1000);
     } catch (Exception ex) {
       ex.printStackTrace();
