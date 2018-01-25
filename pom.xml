@@ -27,7 +27,7 @@
   <groupId>org.daobs</groupId>
   <artifactId>daobs</artifactId>
   <packaging>pom</packaging>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.1-SNAPSHOT</version>
   <name>Data analyzer and observer</name>
   <organization>
     <name>INSPIRE MIF</name>
@@ -544,6 +544,11 @@
 
     <es.version>5.6.5</es.version>
     <es.version.md5>dce1527919573d82f02c1d3f091b0398</es.version.md5>
+
+    <!--<es.version>6.1.2</es.version>-->
+    <ror.version>1.16.14_es${es.version}}</ror.version>
+    <!--<ror.version>6.1.1</ror.version>-->
+    <!--<es.version.md5>f4946d8fc400261daeafa09df55627dc</es.version.md5>-->
     <es.port>9200</es.port>
     <es.host>localhost</es.host>
     <!-- For docker, es.host is container
@@ -568,6 +573,8 @@
     <es.xpack.config></es.xpack.config>
 
     <kb.version.sha512>96ff8c183877365cc444631d0dd29d231f8d732e835f1657ccca23ce461e94455915d4785ace79ef01e2b2277dcbba28869b18f4c29a5319ab8b59ce4a581d43</kb.version.sha512>
+
+    <!--<kb.version.sha512>eefe3ae73e08c0cd14c5c7d7f962dc78cdfff1096895a1ab539f172b84dfa0d8c197d99573ac7dea6c60adb89b5e3fd5be10dddd749c060c540b30c34426c8a1</kb.version.sha512>-->
     <kb.protocol>${es.protocol}</kb.protocol>
     <kb.port>5601</kb.port>
     <kb.host>localhost</kb.host>
