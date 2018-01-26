@@ -37,6 +37,22 @@
             </configuration>
           </execution>
           <execution>
+            <id>copy-ror-to-docker-folder</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/../docker/elasticsearch</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/readonlyrest</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
             <id>copy-es-config-to-es-folder</id>
             <phase>process-resources</phase>
             <goals>
@@ -164,6 +180,6 @@
     <es.executable>elasticsearch</es.executable>
     <es.plugin.executable>elasticsearch-plugin</es.plugin.executable>
     <file.protocol>file://</file.protocol>
-    <readonlyrest.filename>readonlyrest-1.16.14_es${es.version}.zip</readonlyrest.filename>
+    <readonlyrest.filename>readonlyrest-${ror.version}.zip</readonlyrest.filename>
   </properties>
 </project>
