@@ -1,6 +1,8 @@
 #/bin/bash
 
 cd /daobs-data-dir/datadir/;
+
+# TODO: only do that if index does not exist.
 elasticdump \
   --input=index-dashboards-mapping.json \
   --output=http://kibana_server:password@elasticsearch:9200/.dashboards \
