@@ -11,7 +11,7 @@ mkdir -p /etc/nginx/certs/
 
 
 echo $GENERATESSL
-if [ -z "${GENERATESSL}" ] || [ "${GENERATESSL}" != "YES" ]; then
+if [ -z "${GENERATESSL}" ] || [ "${GENERATESSL}" != "NO" ]; then
 
   echo "Generating self-signed SSL certificates"
 
