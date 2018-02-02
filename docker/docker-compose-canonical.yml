@@ -62,16 +62,16 @@ services:
     restart: always
 
   cerebro:
-    image: snuids/cerebro:v0.7.1
+    image: inpiremif/inspire-cerebro:0.7.2
     depends_on:
       - "elasticsearch"
-    volumes:
-      - ./cerebro/config/application.conf:/opt/cerebro/conf/application.conf
+    environment:
+      - "SECRET=ki:s:[[@=Ag?QI`W2jMwkY:eqvrJ]JqoJyi2axj3ZvOv^/KavOT4ViJSv?6YY4[N" 
     restart: always
     container_name: sandbox-cerebro
 
   kibana:
-    image: inspire-kibana:5.6.5
+    image: inpiremif/inspire-kibana:5.6.6
     depends_on:
       - "elasticsearch"
     environment:
@@ -84,7 +84,7 @@ services:
   nginx:
     hostname: nginx
 #    image: nginx:stable-alpine
-    image: inspire-nginx    
+    image: inpiremif/inspire-nginx    
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/pki/tls/certs/server-eionet.crt:/tmp/cert.crt:ro

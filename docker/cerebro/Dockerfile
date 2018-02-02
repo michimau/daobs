@@ -1,4 +1,4 @@
-FROM yannart/docker-cerebro
+FROM yannart/docker-cerebro:0.7.2
 #snuids/cerebro:v0.7.1
 
 MAINTAINER doublebyte <joana.simoes@geocat.net>
