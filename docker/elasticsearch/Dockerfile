@@ -16,6 +16,6 @@ RUN chmod a+x /docker-entrypoint.sh
 RUN yum install -y openssl
 USER elasticsearch
 
-#EXPOSE 9200 9300
+EXPOSE 9200 9300
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["elasticsearch"]
