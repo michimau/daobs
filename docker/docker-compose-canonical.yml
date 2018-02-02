@@ -71,12 +71,13 @@ services:
     container_name: sandbox-cerebro
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:5.6.5
-    volumes:
-      - ${PWD}/kibana/wait-for-it.sh:/wait-for-it.sh
-      - ${PWD}/kibana/docker-entry.sh:/docker-entry.sh
+    image: inspire-kibana:5.6.5
     depends_on:
       - "elasticsearch"
+    environment:
+      - "BASEPATH=dashboard"
+      - "KIBANAPASSWORD=changeme"
+      - "KIBANAUSERNAME=changeme"
     restart: always
     command: ["bash", "/wait-for-it.sh", "elasticsearch:9200", "-t", "0", "--", "/docker-entry.sh"]
 
